@@ -1,0 +1,48 @@
+#app {
+    #byob-navbar {
+        .nav-link {
+            text-transform: uppercase;
+            color: $white;
+
+            &:hover {
+                font-weight: bold;
+                opacity: 1;
+            }
+        }
+    }
+
+    footer {
+        background-color: $byob-primary;
+        width: 100%;
+        color: $white;
+    }
+
+    .cart {
+        .cart-item {
+            &-name {
+                font-weight: bold;
+            }
+            &-description {
+                color: #404040;
+            }
+        }
+    }
+
+    .form-control {
+        border-radius: 0;
+        border-color: $byob-primary;
+        padding: $form-input-padding;
+        font-size: $common-font-size;
+    }
+
+    .btn {
+        border-radius: 0;
+        padding-top: $input-padding;
+        padding-bottom: $input-padding;
+        text-transform: uppercase;
+        font-size: $common-font-size;
+        &.btn-primary {
+            color: $white;
+        }
+    }
+}

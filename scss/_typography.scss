@@ -1,0 +1,25 @@
+body {
+    font-family: 'Circular Regular', Fallback, sans-serif;
+    letter-spacing: 1px;
+
+    #byob-navbar {
+        .nav-link {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.byob-title {
+    font-family: 'Circular Black', Fallback, sans-serif;
+}
+
+.byob-text-small {
+    font-size: 0.7rem;
+}
