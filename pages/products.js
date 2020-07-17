@@ -1,12 +1,11 @@
 import Head from 'next/head';
-import AppLayout from '~/layouts/App';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 
 import { Banner, Filter, Catalogue } from '~/components/products';
 
 export default function ProductsPage() {
     return (
-        <AppLayout>
+        <>
             <Head>
                 <title>BYOB | Products</title>
             </Head>
@@ -46,6 +45,6 @@ export default function ProductsPage() {
                     </Col>
                 </Row>
             </Container>
-        </AppLayout>
+        </>
     );
 }

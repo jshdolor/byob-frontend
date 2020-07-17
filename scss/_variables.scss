@@ -11,6 +11,9 @@ $theme-colors: (
     'accent': $byob-accent,
 );
 
+$default-text-color: #545454 !default;
+$secondary-text-color: rgba(84, 84, 84, 0.8) !default;
+
 @font-face {
     font-family: 'Circular Regular';
     src: url('fonts/circular-regular/webfont.eot');

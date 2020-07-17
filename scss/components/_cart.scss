@@ -1,0 +1,29 @@
+#cart-sidebar {
+    z-index: 2000;
+
+    .cart-content {
+        @include media-breakpoint-up(sm) {
+            min-width: 350px;
+            max-width: 350px;
+        }
+        @include media-breakpoint-down(sm) {
+            min-width: 100%;
+        }
+
+        .byob-title {
+            font-size: 1.5em;
+        }
+
+        .container {
+            min-height: 100%;
+            height: auto;
+        }
+
+        .cart-item {
+            border-top: 1px solid #ccc;
+            &:last-child {
+                border-bottom: 1px solid #ccc;
+            }
+        }
+    }
+}

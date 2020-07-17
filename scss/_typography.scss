@@ -20,6 +20,11 @@ h6,
     font-family: 'Circular Black', Fallback, sans-serif;
 }
 
-.byob-text-small {
-    font-size: 0.7rem;
+.byob- {
+    &text-small {
+        font-size: 0.6rem;
+    }
+    &text-secondary {
+        color: $secondary-text-color;
+    }
 }

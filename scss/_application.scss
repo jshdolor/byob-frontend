@@ -1,4 +1,5 @@
 #app {
+    color: $default-text-color;
     #byob-navbar {
         .nav-link {
             text-transform: uppercase;
@@ -9,6 +10,10 @@
                 opacity: 1;
             }
         }
+    }
+
+    #byob-content {
+        min-height: 100%;
     }
 
     footer {

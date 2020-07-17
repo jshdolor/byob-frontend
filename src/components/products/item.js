@@ -6,9 +6,9 @@ const Item = (props) => {
         <div className='my-3'>
             <Image src={image} fluid></Image>
             <div className='byob-text-small'>
-                {name}
-                <small style={{ display: 'block' }}>
-                    <i className=' text-muted'>{description}</i>
+                <b>{name}</b>
+                <small className='d-block'>
+                    <i className='text-muted'>{description}</i>
                 </small>
             </div>
         </div>

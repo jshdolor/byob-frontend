@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import Head from 'next/head';
 import LoginForm from '~/components/forms/Login';
-import AppLayout from '~/layouts/App';
 import { Container, Row, Col } from 'react-bootstrap';
 
 export default function LoginPage() {
     return (
-        <AppLayout>
+        <>
             <Head>
                 <title>BYOB | Login</title>
             </Head>
@@ -27,6 +26,6 @@ export default function LoginPage() {
                     </Col>
                 </Row>
             </Container>
-        </AppLayout>
+        </>
     );
 }

@@ -1,30 +1,62 @@
 import Item from './item';
+import React from 'react';
 
-const items = [{}, {}, {}];
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
-const price = 10;
+import { toggleCartMenu } from '~/store/cartMenu/actions';
+import { connect, useStore } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const cart = () => (
-    <div className='cart container'>
-        <div className='row'>
-            <div className='col-9'></div>
-            <div className='col-3'>
-                <div>Cart</div>
+import { GrFormClose } from 'react-icons/gr';
 
-                {items.map((d, i) => (
-                    <Item key={i}></Item>
-                ))}
+const Cart = (props) => {
+    const store = useStore();
+    const { cart } = store.getState();
 
-                <div className='row'>
-                    <div className='col-12'>
-                        <button className='btn btn-dark btn-block'>
-                            Checkout - {price}
-                        </button>
+    return (
+        <Container className='bg-light pt-5'>
+            <Row>
+                <Col>
+                    <div className='byob-title my-3 text-primary text-uppercase'>
+                        Cart
+                        <Button
+                            variant='link'
+                            className='float-right px-0'
+                            onClick={() => {
+                                props.toggleCartMenu();
+                            }}
+                        >
+                            <GrFormClose size='2em'></GrFormClose>
+                        </Button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-);
+                    <div>
+                        {cart.map((d, i) => (
+                            <Item key={i}></Item>
+                        ))}
+                    </div>
+                    <Button block className='mt-4' variant='primary'>
+                        Checkout - {10}
+                    </Button>
+                    <div className='my-2 byob-text-small text-center byob-text-secondary'>
+                        Shipping & Taxes Calculated at Checkout
+                    </div>
+                </Col>
+            </Row>
+        </Container>
+    );
+};
 
-export default cart;
+const mapStateToProps = function (state) {
+    return state.cartMenu;
+};
+
+const mapDispatchToProps = function (dispatch) {
+    return bindActionCreators(
+        {
+            toggleCartMenu,
+        },
+        dispatch
+    );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

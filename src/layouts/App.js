@@ -1,12 +1,19 @@
-import Header from '../components/header';
-import Footer from '../components/footer';
+import Header from '~/components/header';
+import Footer from '~/components/footer';
+import CartSidebar from '~/components/cart/sidebar';
 
-const AppLayout = ({ children }) => (
-    <div id='app'>
-        <Header></Header>
-        <div className='py-5'>{children}</div>
-        <Footer></Footer>
-    </div>
-);
+const AppLayout = ({ children }) => {
+    return (
+        <div id='app'>
+            <CartSidebar>
+                <Header></Header>
+                <div className='py-5' id='byob-content'>
+                    {children}
+                </div>
+                <Footer></Footer>
+            </CartSidebar>
+        </div>
+    );
+};
 
 export default AppLayout;

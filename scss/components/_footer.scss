@@ -1,0 +1,12 @@
+footer {
+    .footer-link {
+        opacity: 0.9;
+        color: #fff;
+        display: block;
+
+        &:hover {
+            text-decoration: none;
+            opacity: 1;
+        }
+    }
+}
