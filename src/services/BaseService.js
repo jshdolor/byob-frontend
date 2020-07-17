@@ -19,11 +19,11 @@ export default class BaseService {
         return Client.setUrl(this.endpoint)
             .get()
             .then(({ data }) => {
-                const products = data.map((d) => new this.model(d));
+                const modeledData = (data || []).map((d) => new this.model(d));
                 if (this.cacheable) {
-                    CacheManager.set(this.cacheKey, products);
+                    CacheManager.set(this.cacheKey, modeledData);
                 }
-                return products;
+                return modeledData;
             })
             .catch((e) => e);
     }
@@ -42,7 +42,7 @@ export default class BaseService {
         return Client.setUrl(this.endpoint)
             .get()
             .then(({ data }) => {
-                const modeledData = new this.model(data);
+                const modeledData = new this.model(data || {});
                 if (this.cacheable) {
                     CacheManager.set(cacheKey, modeledData);
                 }

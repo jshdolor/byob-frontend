@@ -1,15 +1,15 @@
-import Cookie from 'js-cookie';
-
 class ClientStorage {
-    static storage = Cookie;
+    static storage = process.browser
+        ? localStorage
+        : { getItem: () => '', setItem: () => '' };
 
     static get(key = '') {
-        const value = this.storage.get(key) || null;
+        const value = this.storage.getItem(key) || null;
         return JSON.parse(value);
     }
 
     static set(key, value) {
-        this.storage.set(key, JSON.stringify(value));
+        this.storage.setItem(key, JSON.stringify(value));
     }
 
     //array

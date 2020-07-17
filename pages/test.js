@@ -11,7 +11,10 @@ const Test = (props) => {
         id: 1,
         name: 'blah',
         price: 200,
+        price_currency: 'P200.00',
+        description: 'asdas asda asd asd as das das',
         quantity: 2,
+        image: 'https://picsum.photos/200/300?random=25',
     };
 
     return (
@@ -31,12 +34,13 @@ const Test = (props) => {
                 <div className='my-3 byob-title byob-text-small text-uppercase'>
                     .byob-title.byob-text-small.text-uppercase
                 </div>
+                <div>{JSON.stringify(item)}</div>
                 <Button
                     onClick={(e) => {
                         props.addCartItem(item);
                     }}
                 >
-                    Add Cart
+                    Add to Cart
                 </Button>
             </Container>
         </AppLayout>

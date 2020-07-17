@@ -5,10 +5,19 @@ export default class Cart {
         this._name = data.name;
         this._image = data.image;
         this._quantity = data.quantity;
+        this._description = data.description;
+    }
+
+    get price_currency() {
+        return `P${this.price}`;
     }
 
     get price() {
         return (this._price || 0).toFixed(2);
+    }
+
+    get description() {
+        return this._description;
     }
 
     get id() {

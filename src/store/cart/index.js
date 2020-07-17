@@ -1,16 +1,25 @@
 import { ADD_CART_ITEM, REMOVE_CART_ITEM, SET_CART_ITEMS } from './actions';
+import io from 'socket.io-client';
 
 const initialState = [];
 
 export default (state = initialState, { type, payload }) => {
+    let updatedState = state;
     switch (type) {
         case ADD_CART_ITEM:
-            return [...state, payload];
+            updatedState = [...state, payload];
+            break;
 
         case SET_CART_ITEMS:
-            return [...payload];
+            updatedState = [...payload];
+            break;
 
         default:
-            return state;
+            updatedState = state;
     }
+
+    const socket = io();
+    socket.emit('setCart', updatedState);
+
+    return updatedState;
 };

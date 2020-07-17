@@ -206,18 +206,24 @@
             }
         ]
     },
-    "cart": [
-        {
-            "itemId": 1,
-            "quantity": 2,
-            "price": 123,
-            "notes": "asdasdas"
-        },
-        {
-            "itemId": 2,
-            "quantity": 6,
-            "price": 100,
-            "notes": "Blah"
-        }
-    ]
+    "cart": {
+        "data": [
+            {
+                "id": 9,
+                "name": "blah",
+                "price": 200,
+                "description": "asdas asda asd asd as das das",
+                "quantity": 1,
+                "image": "https://picsum.photos/200/300?random=25"
+            },
+            {
+                "id": 10,
+                "name": "blah blah 2",
+                "price": 300,
+                "description": "asdas asda asd asd as das das",
+                "quantity": 3,
+                "image": "https://picsum.photos/200/300?random=25"
+            }
+        ]
+    }
 }

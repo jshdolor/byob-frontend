@@ -4,25 +4,21 @@ import { FaShoppingCart, FaSearch } from 'react-icons/fa';
 import { toggleCartMenu } from '~/store/cartMenu/actions';
 import { connect, useStore } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 
 const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
 
 const Header = (props) => {
-    const store = useStore();
-    const { cart } = store.getState();
+    const [cartCount, setCartCount] = useState(0);
+    const socket = io();
 
-    const [cartCount, setCartCount] = useState(cart.length);
-
-    if (process.browser) {
-        window.addEventListener(
-            'storage',
-            () => {
-                setCartCount(localStorage.getItem('count'));
-            },
-            false
-        );
-    }
+    useEffect(() => {
+        socket.on('newCart', (cart) => {
+            console.log(cart);
+            setCartCount(cart.length);
+        });
+    }, []);
 
     const userNav = true ? (
         <Link href='/login'>
@@ -91,7 +87,7 @@ const Header = (props) => {
                                 variant='accent'
                                 className='text-light rounded-circle position-absolute'
                             >
-                                {cart.length}
+                                {cartCount}
                             </Badge>
                         </div>
                     </Nav.Link>

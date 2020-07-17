@@ -1,25 +1,22 @@
 import { Row, Col, Image } from 'react-bootstrap';
 
-const cartItem = (props) => (
+const cartItem = ({ item }) => (
     <Row noGutters className='cart-item py-4 px-0'>
         <Col lg={5}>
-            <Image
-                src='https://semantic-ui.com/images/wireframe/image.png'
-                fluid
-            ></Image>
+            <Image src={item.image} fluid></Image>
         </Col>
         <Col lg={5}>
             <div className='px-1'>
                 <div className='byob-text-small font-weight-bold cart-item-name'>
-                    Datu Puti
+                    {item.name}
                 </div>
                 <div className='byob-text-small byob-text-secondary cart-item-description'>
-                    This is the item's short description
+                    {item.description}
                 </div>
             </div>
         </Col>
         <Col lg={2} className='text-right byob-text-small font-weight-bold'>
-            P24.50
+            {item.price_currency}
         </Col>
     </Row>
 );
