@@ -24,6 +24,12 @@
             &:last-child {
                 border-bottom: 1px solid #ccc;
             }
+
+            .quantity-modifier {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
         }
     }
 }

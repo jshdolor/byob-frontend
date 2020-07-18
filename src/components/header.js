@@ -7,17 +7,26 @@ import { bindActionCreators } from 'redux';
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
+import ClientStorage from '~/lib/ClientStorage';
+
 const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
 
 const Header = (props) => {
     const [cartCount, setCartCount] = useState(0);
-    const socket = io();
+
+    const getCurrentCart = () => {
+        const cart = ClientStorage.get('cart');
+        setCartCount((cart || []).reduce((a, b) => a + b.quantity, 0));
+    };
 
     useEffect(() => {
-        socket.on('newCart', (cart) => {
-            console.log(cart);
-            setCartCount(cart.length);
+        const socket = io();
+
+        socket.on('newCart', () => {
+            getCurrentCart();
         });
+
+        return () => socket.disconnect();
     }, []);
 
     const userNav = true ? (

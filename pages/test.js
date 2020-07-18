@@ -2,18 +2,26 @@ import Head from 'next/head';
 import AppLayout from '~/layouts/App';
 import { Container, Button } from 'react-bootstrap';
 
-import { addCartItem } from '~/store/cart/actions';
+import { addCartItem, setCartItems } from '~/store/cart/actions';
 import { connect, useStore } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ClientStorage from '~/lib/ClientStorage';
+
+import { useEffect } from 'react';
 
 const Test = (props) => {
+    useEffect(() => {
+        props.setCartItems(props.cart);
+    }, []);
+
+    const price = Math.ceil(Math.random() * 1000).toFixed(2);
     const item = {
-        id: 1,
+        id: Math.ceil(Math.random() * 100),
         name: 'blah',
-        price: 200,
-        price_currency: 'P200.00',
+        price,
+        price_currency: 'P' + price,
         description: 'asdas asda asd asd as das das',
-        quantity: 2,
+        quantity: 1,
         image: 'https://picsum.photos/200/300?random=25',
     };
 
@@ -47,6 +55,11 @@ const Test = (props) => {
     );
 };
 
+Test.getInitialProps = async (ctx) => {
+    const cart = ClientStorage.get('cart');
+    return { cart };
+};
+
 const mapStateToProps = function (state) {
     return state;
 };
@@ -55,6 +68,7 @@ const mapDispatchToProps = function (dispatch) {
     return bindActionCreators(
         {
             addCartItem,
+            setCartItems,
         },
         dispatch
     );

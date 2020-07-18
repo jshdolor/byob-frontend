@@ -8,9 +8,9 @@ export default class Cart {
         this._description = data.description;
     }
 
-    get price_currency() {
-        return `P${this.price}`;
-    }
+    price_currency = (amount = 0) => {
+        return `P${amount.toFixed(2)}`;
+    };
 
     get price() {
         return (this._price || 0).toFixed(2);

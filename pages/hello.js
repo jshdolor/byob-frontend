@@ -7,12 +7,13 @@ const Hello = () => {
     useEffect(() => {
         const socket = io();
         socket.on('now', (data) => {
-            setWord(data.length);
+            console.log(data);
+            setWord(data.message);
         });
 
-        socket.on('newCart', (cart) => {
-            console.log(cart);
-            setWord(cart.length);
+        socket.on('newCart', (data) => {
+            console.log(data);
+            setWord(data.length);
         });
     }, []);
 

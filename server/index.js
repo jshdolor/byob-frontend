@@ -9,14 +9,17 @@ const nextHandler = nextApp.getRequestHandler();
 
 let port = 3000;
 
+let interval;
+
 io.on('connect', (socket) => {
-    socket.emit('now', {
-        message: 'josh',
-    });
+    io.sockets.emit('newCart', true);
+
+    //fire when connected to get the current count on the local storage
+    io.sockets.emit('newCart', true);
 
     socket.on('setCart', (foo) => {
-        socket.emit('now', foo);
-        console.log(foo);
+        console.log('added to cart');
+        io.sockets.emit('newCart', true);
     });
 });
 
