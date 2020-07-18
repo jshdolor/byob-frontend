@@ -12,7 +12,7 @@ const Catalogue = () => {
 
     return (
         <Row>
-            {products.map((product) => (
+            {(products || []).map((product) => (
                 <Col key={product.id} lg={3}>
                     <Item data={product}></Item>
                 </Col>
