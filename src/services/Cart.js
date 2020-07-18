@@ -1,4 +1,4 @@
-import CartModel from '~/models/Cart';
+import CartModel from '~/models/cart';
 import BaseService from './BaseService';
 
 export default class CartService extends BaseService {
