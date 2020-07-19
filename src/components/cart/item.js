@@ -6,14 +6,14 @@ const cartItem = ({ item }) => {
 
     return (
         <Row noGutters className='cart-item py-4 px-0'>
-            <Col lg={5}>
+            <Col lg={5} className='text-center'>
                 <Image src={item.image} fluid></Image>
             </Col>
             <Col lg={5} className='px-1'>
                 <div className='byob-text-small font-weight-bold cart-item-name'>
                     {item.name}
                 </div>
-                <div className='byob-text-small byob-text-secondary cart-item-description'>
+                <div className='byob-text-small byob-text-secondary cart-item-description pb-4'>
                     {item.description}
                 </div>
                 <QuantityModifier

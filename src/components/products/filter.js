@@ -1,44 +1,36 @@
 import { Form } from 'react-bootstrap';
+import { Fragment } from 'react';
 
-const brands = ['all', 'datu puti', 'golden fiesta', 'jufran'];
-const types = ['all', 'packaged', 'refill'];
-const priceRange = ['all', '1-20', '21-40', '41-60', '61-80', '81-100'];
+const filterValues = {
+    Brands: ['All', 'Datu Puti', 'Golden Fiesta', 'Jufran'],
+    Types: ['All', 'Packaged', 'Refill'],
+    'Price Range': ['All', '1-20', '21-40', '41-60', '61-80', '81-100'],
+};
 
-const filter = () => (
+const Filter = () => (
     <div className='filter-container'>
-        <div>Types</div>
-        {types.map((type, i) => (
-            <Form.Check
-                className='byob-text-small'
-                key={i}
-                name='types'
-                type='radio'
-                label={`${type}`}
-            />
-        ))}
-        <hr></hr>
-        <div>Brands</div>
-        {brands.map((brand, i) => (
-            <Form.Check
-                className='byob-text-small'
-                key={i}
-                name='brands'
-                type='radio'
-                label={`${brand}`}
-            />
-        ))}
-        <hr></hr>
-        <div>Price Range</div>
-        {priceRange.map((priceR, i) => (
-            <Form.Check
-                className='byob-text-small'
-                key={i}
-                name='priceRange'
-                type='radio'
-                label={`${priceR}`}
-            />
-        ))}
+        {Object.keys(filterValues).map((filter, filterKey) => {
+            return (
+                <Fragment>
+                    <div className='byob-title byob-text-small'>{filter}</div>
+                    {filterValues[filter].map((type, i) => (
+                        <Form.Check
+                            className='my-2 byob-text-small byob-text-secondary'
+                            key={i}
+                            name={filter}
+                            type='radio'
+                            label={`${type}`}
+                        />
+                    ))}
+                    {filterKey < Object.keys(filterValues).length - 1 ? (
+                        <hr></hr>
+                    ) : (
+                        ''
+                    )}
+                </Fragment>
+            );
+        })}
     </div>
 );
 
-export default filter;
+export default Filter;

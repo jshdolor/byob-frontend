@@ -3,4 +3,10 @@
         position: sticky;
         top: 60px;
     }
+
+    input[type='radio'] {
+        &:checked:after {
+            content: '✓';
+        }
+    }
 }
