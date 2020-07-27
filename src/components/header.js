@@ -50,7 +50,7 @@ const Header = (props) => {
         bg: 'primary',
         variant: 'dark',
         id: 'byob-navbar',
-        sticky: 'top',
+        fixed: 'top',
     };
 
     return (
@@ -86,7 +86,7 @@ const Header = (props) => {
                         <FaSearch></FaSearch>
                     </Nav.Link>
                     <Nav.Link href='#' onClick={() => props.toggleCartMenu()}>
-                        <div style={{ position: 'relative' }}>
+                        <div className='position-relative'>
                             <FaShoppingCart></FaShoppingCart>
                             <Badge
                                 style={{

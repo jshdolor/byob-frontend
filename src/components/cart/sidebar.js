@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 const sideBarStyle = {
-    sidebar: { zIndex: 2002 },
+    sidebar: { zIndex: 2003 },
     overlay: {
-        zIndex: 2001,
+        zIndex: 2002,
     },
 };
 

@@ -1,31 +1,67 @@
-import Link from 'next/link';
 import Head from 'next/head';
-import LoginForm from '~/components/forms/Login';
-import { Container, Row, Col } from 'react-bootstrap';
+import AccountLayout from '~/layouts/Account';
+import BootstrapTable from 'react-bootstrap-table-next';
+
+const columns = [
+    {
+        dataField: 'id',
+        text: 'Order Number',
+    },
+    {
+        dataField: 'name',
+        text: 'Product Name',
+    },
+    {
+        dataField: 'price',
+        text: 'Product Price',
+    },
+];
+
+const products = [
+    {
+        id: 1,
+        name: 'test',
+        price: 100.0,
+    },
+    {
+        id: 2,
+        name: 'test',
+        price: 100.0,
+    },
+];
+
+const expandRow = {
+    renderer: (row) => (
+        <div>
+            <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
+            <p>
+                You can render anything here, also you can add additional data
+                on every row object
+            </p>
+            <p>
+                expandRow.renderer callback will pass the origin row object to
+                you
+            </p>
+        </div>
+    ),
+    onlyOneExpanding: true,
+};
 
 export default function OrderHistory() {
     return (
-        <>
+        <AccountLayout>
             <Head>
                 <title>BYOB | Account - Order History</title>
             </Head>
-            <Container>
-                <Row className='justify-content-md-center'>
-                    <Col lg={4}>
-                        <div className='byob-title text-uppercase text-primary my-3'>
-                            Login
-                        </div>
-                        <LoginForm></LoginForm>
-                        <hr />
-                        <Row className='justify-content-md-center my-3'>
-                            <div className='byob-text-small'>
-                                Or login using
-                            </div>
-                        </Row>
-                        <button className='btn btn-block btn-dark'>fb</button>
-                    </Col>
-                </Row>
-            </Container>
-        </>
+            <div className='mb-3 font-weight-bold byob-text-small'>
+                Order History
+            </div>
+            <BootstrapTable
+                keyField='id'
+                data={products}
+                columns={columns}
+                expandRow={expandRow}
+            />
+        </AccountLayout>
     );
 }

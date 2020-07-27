@@ -7,9 +7,7 @@ const AppLayout = ({ children }) => {
         <div id='app'>
             <CartSidebar>
                 <Header></Header>
-                <div className='py-5' id='byob-content'>
-                    {children}
-                </div>
+                <div id='byob-content'>{children}</div>
                 <Footer></Footer>
             </CartSidebar>
         </div>
