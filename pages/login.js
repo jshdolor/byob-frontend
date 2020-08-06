@@ -16,13 +16,6 @@ export default function LoginPage() {
                             Login
                         </div>
                         <LoginForm></LoginForm>
-                        <hr />
-                        <Row className='justify-content-md-center my-3'>
-                            <div className='byob-text-small'>
-                                Or login using
-                            </div>
-                        </Row>
-                        <button className='btn btn-block btn-dark'>fb</button>
                     </Col>
                 </Row>
             </Container>
