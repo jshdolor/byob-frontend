@@ -12,9 +12,20 @@ export default function LoginPage() {
             <Container>
                 <Row className='justify-content-md-center'>
                     <Col lg={4}>
-                        <div className='byob-title text-uppercase text-primary my-3'>
-                            Login
+                        <div className='my-3'>
+                            <div className='byob-title text-uppercase text-primary '>
+                                Login
+                            </div>
+                            <small>
+                                Don't have an account?{' '}
+                                <i>
+                                    <Link href='/signup'>
+                                        <a>Signup</a>
+                                    </Link>
+                                </i>
+                            </small>
                         </div>
+
                         <LoginForm></LoginForm>
                     </Col>
                 </Row>

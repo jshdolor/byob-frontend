@@ -2,7 +2,7 @@ import Http from '~/clients/Http';
 
 export default class ApiClient {
     static url = '';
-    static API_BASE = 'http://localhost:3001/api/v1';
+    static API_BASE = `${process.env.NEXT_PUBLIC_BYOB_HOST}/api/v1`;
 
     static setUrl(url) {
         this.url = this.API_BASE + url;

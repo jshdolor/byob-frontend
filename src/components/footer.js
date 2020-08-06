@@ -13,7 +13,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
 
-const Footer = () => (
+const AppFooter = () => (
     <footer>
         <div className='footer'>
             <Container className='py-5'>
@@ -113,4 +113,4 @@ const Footer = () => (
     </footer>
 );
 
-export default Footer;
+export default AppFooter;
