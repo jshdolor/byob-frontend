@@ -45,7 +45,8 @@ export default class Http {
 
     _send() {
         return axios(this.config).then((response) => {
-            return response.data;
+            console.log(response);
+            return response;
         });
     }
 }

@@ -12,17 +12,21 @@ export default function LoginPage() {
             <Container>
                 <Row className='justify-content-md-center'>
                     <Col lg={4}>
-                        <div className='byob-title text-uppercase text-primary my-3'>
-                            Login
-                        </div>
-                        <LoginForm></LoginForm>
-                        <hr />
-                        <Row className='justify-content-md-center my-3'>
-                            <div className='byob-text-small'>
-                                Or login using
+                        <div className='my-3'>
+                            <div className='byob-title text-uppercase text-primary '>
+                                Login
                             </div>
-                        </Row>
-                        <button className='btn btn-block btn-dark'>fb</button>
+                            <small>
+                                Don't have an account?{' '}
+                                <i>
+                                    <Link href='/signup'>
+                                        <a>Signup</a>
+                                    </Link>
+                                </i>
+                            </small>
+                        </div>
+
+                        <LoginForm></LoginForm>
                     </Col>
                 </Row>
             </Container>

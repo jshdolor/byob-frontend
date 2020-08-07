@@ -20,12 +20,6 @@
         padding-bottom: 125px;
     }
 
-    footer {
-        background-color: $byob-primary;
-        width: 100%;
-        color: $white;
-    }
-
     .cart {
         .cart-item {
             &-name {
@@ -39,9 +33,23 @@
 
     .form-control {
         border-radius: 0;
-        border-color: $byob-primary;
         padding: $form-input-padding;
         font-size: $common-font-size;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .form-control.is-invalid {
+        border-color: $byob-accent;
+        background-image: none;
+    }
+
+    .invalid-feedback {
+        color: $byob-accent;
+        font-size: $small-font-size;
     }
 
     .btn {

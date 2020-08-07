@@ -26,7 +26,7 @@ const Test = (props) => {
     };
 
     return (
-        <AppLayout>
+        <>
             <Head>
                 <title>BYOB | Home</title>
             </Head>
@@ -57,7 +57,7 @@ const Test = (props) => {
                     </Col>
                 </Row>
             </Container>
-        </AppLayout>
+        </>
     );
 };
 

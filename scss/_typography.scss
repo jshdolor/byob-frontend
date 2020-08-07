@@ -4,7 +4,7 @@ body {
 
     #byob-navbar {
         .nav-link {
-            font-size: 0.8rem;
+            font-size: $common-font-size;
             opacity: 0.9;
         }
     }
@@ -18,11 +18,18 @@ h5,
 h6,
 .byob-title {
     font-family: 'Circular Black', Fallback, sans-serif;
+
+    small {
+        display: block;
+        font-size: $small-font-size;
+        font-weight: 100;
+        color: $default-text-color;
+    }
 }
 
 .byob- {
     &text-small {
-        font-size: 0.6rem;
+        font-size: $small-font-size;
     }
     &text-secondary {
         color: $secondary-text-color;

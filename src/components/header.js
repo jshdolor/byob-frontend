@@ -1,7 +1,10 @@
 import { Nav, Navbar, Badge } from 'react-bootstrap';
 import Link from 'next/link';
 import { FaShoppingCart, FaSearch } from 'react-icons/fa';
+
 import { toggleCartMenu } from '~/store/cartMenu/actions';
+import { toggleHeader } from '~/store/app/actions';
+
 import { connect, useStore } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useState, useEffect } from 'react';
@@ -114,6 +117,7 @@ const mapDispatchToProps = function (dispatch) {
     return bindActionCreators(
         {
             toggleCartMenu,
+            toggleHeader,
         },
         dispatch
     );

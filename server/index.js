@@ -18,7 +18,6 @@ io.on('connect', (socket) => {
     io.sockets.emit('newCart', true);
 
     socket.on('setCart', (foo) => {
-        console.log('added to cart');
         io.sockets.emit('newCart', true);
     });
 });

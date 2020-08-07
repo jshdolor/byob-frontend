@@ -1,12 +1,27 @@
 footer {
-    .footer-link {
-        opacity: 0.9;
-        color: #fff;
+    &::before {
+        background-image: url(/pre-footer.png);
+        background-repeat: repeat-x;
+        content: '';
+        height: 70px;
+        width: 100%;
         display: block;
+    }
 
-        &:hover {
-            text-decoration: none;
-            opacity: 1;
+    .footer {
+        background-color: $byob-primary;
+        width: 100%;
+        color: $white;
+
+        .footer-link {
+            opacity: 0.9;
+            color: #fff;
+            display: block;
+
+            &:hover {
+                text-decoration: none;
+                opacity: 1;
+            }
         }
     }
 }
