@@ -38,7 +38,7 @@ const AccountLayout = ({ children }) => {
                         <Form.Check
                             label={link.label}
                             type='radio'
-                            onClick={() => {
+                            onChange={() => {
                                 Router.push(link.path);
                             }}
                             checked={router.pathname == link.path}

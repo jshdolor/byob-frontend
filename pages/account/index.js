@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
 
-export default function OrderHistory() {
+const Account = (props) => {
+    console.log(props);
+
     return (
         <AccountLayout>
             <Head>
@@ -9,4 +11,16 @@ export default function OrderHistory() {
             </Head>
         </AccountLayout>
     );
-}
+};
+
+export const getServerSideProps = async (ctx) => {
+    // Must validate JWT
+    // If the JWT is invalid it must redirect
+    // back to the main page. You can do that
+    // with Router from 'next/router
+    console.log(ctx);
+
+    // Must return an object
+    return { props: { acct: 1 } };
+};
+export default Account;

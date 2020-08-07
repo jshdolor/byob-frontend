@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { mergeDeep } from '~/helpers';
 
 export default class Http {
     constructor() {
@@ -44,9 +45,12 @@ export default class Http {
     }
 
     _send() {
+        if (!!Object.keys(this.overrides).length) {
+            this.config = mergeDeep(this.config, this.overrides);
+        }
+
         return axios(this.config).then((response) => {
-            console.log(response);
-            return response;
+            return response.data;
         });
     }
 }

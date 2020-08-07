@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
 import BootstrapTable from 'react-bootstrap-table-next';
+import ProfileService from '~/services/ProfileService';
+
+import CookieManager from '~/lib/CookieManager';
 
 const columns = [
     {
@@ -47,7 +50,8 @@ const expandRow = {
     onlyOneExpanding: true,
 };
 
-export default function OrderHistory() {
+function OrderHistory(props) {
+    console.log(props);
     return (
         <AccountLayout>
             <Head>
@@ -65,3 +69,18 @@ export default function OrderHistory() {
         </AccountLayout>
     );
 }
+
+export const getServerSideProps = async (ctx) => {
+    let data = {};
+    try {
+        data = await ProfileService.get(ctx);
+    } catch (e) {
+        console.log('ERROR', e);
+        ctx.res.statusCode = 302;
+        ctx.res.setHeader('Location', `/login`);
+    }
+
+    return { props: data.toJSON() };
+};
+
+export default OrderHistory;

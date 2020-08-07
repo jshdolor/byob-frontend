@@ -1,16 +1,16 @@
 import Client from '~/clients/ApiClient';
+import ExceptionHandler from '~/exception/Handler';
 
+import AuthModel from '~/models/auth';
 export default class LoginService {
     static endpoint = '/login';
 
     static handle(request) {
         return Client.setUrl(this.endpoint)
             .post(request.toJSON())
-            .then((data) => {
-                console.log(data);
-
-                return data;
+            .then(({ data }) => {
+                return new AuthModel(data);
             })
-            .catch((e) => e);
+            .catch((e) => new ExceptionHandler('LoginService', e));
     }
 }

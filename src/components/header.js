@@ -79,8 +79,8 @@ const Header = (props) => {
                     <Link href='/products'>
                         <a className='nav-link'>Products</a>
                     </Link>
-                    <Link href='/test'>
-                        <a className='nav-link'>Test</a>
+                    <Link href='/vlogs'>
+                        <a className='nav-link'>Vlogs</a>
                     </Link>
                 </Nav>
                 <Nav>
