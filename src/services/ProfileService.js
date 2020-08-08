@@ -2,22 +2,22 @@ import ProfileModel from '~/models/profile';
 import Client from '~/clients/ApiClient';
 import ExceptionHandler from '~/exception/Handler';
 
-import nookies from 'nookies';
+import CookieManager from '~/lib/CookieManager';
 
 export default class ProfileService {
     static endpoint = '/profile';
 
     static get(context) {
-        const cookies = nookies.get(context);
+        const token = CookieManager.setContext(context).get('b-at');
 
         const config = {
             headers: {
-                Authorization: `Bearer ${cookies['b-at']}`,
+                Authorization: `Bearer ${token}`,
             },
         };
 
         return Client.setUrl(this.endpoint)
-            .get(null, config)
+            .get(null, config, context)
             .then(({ data }) => {
                 return new ProfileModel(data);
             })

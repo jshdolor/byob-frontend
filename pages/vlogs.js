@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Container } from 'react-bootstrap';
 
-export default function Vlog() {
+export default function Vlogs() {
     return (
         <div>
             <Head>

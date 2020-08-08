@@ -3,8 +3,9 @@ import Head from 'next/head';
 import LoginForm from '~/components/forms/Login';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProfileService from '~/services/ProfileService';
+import hasAuth from '~/middleware/hasAuth';
 
-export default function LoginPage() {
+function LoginPage() {
     return (
         <>
             <Head>
@@ -35,13 +36,9 @@ export default function LoginPage() {
     );
 }
 
-export const getServerSideProps = async (ctx) => {
-    try {
-        await ProfileService.get(ctx);
-        //meaning already loggedin
-        ctx.res.statusCode = 302;
-        ctx.res.setHeader('Location', `/`);
-    } catch (e) {}
-
-    return { props: {} };
+LoginPage.getInitialProps = async (ctx) => {
+    // await hasAuth(ctx);
+    return {};
 };
+
+export default LoginPage;

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
-import ProfileService from '~/services/ProfileService';
+import authCheck from '~/middleware/auth';
 
 const Account = (props) => {
     return (
@@ -12,16 +12,9 @@ const Account = (props) => {
     );
 };
 
-export const getServerSideProps = async (ctx) => {
-    let data = {};
-    try {
-        data = await ProfileService.get(ctx);
-    } catch (e) {
-        ctx.res.statusCode = 302;
-        ctx.res.setHeader('Location', `/login`);
-    }
-
-    return { props: data.toJSON() };
+Account.getInitialProps = async (ctx) => {
+    await authCheck(ctx);
+    return {};
 };
 
 export default Account;

@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
 import BootstrapTable from 'react-bootstrap-table-next';
-import ProfileService from '~/services/ProfileService';
+
+import authCheck from '~/middleware/auth';
 
 const columns = [
     {
@@ -67,16 +68,11 @@ function OrderHistory(props) {
     );
 }
 
-export const getServerSideProps = async (ctx) => {
-    let data = {};
-    try {
-        data = await ProfileService.get(ctx);
-    } catch (e) {
-        ctx.res.statusCode = 302;
-        ctx.res.setHeader('Location', `/login`);
-    }
+OrderHistory.getInitialProps = async (ctx) => {
+    await authCheck(ctx);
 
-    return { props: data.toJSON() };
+    //can pass data here for initial page call
+    return {};
 };
 
 export default OrderHistory;

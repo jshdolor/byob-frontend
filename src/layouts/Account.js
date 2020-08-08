@@ -5,7 +5,7 @@ import ClientStorage from '~/lib/ClientStorage';
 
 const accountLinks = [
     {
-        path: '/account/',
+        path: '/account',
         label: 'My Account',
         cls: 'font-weight-bold',
     },

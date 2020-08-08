@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
-let port = 3000;
+const port = 3000;
 
 io.on('connect', (socket) => {
     //fire when connected to get the current count on the local storage
@@ -28,6 +28,21 @@ io.on('connect', (socket) => {
 
 nextApp.prepare().then(() => {
     //can handle middleware here..
+
+    // app.get('/account(/*)?', async (req, res) => {
+    //     console.log('hit');
+    //     try {
+    //         const d = await ProfileService.get(req);
+    //         nextHandler(req, res);
+    //     } catch (e) {
+    //         console.log(e);
+
+    //         io.on('connect', (socket) => {
+    //             io.sockets.emit('userLoggedOut', true);
+    //         });
+    //         res.redirect(301, '/login');
+    //     }
+    // });
 
     app.get('*', (req, res) => {
         nextHandler(req, res);

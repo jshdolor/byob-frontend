@@ -9,15 +9,32 @@ import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import { useRouter } from 'next/router';
 
 import ClientStorage from '~/lib/ClientStorage';
 
+import { userPages } from '~/config/routes';
+
 const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
+
+const accountLink = (
+    <Link href='/account'>
+        <a className='nav-link'>My Account</a>
+    </Link>
+);
+
+const loginLink = (
+    <Link href='/login'>
+        <a className='nav-link'>Login</a>
+    </Link>
+);
 
 const Header = (props) => {
     const [cartCount, setCartCount] = useState(0);
-
     const { session } = useSelector((state) => state);
+
+    const router = useRouter();
+    const [userNav, setUserNav] = useState(loginLink);
 
     const getCurrentCart = () => {
         const cart = ClientStorage.get('cart');
@@ -25,32 +42,31 @@ const Header = (props) => {
     };
 
     useEffect(() => {
+        console.log(router.route);
         const socket = io();
+
+        if (session.isLoggedIn) {
+            setUserNav(accountLink);
+        }
 
         socket.on('newCart', () => {
             getCurrentCart();
         });
 
         socket.on('userLoggedIn', () => {
-            location.reload();
+            setUserNav(accountLink);
         });
 
         socket.on('userLoggedOut', () => {
-            location.reload();
+            setUserNav(loginLink);
+
+            if (userPages.indexOf(router.route)) {
+                router.replace('/');
+            }
         });
 
         return () => socket.disconnect();
     }, []);
-
-    const userNav = session.isLoggedIn ? (
-        <Link href='/account'>
-            <a className='nav-link'>My Account</a>
-        </Link>
-    ) : (
-        <Link href='/login'>
-            <a className='nav-link'>Login</a>
-        </Link>
-    );
 
     const navBarProps = {
         collapseOnSelect: true,
@@ -90,6 +106,7 @@ const Header = (props) => {
                 </Nav>
                 <Nav>
                     {userNav}
+
                     <Nav.Link href='#features'>
                         <FaSearch></FaSearch>
                     </Nav.Link>
