@@ -3,8 +3,6 @@ import AccountLayout from '~/layouts/Account';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ProfileService from '~/services/ProfileService';
 
-import CookieManager from '~/lib/CookieManager';
-
 const columns = [
     {
         dataField: 'id',
@@ -51,7 +49,6 @@ const expandRow = {
 };
 
 function OrderHistory(props) {
-    console.log(props);
     return (
         <AccountLayout>
             <Head>
@@ -75,7 +72,6 @@ export const getServerSideProps = async (ctx) => {
     try {
         data = await ProfileService.get(ctx);
     } catch (e) {
-        console.log('ERROR', e);
         ctx.res.statusCode = 302;
         ctx.res.setHeader('Location', `/login`);
     }

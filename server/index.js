@@ -9,20 +9,28 @@ const nextHandler = nextApp.getRequestHandler();
 
 let port = 3000;
 
-let interval;
-
 io.on('connect', (socket) => {
-    io.sockets.emit('newCart', true);
-
     //fire when connected to get the current count on the local storage
     io.sockets.emit('newCart', true);
 
     socket.on('setCart', (foo) => {
         io.sockets.emit('newCart', true);
     });
+
+    socket.on('userLogin', () => {
+        console.log('login');
+        io.sockets.emit('userLoggedIn', true);
+    });
+
+    socket.on('userLogout', () => {
+        console.log('logout');
+        io.sockets.emit('userLoggedOut', true);
+    });
 });
 
 nextApp.prepare().then(() => {
+    //can handle middleware here..
+
     app.get('*', (req, res) => {
         nextHandler(req, res);
     });

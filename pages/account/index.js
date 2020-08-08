@@ -1,9 +1,8 @@
 import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
+import ProfileService from '~/services/ProfileService';
 
 const Account = (props) => {
-    console.log(props);
-
     return (
         <AccountLayout>
             <Head>
@@ -14,13 +13,15 @@ const Account = (props) => {
 };
 
 export const getServerSideProps = async (ctx) => {
-    // Must validate JWT
-    // If the JWT is invalid it must redirect
-    // back to the main page. You can do that
-    // with Router from 'next/router
-    console.log(ctx);
+    let data = {};
+    try {
+        data = await ProfileService.get(ctx);
+    } catch (e) {
+        ctx.res.statusCode = 302;
+        ctx.res.setHeader('Location', `/login`);
+    }
 
-    // Must return an object
-    return { props: { acct: 1 } };
+    return { props: data.toJSON() };
 };
+
 export default Account;

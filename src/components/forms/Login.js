@@ -2,13 +2,17 @@ import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form } from 'react-bootstrap';
 import Router from 'next/router';
+import { loginUser } from '~/store/session/actions';
 
 import LoginRequest from '~/services/Authentication/requests/LoginRequest';
 import LoginService from '~/services/Authentication/LoginService';
 
 import CookieManager from '~/lib/CookieManager';
 
-const LoginForm = () => {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+const LoginForm = (props) => {
     const { handleSubmit, register, errors } = useForm();
 
     const [hasErrors, setErrors] = useState(false);
@@ -30,6 +34,7 @@ const LoginForm = () => {
             }
 
             CookieManager.set('b-at', res.access_token);
+            props.loginUser(true);
             formComponent.current.reset();
             Router.push('/');
         });
@@ -99,4 +104,16 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+const mapStateToProps = function (state) {
+    return state;
+};
+
+const mapDispatchToProps = function (dispatch) {
+    return bindActionCreators(
+        {
+            loginUser,
+        },
+        dispatch
+    );
+};
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

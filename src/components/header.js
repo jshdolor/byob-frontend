@@ -5,7 +5,7 @@ import { FaShoppingCart, FaSearch } from 'react-icons/fa';
 import { toggleCartMenu } from '~/store/cartMenu/actions';
 import { toggleHeader } from '~/store/app/actions';
 
-import { connect, useStore } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
@@ -16,6 +16,8 @@ const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
 
 const Header = (props) => {
     const [cartCount, setCartCount] = useState(0);
+
+    const { session } = useSelector((state) => state);
 
     const getCurrentCart = () => {
         const cart = ClientStorage.get('cart');
@@ -29,22 +31,25 @@ const Header = (props) => {
             getCurrentCart();
         });
 
+        socket.on('userLoggedIn', () => {
+            location.reload();
+        });
+
+        socket.on('userLoggedOut', () => {
+            location.reload();
+        });
+
         return () => socket.disconnect();
     }, []);
 
-    const userNav = true ? (
+    const userNav = session.isLoggedIn ? (
+        <Link href='/account'>
+            <a className='nav-link'>My Account</a>
+        </Link>
+    ) : (
         <Link href='/login'>
             <a className='nav-link'>Login</a>
         </Link>
-    ) : (
-        <>
-            <Link href='/account'>
-                <a className='nav-link'>My Account</a>
-            </Link>
-            <Link href='/logout'>
-                <a className='nav-link'>Logout</a>
-            </Link>
-        </>
     );
 
     const navBarProps = {
