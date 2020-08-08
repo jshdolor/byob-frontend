@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 function Logout({ logoutUser }) {
     useEffect(() => {
         logoutUser();
-        Router.push('/');
+        window.location.href = '/';
     }, []);
 
     return (

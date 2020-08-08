@@ -21,7 +21,7 @@ const AccountLayout = ({ children }) => {
 
     const logout = () => {
         ClientStorage.set('cart', []);
-        Router.replace('/');
+        Router.replace('/logout');
     };
 
     return (

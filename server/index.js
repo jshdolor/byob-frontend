@@ -18,12 +18,10 @@ io.on('connect', (socket) => {
     });
 
     socket.on('userLogin', () => {
-        console.log('login');
         io.sockets.emit('userLoggedIn', true);
     });
 
     socket.on('userLogout', () => {
-        console.log('logout');
         io.sockets.emit('userLoggedOut', true);
     });
 });
