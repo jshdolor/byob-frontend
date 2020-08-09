@@ -1,0 +1,31 @@
+import { LOGIN_USER, LOGOUT_USER } from './actions';
+import io from 'socket.io-client';
+import CookieManager from '~/lib/CookieManager';
+
+const socket = io();
+
+const initialState = {
+    isLoggedIn: !!CookieManager.get('b-at'),
+};
+
+export default (state = initialState, { type, payload }) => {
+    let updatedState = state;
+
+    switch (type) {
+        case LOGIN_USER:
+            updatedState = { ...state, isLoggedIn: true };
+            socket.emit('userLogin', updatedState);
+            break;
+
+        case LOGOUT_USER:
+            updatedState = { ...state, isLoggedIn: false };
+            socket.emit('userLogout', updatedState);
+            CookieManager.delete('b-at');
+            break;
+
+        default:
+            return state;
+    }
+
+    return updatedState;
+};

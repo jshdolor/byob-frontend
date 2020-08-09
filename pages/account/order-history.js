@@ -2,6 +2,8 @@ import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
 import BootstrapTable from 'react-bootstrap-table-next';
 
+import authCheck from '~/middleware/auth';
+
 const columns = [
     {
         dataField: 'id',
@@ -47,7 +49,7 @@ const expandRow = {
     onlyOneExpanding: true,
 };
 
-export default function OrderHistory() {
+function OrderHistory(props) {
     return (
         <AccountLayout>
             <Head>
@@ -65,3 +67,12 @@ export default function OrderHistory() {
         </AccountLayout>
     );
 }
+
+OrderHistory.getInitialProps = async (ctx) => {
+    await authCheck(ctx);
+
+    //can pass data here for initial page call
+    return {};
+};
+
+export default OrderHistory;

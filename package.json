@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "concurrently 'node server/index.js' 'json-server --watch mockdb/db.json --routes mockdb/routes.json --port 3001' ",
+        "dev": "node server/index.js",
         "build": "next build",
         "start": "next start"
     },
@@ -16,6 +16,7 @@
         "js-cookie": "^2.2.1",
         "next": "9.4.4",
         "next-redux-wrapper": "^6.0.2",
+        "nookies": "^2.4.0",
         "react": "16.13.1",
         "react-bootstrap": "^1.2.2",
         "react-bootstrap-table-next": "^4.0.3",

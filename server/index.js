@@ -7,22 +7,43 @@ const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
-let port = 3000;
-
-let interval;
+const port = 3000;
 
 io.on('connect', (socket) => {
-    io.sockets.emit('newCart', true);
-
     //fire when connected to get the current count on the local storage
     io.sockets.emit('newCart', true);
 
     socket.on('setCart', (foo) => {
         io.sockets.emit('newCart', true);
     });
+
+    socket.on('userLogin', () => {
+        io.sockets.emit('userLoggedIn', true);
+    });
+
+    socket.on('userLogout', () => {
+        io.sockets.emit('userLoggedOut', true);
+    });
 });
 
 nextApp.prepare().then(() => {
+    //can handle middleware here..
+
+    // app.get('/account(/*)?', async (req, res) => {
+    //     console.log('hit');
+    //     try {
+    //         const d = await ProfileService.get(req);
+    //         nextHandler(req, res);
+    //     } catch (e) {
+    //         console.log(e);
+
+    //         io.on('connect', (socket) => {
+    //             io.sockets.emit('userLoggedOut', true);
+    //         });
+    //         res.redirect(301, '/login');
+    //     }
+    // });
+
     app.get('*', (req, res) => {
         nextHandler(req, res);
     });

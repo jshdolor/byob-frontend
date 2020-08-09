@@ -5,7 +5,7 @@ import ClientStorage from '~/lib/ClientStorage';
 
 const accountLinks = [
     {
-        path: '/account/',
+        path: '/account',
         label: 'My Account',
         cls: 'font-weight-bold',
     },
@@ -21,7 +21,7 @@ const AccountLayout = ({ children }) => {
 
     const logout = () => {
         ClientStorage.set('cart', []);
-        Router.replace('/');
+        Router.replace('/logout');
     };
 
     return (
@@ -38,7 +38,7 @@ const AccountLayout = ({ children }) => {
                         <Form.Check
                             label={link.label}
                             type='radio'
-                            onClick={() => {
+                            onChange={() => {
                                 Router.push(link.path);
                             }}
                             checked={router.pathname == link.path}

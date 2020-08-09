@@ -5,17 +5,36 @@ import { FaShoppingCart, FaSearch } from 'react-icons/fa';
 import { toggleCartMenu } from '~/store/cartMenu/actions';
 import { toggleHeader } from '~/store/app/actions';
 
-import { connect, useStore } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import { useRouter } from 'next/router';
 
 import ClientStorage from '~/lib/ClientStorage';
 
+import { userPages } from '~/config/routes';
+
 const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
+
+const accountLink = (
+    <Link href='/account'>
+        <a className='nav-link'>My Account</a>
+    </Link>
+);
+
+const loginLink = (
+    <Link href='/login'>
+        <a className='nav-link'>Login</a>
+    </Link>
+);
 
 const Header = (props) => {
     const [cartCount, setCartCount] = useState(0);
+    const { session } = useSelector((state) => state);
+
+    const router = useRouter();
+    const [userNav, setUserNav] = useState(loginLink);
 
     const getCurrentCart = () => {
         const cart = ClientStorage.get('cart');
@@ -23,29 +42,31 @@ const Header = (props) => {
     };
 
     useEffect(() => {
+        console.log(router.route);
         const socket = io();
+
+        if (session.isLoggedIn) {
+            setUserNav(accountLink);
+        }
 
         socket.on('newCart', () => {
             getCurrentCart();
         });
 
+        socket.on('userLoggedIn', () => {
+            setUserNav(accountLink);
+        });
+
+        socket.on('userLoggedOut', () => {
+            setUserNav(loginLink);
+
+            if (userPages.indexOf(router.route)) {
+                router.replace('/');
+            }
+        });
+
         return () => socket.disconnect();
     }, []);
-
-    const userNav = true ? (
-        <Link href='/login'>
-            <a className='nav-link'>Login</a>
-        </Link>
-    ) : (
-        <>
-            <Link href='/account'>
-                <a className='nav-link'>My Account</a>
-            </Link>
-            <Link href='/logout'>
-                <a className='nav-link'>Logout</a>
-            </Link>
-        </>
-    );
 
     const navBarProps = {
         collapseOnSelect: true,
@@ -79,12 +100,13 @@ const Header = (props) => {
                     <Link href='/products'>
                         <a className='nav-link'>Products</a>
                     </Link>
-                    <Link href='/test'>
-                        <a className='nav-link'>Test</a>
+                    <Link href='/vlogs'>
+                        <a className='nav-link'>Vlogs</a>
                     </Link>
                 </Nav>
                 <Nav>
                     {userNav}
+
                     <Nav.Link href='#features'>
                         <FaSearch></FaSearch>
                     </Nav.Link>
