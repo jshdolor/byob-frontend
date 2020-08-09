@@ -19,11 +19,18 @@ io.on('connect', (socket) => {
 
     socket.on('userLogin', () => {
         io.sockets.emit('userLoggedIn', true);
+        socket.join('joshua');
     });
 
     socket.on('userLogout', () => {
         io.sockets.emit('userLoggedOut', true);
     });
+});
+
+io.on('connection', (socket) => {
+    setInterval(() => {
+        socket.to('joshua').emit('test', 'yow');
+    }, 3000);
 });
 
 nextApp.prepare().then(() => {

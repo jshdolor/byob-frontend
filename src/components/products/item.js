@@ -1,16 +1,28 @@
-import { Image } from 'react-bootstrap';
+import { Image, Row, Col, Space } from 'react-bootstrap';
+import ButtonAddCart from '~/components/buttons/addCart';
+import Link from 'next/link';
 
 const Item = (props) => {
-    const { name, description, image } = props.data;
+    const { id, name, image, displayPrice, slug } = props.data;
+
+    const buttonProps = {
+        id,
+        text: <i className='byob-text-small'>Add to Cart</i>,
+        style: { marginTop: '-10px' },
+    };
+
     return (
         <div className='my-3'>
-            <Image src={image} fluid></Image>
-            <div className='byob-text-small'>
-                <b>{name}</b>
-                <small className='d-block'>
-                    <i className='text-muted'>{description}</i>
-                </small>
-            </div>
+            <Link href={`/products/${slug}`}>
+                <a className='byob-text-default'>
+                    <Image src={image} style={{ width: '100%' }} fluid></Image>
+                    <div className='byob-text-small font-weight-bold d-block mt-3'>
+                        <div className='ml-2 float-right'>{displayPrice}</div>
+                        <div className='mr-auto'>{name}</div>
+                    </div>
+                </a>
+            </Link>
+            <ButtonAddCart {...buttonProps}></ButtonAddCart>
         </div>
     );
 };
