@@ -1,13 +1,13 @@
 import Head from 'next/head';
-import { Container } from 'react-bootstrap';
+import HomeTPL from '../src/layouts/Home/HomeTPL';
 
 export default function HomePage() {
-    return (
-        <div>
-            <Head>
-                <title>BYOB | Home</title>
-            </Head>
-            <Container></Container>
-        </div>
-    );
+  return (
+    <div>
+      <Head>
+        <title>BYOB | Home</title>
+      </Head>
+      <HomeTPL></HomeTPL>
+    </div>
+  );
 }
