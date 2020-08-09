@@ -1,8 +1,23 @@
 import CartModel from '~/models/cart';
-import BaseService from './BaseService';
+import Client from '~/clients/ApiClient';
+import ExceptionHandler from '~/exception/Handler';
 
-export default class CartService extends BaseService {
+export default class CartService {
     static endpoint = '/cart';
-    static model = CartModel;
-    static cacheable = false;
+
+    getCart() {
+        return Client.setUrl(this.endpoint)
+            .withAuth()
+            .get()
+            .then(({ data }) => {
+                return new CartModel(data);
+            })
+            .catch((e) => new ExceptionHandler('CartService - getCart', e));
+    }
+
+    setCart() {}
+
+    removeItem() {}
+
+    setItem() {}
 }

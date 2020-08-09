@@ -2,8 +2,10 @@ import Link from 'next/link';
 import Head from 'next/head';
 import LoginForm from '~/components/forms/Login';
 import { Container, Row, Col } from 'react-bootstrap';
+import ProfileService from '~/services/ProfileService';
+import hasAuth from '~/middleware/hasAuth';
 
-export default function LoginPage() {
+function LoginPage() {
     return (
         <>
             <Head>
@@ -33,3 +35,10 @@ export default function LoginPage() {
         </>
     );
 }
+
+LoginPage.getInitialProps = async (ctx) => {
+    // await hasAuth(ctx);
+    return {};
+};
+
+export default LoginPage;

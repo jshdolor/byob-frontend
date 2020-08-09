@@ -1,4 +1,4 @@
-export default class Cache {
+export default class CacheManager {
     static storage = {};
 
     static set(name, value) {

@@ -1,5 +1,5 @@
 import Client from '~/clients/ApiClient';
-import CacheManager from '~/utils/Cache';
+import CacheManager from '~/lib/CacheManager';
 
 export default class BaseService {
     static cacheKey = 'base-service';

@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import AccountLayout from '~/layouts/Account';
+import authCheck from '~/middleware/auth';
 
-export default function OrderHistory() {
+const Account = (props) => {
     return (
         <AccountLayout>
             <Head>
@@ -9,4 +10,11 @@ export default function OrderHistory() {
             </Head>
         </AccountLayout>
     );
-}
+};
+
+Account.getInitialProps = async (ctx) => {
+    await authCheck(ctx);
+    return {};
+};
+
+export default Account;

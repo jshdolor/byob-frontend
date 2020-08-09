@@ -104,11 +104,13 @@ const AppFooter = () => (
                     </Col>
                 </Row>
             </Container>
-            <Row className='bg-accent py-2'>
-                <Col className='text-center byob-text-small '>
-                    © 2020 All Rights Reserved
-                </Col>
-            </Row>
+            <Container fluid>
+                <Row className='bg-accent py-2'>
+                    <Col className='text-center byob-text-small '>
+                        © 2020 All Rights Reserved
+                    </Col>
+                </Row>
+            </Container>
         </div>
     </footer>
 );

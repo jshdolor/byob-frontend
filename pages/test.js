@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import AppLayout from '~/layouts/App';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 
 import { addCartItem, setCartItems } from '~/store/cart/actions';

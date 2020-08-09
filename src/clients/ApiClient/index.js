@@ -9,18 +9,18 @@ export default class ApiClient {
         return ApiClient;
     }
 
-    static post(data, options = {}) {
-        let http = new Http();
+    static post(data, options = {}, ctx = null) {
+        let http = new Http(ctx);
         return http.post(this.url, data);
     }
 
-    static put(data, options = {}) {
-        let http = new Http();
+    static put(data, options = {}, ctx = null) {
+        let http = new Http(ctx);
         return http.put(this.url, data, options);
     }
 
-    static get(params, options = {}) {
-        let http = new Http();
+    static get(params, options = {}, ctx = null) {
+        let http = new Http(ctx);
         return http.get(this.url, params, options);
     }
 }
