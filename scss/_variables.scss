@@ -9,33 +9,28 @@ $common-font-size: 1rem;
 $small-font-size: 0.8rem;
 
 $theme-colors: (
-    'primary': $byob-primary,
-    'accent': $byob-accent,
+  'primary': $byob-primary,
+  'accent': $byob-accent,
 );
 
 $default-text-color: #545454 !default;
 $secondary-text-color: rgba(84, 84, 84, 0.8) !default;
 
+$primary-font: 'Circular Regular';
+$bold-font: 'Circular Black';
+
 @font-face {
-    font-family: 'Circular Regular';
-    src: url('fonts/circular-regular/webfont.eot');
-    src: local('webfont'),
-        url('fonts/circular-regular/webfont.eot?#iefix')
-            format('embedded-opentype'),
-        url('fonts/circular-regular/webfont.woff2') format('woff2'),
-        url('fonts/circular-regular/webfont.woff') format('woff'),
-        url('fonts/circular-regular/webfont.ttf') format('truetype');
-    // url('fonts/circular-regular/webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+  font-family: 'Circular Regular';
+  src: url('fonts/circular-regular/webfont.eot');
+  src: local('webfont'), url('fonts/circular-regular/webfont.eot?#iefix') format('embedded-opentype'), url('fonts/circular-regular/webfont.woff2') format('woff2'),
+    url('fonts/circular-regular/webfont.woff') format('woff'), url('fonts/circular-regular/webfont.ttf') format('truetype');
+  // url('fonts/circular-regular/webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
 
 @font-face {
-    font-family: 'Circular Black';
-    src: url('fonts/circular-black/webfont.eot');
-    src: local('webfont'),
-        url('fonts/circular-black/webfont.eot?#iefix')
-            format('embedded-opentype'),
-        url('fonts/circular-black/webfont.woff2') format('woff2'),
-        url('fonts/circular-black/webfont.woff') format('woff'),
-        url('fonts/circular-black/webfont.ttf') format('truetype');
-    // url('fonts/circular-regular/webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+  font-family: 'Circular Black';
+  src: url('fonts/circular-black/webfont.eot');
+  src: local('webfont'), url('fonts/circular-black/webfont.eot?#iefix') format('embedded-opentype'), url('fonts/circular-black/webfont.woff2') format('woff2'),
+    url('fonts/circular-black/webfont.woff') format('woff'), url('fonts/circular-black/webfont.ttf') format('truetype');
+  // url('fonts/circular-regular/webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
 }

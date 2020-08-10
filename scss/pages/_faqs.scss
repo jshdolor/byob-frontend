@@ -1,0 +1,33 @@
+.faqs-container {
+  @include for-tablet-portrait-up {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .faqs-title {
+    color: $byob-primary;
+    text-transform: uppercase;
+  }
+
+  .contact-btn {
+    font-style: italic;
+    margin-left: 5px;
+  }
+
+  .accordion-cont {
+    padding: 20px 0;
+    .ant-collapse {
+      border: 1px solid $byob-primary;
+    }
+    .ant-collapse > .ant-collapse-item {
+      border-bottom: 1px solid $byob-primary;
+    }
+    .ant-collapse-item {
+      &.ant-collapse-item-active {
+        .ant-collapse-header {
+          background: $byob-primary;
+          color: white;
+        }
+      }
+    }
+  }
+}

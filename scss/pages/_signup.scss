@@ -1,0 +1,51 @@
+.signup-container {
+  @include for-tablet-portrait-up {
+    max-width: 600px;
+    margin: 0 auto;
+
+    .name {
+      display: inline-block;
+      width: calc(50% - 8px);
+
+      &.-last {
+        margin: 0 0px 0px 16px;
+      }
+    }
+  }
+
+  .signup-title {
+    color: $byob-primary;
+    text-transform: uppercase;
+  }
+
+  .login-btn {
+    font-style: italic;
+  }
+
+  .form-container {
+    .ant-input {
+      padding: 14px;
+      border: 1px solid $byob-primary;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom: 6px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: $byob-primary;
+    border: none;
+    font-family: $bold-font;
+    text-transform: uppercase;
+    padding: 20px;
+    height: 60px;
+  }
+
+  .ant-form-item-has-error .ant-form-item-explain {
+    font-style: italic;
+    color: $byob-primary !important;
+    font-size: 12px;
+  }
+}
