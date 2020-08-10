@@ -5,8 +5,9 @@
             text-transform: uppercase;
             color: $white;
 
+            &.active,
             &:hover {
-                font-weight: bold;
+                font-weight: 400;
                 opacity: 1;
             }
         }

@@ -19,11 +19,11 @@ const App = ({ Component, pageProps }) => {
     );
 };
 
-App.getInitialProps = async () => {
-    const products = await ProductsService.getAll();
-    return {
-        products,
-    };
-};
+// App.getInitialProps = async () => {
+//     const products = await ProductsService.getAll();
+//     return {
+//         products,
+//     };
+// };
 
 export default App;

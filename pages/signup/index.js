@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Container } from 'react-bootstrap';
-import SignupTPL from '../../src/layouts/Signup/SignupTPL';
+import SignupTPL from '~/layouts/Signup/SignupTPL';
 
-export default function HomePage() {
-  return (
-    <div>
-      <Head>
-        <title>BYOB | Home</title>
-      </Head>
-      <SignupTPL></SignupTPL>
-    </div>
-  );
+export default function Signup() {
+    return (
+        <div>
+            <Head>
+                <title>BYOB | Sign Up</title>
+            </Head>
+            <SignupTPL></SignupTPL>
+        </div>
+    );
 }

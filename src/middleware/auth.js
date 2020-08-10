@@ -1,5 +1,6 @@
 import ProfileService from '~/services/ProfileService';
 import Router from 'next/router';
+import CookieManager from '~/lib/CookieManager';
 
 const authCheck = async (ctx) => {
     const { req, res } = ctx;
@@ -10,6 +11,7 @@ const authCheck = async (ctx) => {
         try {
             const data = await ProfileService.get(ctx);
         } catch (e) {
+            CookieManager.delete('b-at');
             res.writeHead(302, { Location: '/login' });
             res.end();
         }
@@ -19,6 +21,7 @@ const authCheck = async (ctx) => {
         try {
             const data = await ProfileService.get(null);
         } catch (e) {
+            CookieManager.delete('b-at');
             Router.replace('/login');
         }
     }

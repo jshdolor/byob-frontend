@@ -11,6 +11,8 @@ export default class LoginService {
             .then(({ data }) => {
                 return new AuthModel(data);
             })
-            .catch((e) => new ExceptionHandler('LoginService', e));
+            .catch((e) => {
+                throw new ExceptionHandler('LoginService', e);
+            });
     }
 }
