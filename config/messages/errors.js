@@ -1,7 +1,9 @@
+export const NAME_REQUIRED = 'Your name is required.';
 export const FIRST_NAME_REQUIRED = 'Your first name is required.';
 export const LAST_NAME_REQUIRED = 'Your last name is required.';
 export const EMAIL_VALID = 'Please provied a valid email address.';
 export const EMAIL_REQUIRED = 'Your email address is required.';
+export const MESSAGE_REQUIRED = 'Your message is required.';
 export const PRC_REQUIRED = 'Your PRC number is required.';
 export const PRC_VALID = 'Please provide a valid PRC Id number.';
 export const TERMS_REQUIRED = 'You must agree to the terms & conditions to proceed.';

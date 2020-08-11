@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Container } from 'react-bootstrap';
-import HowToOrderTPL from '../src/layouts/HowToOrder/HowToOrderTPL';
+import ContactUsTPL from '../src/layouts/ContactUs/ContactUsTPL';
 
 export default function HomePage() {
   return (
     <div>
       <Head>
-        <title>BYOB | How to Order</title>
+        <title>BYOB | Contact Us</title>
       </Head>
-      <HowToOrderTPL></HowToOrderTPL>
+      <ContactUsTPL></ContactUsTPL>
     </div>
   );
 }

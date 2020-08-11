@@ -1,0 +1,79 @@
+.contact-container {
+  @include for-tablet-portrait-up {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-title {
+    color: $byob-primary;
+    text-transform: uppercase;
+  }
+
+  .form-container {
+    .ant-input {
+      padding: 14px;
+      border: 1px solid $byob-primary;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom: 6px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: $byob-primary;
+    border: none;
+    font-family: $bold-font;
+    text-transform: uppercase;
+    padding: 20px;
+    height: 60px;
+  }
+
+  .ant-form-item-has-error .ant-form-item-explain {
+    font-style: italic;
+    color: $byob-primary !important;
+    font-size: 12px;
+  }
+  .contact-terms {
+    font-style: italic;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .contact-info {
+    padding-top: 40px;
+    p {
+      font-size: 12px;
+      margin-bottom: 40px;
+
+      @include for-tablet-portrait-up {
+        margin-bottom: 20px;
+      }
+    }
+    .info-cont {
+      margin-bottom: 20px;
+      .info-title {
+        font-size: 16px;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        color: #545454;
+        letter-spacing: 0px;
+      }
+    }
+
+    @include for-tablet-portrait-up {
+      .contact-image-cont {
+        text-align: center;
+      }
+    }
+    .contact-logo {
+      width: 100%;
+      @include for-tablet-portrait-up {
+        max-width: 100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+  }
+}
