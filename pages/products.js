@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { Container, Row, Col, Form } from 'react-bootstrap';
-
 import { Banner, Filter, Catalogue } from '~/components/products';
 
 export default function ProductsPage() {

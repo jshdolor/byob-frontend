@@ -42,7 +42,6 @@ const Header = (props) => {
     };
 
     useEffect(() => {
-        console.log(router.route);
         const socket = io();
 
         if (session.isLoggedIn) {
@@ -63,6 +62,10 @@ const Header = (props) => {
             if (userPages.indexOf(router.route)) {
                 router.replace('/');
             }
+        });
+
+        socket.on('test', (value) => {
+            console.log(value);
         });
 
         return () => socket.disconnect();
