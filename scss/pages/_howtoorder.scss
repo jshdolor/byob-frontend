@@ -1,0 +1,11 @@
+.how-title {
+  text-align: center;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  color: $byob-primary;
+  font-size: 40px;
+
+  @include for-tablet-portrait-up {
+    font-size: 48px;
+  }
+}
