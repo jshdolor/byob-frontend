@@ -45,9 +45,11 @@ export default (state = [], { type, payload }) => {
             break;
 
         case SET_CART_ITEMS:
+            updatedState = [...updatedState, ...payload];
+
             if (updatedState.length !== 0) {
-                socket.emit('setCart', updatedState);
                 ClientStorage.set('cart', updatedState);
+                socket.emit('setCart', updatedState);
             }
             updatedState = payload;
 

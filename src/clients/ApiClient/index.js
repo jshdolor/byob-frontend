@@ -11,7 +11,7 @@ export default class ApiClient {
 
     static post(data, options = {}, ctx = null) {
         let http = new Http(ctx);
-        return http.post(this.url, data);
+        return http.post(this.url, data, options);
     }
 
     static put(data, options = {}, ctx = null) {

@@ -1,5 +1,8 @@
 import { Nav, Navbar, Badge } from 'react-bootstrap';
 import Link from 'next/link';
+
+import ByobLink from '~/components/widgets/ByobLink';
+
 import { FaShoppingCart, FaSearch } from 'react-icons/fa';
 
 import { toggleCartMenu } from '~/store/cartMenu/actions';
@@ -18,15 +21,15 @@ import { userPages } from '~/config/routes';
 const logo = 'https://pngimg.com/uploads/dna/dna_PNG52.png';
 
 const accountLink = (
-    <Link href='/account'>
+    <ByobLink href='/account'>
         <a className='nav-link'>My Account</a>
-    </Link>
+    </ByobLink>
 );
 
 const loginLink = (
-    <Link href='/login'>
+    <ByobLink href='/login'>
         <a className='nav-link'>Login</a>
-    </Link>
+    </ByobLink>
 );
 
 const Header = (props) => {
@@ -64,10 +67,6 @@ const Header = (props) => {
             }
         });
 
-        socket.on('test', (value) => {
-            console.log(value);
-        });
-
         return () => socket.disconnect();
     }, []);
 
@@ -97,15 +96,15 @@ const Header = (props) => {
             <Navbar.Toggle />
             <Navbar.Collapse>
                 <Nav className='mr-auto'>
-                    <Link href='/'>
+                    <ByobLink href='/'>
                         <a className='nav-link'>Home</a>
-                    </Link>
-                    <Link href='/products'>
+                    </ByobLink>
+                    <ByobLink href='/products'>
                         <a className='nav-link'>Products</a>
-                    </Link>
-                    <Link href='/vlogs'>
+                    </ByobLink>
+                    <ByobLink href='/vlogs'>
                         <a className='nav-link'>Vlogs</a>
-                    </Link>
+                    </ByobLink>
                 </Nav>
                 <Nav>
                     {userNav}
