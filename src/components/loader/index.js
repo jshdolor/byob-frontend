@@ -10,8 +10,9 @@ function Loading() {
         const handleStart = (url) =>
             url !== router.pathname && setLoading(true);
         // handleComplete event was not firing
-        const handleComplete = (url) =>
-            url === router.pathname && setLoading(false);
+        const handleComplete = (url) => {
+            setLoading(false);
+        };
 
         router.events.on('routeChangeStart', handleStart);
         router.events.on('routeChangeComplete', handleComplete);
@@ -22,9 +23,9 @@ function Loading() {
             router.events.off('routeChangeComplete', handleComplete);
             router.events.off('routeChangeError', handleComplete);
         };
-    });
+    }, []);
 
-    return loading && <div>Loading....{/*I have an animation here*/}</div>;
+    return loading && <div className='byob-loader'></div>;
 }
 
 export default Loading;
