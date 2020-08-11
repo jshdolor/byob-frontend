@@ -22,4 +22,29 @@ const mergeDeep = (target, source) => {
     return output;
 };
 
-export { mergeDeep };
+const distinctObjByColumn = (arr, uniqueField) => {
+    return arr.filter(
+        (thing, index, self) =>
+            index ===
+            self.findIndex((t) => t[uniqueField] === thing[uniqueField])
+    );
+};
+
+const combineDistinctCartItems = (cart, item) => {
+    const itemIsInCart = cart.find(
+        (cartItem) => cartItem.product_id === item.product_id
+    );
+
+    if (itemIsInCart) {
+        return cart.map((cartItem) => {
+            if (cartItem.product_id === item.product_id) {
+                cartItem.qty += item.qty;
+            }
+            return cartItem;
+        });
+    }
+
+    return [...cart, item];
+};
+
+export { mergeDeep, distinctObjByColumn, combineDistinctCartItems };

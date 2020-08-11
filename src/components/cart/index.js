@@ -10,10 +10,11 @@ import { bindActionCreators } from 'redux';
 
 import { GrFormClose } from 'react-icons/gr';
 import ClientStorage from '~/lib/ClientStorage';
-
 import io from 'socket.io-client';
 
-import CartService from '~/services/Cart/CartService';
+import CartItemModel from '~/models/cart';
+
+import ProductService from '~/services/Product';
 
 const Cart = (props) => {
     const store = useStore();
@@ -26,9 +27,24 @@ const Cart = (props) => {
 
         const socket = io();
 
-        socket.on('newCart', () => {
+        socket.on('newCart', async () => {
             const storedCart = ClientStorage.get('cart');
-            updateCurrentCart(storedCart);
+
+            if (storedCart.length === 0) {
+                updateCurrentCart([]);
+
+                return;
+            }
+
+            const modeledCart = await storedCart.map(async (item) => {
+                const product = await ProductService.getById(item.product_id);
+                return storedCart.map((item) => {
+                    const cartItem = new CartItemModel(item, product);
+                    return cartItem;
+                });
+            });
+
+            updateCurrentCart(modeledCart);
         });
 
         return () => socket.disconnect();
@@ -65,9 +81,7 @@ const Cart = (props) => {
                             P
                             {(cartItems || [])
                                 .reduce(
-                                    (a, b) =>
-                                        a + parseFloat(b.price * b.quantity) ??
-                                        0,
+                                    (a, b) => a + parseFloat(b.total) ?? 0,
                                     0
                                 )
                                 .toFixed(2)}

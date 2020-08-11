@@ -14,7 +14,7 @@ const QuantityModifier = ({ incrementItem, decrementItem, id, quantity }) => {
                 className='mx-1'
                 size={size}
                 onClick={() => {
-                    decrementItem(id);
+                    if (!callService) decrementItem(id);
                 }}
             ></FaMinus>
             <span className='mx-1 quantity-count' style={{ fontSize: size }}>
@@ -24,6 +24,8 @@ const QuantityModifier = ({ incrementItem, decrementItem, id, quantity }) => {
                 className='mx-1'
                 size={size}
                 onClick={() => {
+                    if (!callService) incrementItem(id);
+
                     incrementItem(id);
                 }}
             ></FaPlus>
