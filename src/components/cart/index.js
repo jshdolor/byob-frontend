@@ -36,13 +36,12 @@ const Cart = (props) => {
                 return;
             }
 
-            const modeledCart = await storedCart.map(async (item) => {
+            let productsOnCart = storedCart.map(async (item) => {
                 const product = await ProductService.getById(item.product_id);
-                return storedCart.map((item) => {
-                    const cartItem = new CartItemModel(item, product);
-                    return cartItem;
-                });
+                return new CartItemModel(item, product);
             });
+
+            const modeledCart = await Promise.all(productsOnCart);
 
             updateCurrentCart(modeledCart);
         });
