@@ -13,6 +13,7 @@ const Account = (props) => {
 };
 
 Account.getInitialProps = async (ctx) => {
+    console.log('checking');
     await authCheck(ctx);
     return {};
 };

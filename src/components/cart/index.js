@@ -13,7 +13,7 @@ import ClientStorage from '~/lib/ClientStorage';
 
 import io from 'socket.io-client';
 
-import CartService from '~/services/Cart';
+import CartService from '~/services/Cart/CartService';
 
 const Cart = (props) => {
     const store = useStore();

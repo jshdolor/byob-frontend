@@ -11,9 +11,9 @@ function LoginPage() {
             <Head>
                 <title>BYOB | Login</title>
             </Head>
-            <Container>
+            <Container className='login-container'>
                 <Row className='justify-content-md-center'>
-                    <Col lg={4}>
+                    <Col lg={5}>
                         <div className='my-3'>
                             <div className='byob-title text-uppercase text-primary '>
                                 Login
@@ -37,7 +37,7 @@ function LoginPage() {
 }
 
 LoginPage.getInitialProps = async (ctx) => {
-    // await hasAuth(ctx);
+    await hasAuth(ctx);
     return {};
 };
 
