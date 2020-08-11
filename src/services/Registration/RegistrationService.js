@@ -26,26 +26,9 @@ export default class RegistrationService {
                 },
             })
             .then((data) => data)
-            .catch(
-                (e) =>
-                    new ExceptionHandler(
-                        'RegistrationService - finalRegistration',
-                        e
-                    )
-            );
-    }
-
-    static checkRegistrationToken(token) {
-        Client.setUrl('/check-registration-token')
-            .get(null, {
-                headers: { 'registration-token': token },
-            })
-            .then((data) => {
-                return data;
-            })
             .catch((e) => {
-                return new ExceptionHandler(
-                    'RegistrationService - checkRegistrationToken',
+                throw new ExceptionHandler(
+                    'RegistrationService - finalRegistration',
                     e
                 );
             });

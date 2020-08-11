@@ -5,5 +5,6 @@ export default class FinalRegistrationRequest extends FormData {
         super();
         this._password = data.password;
         this._mobile_number = data.mobileNumber;
+        this._password_confirmation = data.passwordConfirmation;
     }
 }
