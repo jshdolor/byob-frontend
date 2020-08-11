@@ -44,7 +44,7 @@ class LoginForm extends Component {
                 apiMessage: false,
             });
 
-            Router.push('/');
+            Router.replace('/');
         } catch (e) {
             const errors = e.getErrors();
             this.setState({

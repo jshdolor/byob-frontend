@@ -4,9 +4,9 @@ import finalRegistrationFormSchema from 'config/forms/schema/finalRegistrationFo
 import { Form, Input } from 'formik-antd';
 import { MOBILE_NUMBER_NO_ZERO, NUMBERS_ONLY } from 'config/forms/regex';
 import { Button, Spin } from 'antd';
-
 import FinalRegistrationRequest from '~/services/Registration/requests/FinalRegistrationRequest';
 import RegistrationService from '~/services/Registration/RegistrationService';
+import Router from 'next/router';
 
 class FinalRegistrationForm extends Component {
     constructor(props) {
@@ -36,6 +36,7 @@ class FinalRegistrationForm extends Component {
                 ...this.state,
                 apiMessage: { success: true, messages: [message] },
             });
+            Router.replace('/login');
         } catch (e) {
             const errors = e.getErrors();
             this.setState({
