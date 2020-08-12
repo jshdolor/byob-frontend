@@ -2,6 +2,7 @@ import ProfileService from '~/services/ProfileService';
 import Router from 'next/router';
 import CookieManager from '~/lib/CookieManager';
 
+//TODO: EMIT TO SOCKET - USERLOGOUT
 const authCheck = async (ctx) => {
     const { req, res } = ctx;
     const isServer = !!req;

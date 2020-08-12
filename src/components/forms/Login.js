@@ -57,12 +57,15 @@ class LoginForm extends Component {
 
             Router.replace('/');
         } catch (e) {
-            const errors = e.getErrors();
-            this.setState({
-                ...this.state,
-                visible: true,
-                apiMessage: { success: false, messages: errors },
-            });
+            if (e.getErrors) {
+                const errors = e.getErrors();
+                this.setState({
+                    ...this.state,
+                    visible: true,
+                    apiMessage: { success: false, messages: errors },
+                });
+            }
+
             //fail so delete token from cookie
             CookieManager.delete('b-at');
             this.props.logoutUser(true);

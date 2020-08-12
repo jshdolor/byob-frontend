@@ -1,4 +1,4 @@
-import ProductService from '~/services/Product';
+import { amountPrecision, bottlePerMl, bottlePrice } from '../config/app';
 
 export default class CartItem {
     constructor(data, product) {
@@ -16,7 +16,7 @@ export default class CartItem {
 
     //
     get price() {
-        return parseFloat(this._product?.price || 0).toFixed(2);
+        return parseFloat(this._product?.price || 0).toFixed(amountPrecision);
     }
     get image() {
         return this._product?._image;
@@ -24,6 +24,10 @@ export default class CartItem {
 
     get name() {
         return this._product?._name;
+    }
+
+    get type() {
+        return this._product?._type;
     }
     //
 
@@ -37,17 +41,30 @@ export default class CartItem {
 
     //custom fields
     get total() {
-        return Math.ceil(this.qty * this.price).toFixed(2);
+        const computedPrice = parseFloat(this.qty * this.price).toFixed(
+            amountPrecision
+        );
+
+        return this.type.id === 1
+            ? computedPrice
+            : parseFloat(computedPrice) +
+                  parseFloat(this.bottles * bottlePrice);
     }
 
     get displayPrice() {
-        return `P${this.total}`;
+        return `P${parseFloat(this.total).toFixed(amountPrecision)}`;
+    }
+
+    get bottles() {
+        // 1 bottle per 100ml
+        return Math.ceil(this.qty / bottlePerMl);
     }
 
     getLocalData() {
         return {
             product_id: this.product_id,
             qty: this.qty,
+            type: this.type,
         };
     }
 }

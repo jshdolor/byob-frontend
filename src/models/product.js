@@ -10,10 +10,11 @@ export default class Product {
         this._category = data.category;
         this._brand = data.brand;
         this._type = data.type;
+        this._average_ratings = data.average_ratings;
     }
 
     get price() {
-        return this._price;
+        return parseFloat(this._price);
     }
 
     get displayPrice() {
@@ -22,6 +23,10 @@ export default class Product {
 
     get id() {
         return this._id;
+    }
+
+    get average_ratings() {
+        return parseInt(this._average_ratings);
     }
 
     get image() {

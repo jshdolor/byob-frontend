@@ -19,6 +19,11 @@ export default class ApiClient {
         return http.put(this.url, data, options);
     }
 
+    static patch(data, options = {}, ctx = null) {
+        let http = new Http(ctx);
+        return http.patch(this.url, data, options);
+    }
+
     static delete(data, options = {}, ctx = null) {
         let http = new Http(ctx);
         return http.delete(this.url, data, options);

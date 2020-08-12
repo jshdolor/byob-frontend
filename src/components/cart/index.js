@@ -1,6 +1,6 @@
 import CartItem from './item';
 import React, { useEffect, useState, useMemo } from 'react';
-
+import Router from 'next/router';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { toggleCartMenu } from '~/store/cartMenu/actions';
@@ -23,12 +23,12 @@ const Cart = (props) => {
     const [cartItems, setCartItems] = useState(cart);
 
     useEffect(() => {
-        updateCurrentCart(cart);
+        updateCurrentCart(cart || []);
 
         const socket = io();
 
         socket.on('newCart', async () => {
-            const storedCart = ClientStorage.get('cart');
+            const storedCart = ClientStorage.get('cart') || [];
 
             if (storedCart.length === 0) {
                 updateCurrentCart([]);
@@ -42,7 +42,6 @@ const Cart = (props) => {
             });
 
             const modeledCart = await Promise.all(productsOnCart);
-
             updateCurrentCart(modeledCart);
         });
 
@@ -74,7 +73,12 @@ const Cart = (props) => {
                             <CartItem item={cartItem} key={i}></CartItem>
                         ))}
                     </div>
-                    <Button block className='mt-4' variant='primary'>
+                    <Button
+                        onClick={() => Router.push('/checkout')}
+                        block
+                        className='mt-4'
+                        variant='primary'
+                    >
                         Checkout —{' '}
                         <span className='ml-2'>
                             P

@@ -1,9 +1,21 @@
 import { FaTrashAlt } from 'react-icons/fa';
 import CartService from '~/services/Cart/CartService';
 
-import { RESET_CART, SET_CART_ITEMS } from '~/store/cart/actions';
+import {
+    RESET_CART,
+    SET_CART_ITEMS,
+    REMOVE_CART_ITEM,
+} from '~/store/cart/actions';
 
 const handle = async (product_id) => {
+    if (!window.Store.getState()?.session?.isLoggedIn) {
+        window.Store.dispatch({
+            type: REMOVE_CART_ITEM,
+            payload: product_id,
+        });
+        return;
+    }
+
     try {
         const cart = await CartService.removeFromCart({ product_id });
         window.Store.dispatch({

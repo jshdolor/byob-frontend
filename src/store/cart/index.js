@@ -4,6 +4,8 @@ import {
     SET_CART_ITEMS,
     INCREMENT_ITEM,
     DECREMENT_ITEM,
+    REMOVE_CART_ITEM,
+    SET_CART_ITEM,
 } from './actions';
 import io from 'socket.io-client';
 import ClientStorage from '~/lib/ClientStorage';
@@ -37,6 +39,26 @@ export default (state = [], { type, payload }) => {
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
             break;
+
+        case REMOVE_CART_ITEM:
+            updatedState = updatedState.filter((item) => {
+                return item.product_id !== payload;
+            });
+            socket.emit('setCart', updatedState);
+            ClientStorage.set('cart', updatedState);
+            break;
+
+        case SET_CART_ITEM:
+            updatedState = updatedState.map((item) => {
+                if (item.product_id === payload.id) {
+                    item.qty = payload.qty;
+                }
+                return item;
+            });
+            socket.emit('setCart', updatedState);
+            ClientStorage.set('cart', updatedState);
+            break;
+        ////
 
         case ADD_CART_ITEM:
             updatedState = combineDistinctCartItems(updatedState, payload);
