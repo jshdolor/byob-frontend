@@ -16,16 +16,31 @@ export default class ProductService {
         return Client.setUrl(this.endpoint)
             .get()
             .then(({ data }) => {
-                const modeledData = (data.products || []).map(
-                    (d) => new this.model(d)
-                );
+                const modeledData = (data.products || []).map((d) => {
+                    const modeledProduct = new this.model(d);
+
+                    CacheManager.set(
+                        `${this.cacheKey}_${modeledProduct.id}`,
+                        modeledProduct
+                    );
+
+                    CacheManager.set(
+                        `${this.cacheKey}_${modeledProduct.slug}`,
+                        modeledProduct
+                    );
+
+                    return modeledProduct;
+                });
                 CacheManager.set(this.cacheKey, modeledData);
                 return modeledData;
             })
-            .catch((e) => e);
+            .catch((e) => {
+                throw e;
+            });
     }
 
-    static get(id) {
+    //can be id|slug
+    static getById(id) {
         const cacheKey = `${this.cacheKey}_${id}`;
 
         if (CacheManager.has(cacheKey)) {
@@ -34,13 +49,15 @@ export default class ProductService {
             });
         }
 
-        return Client.setUrl(this.endpoint)
+        return Client.setUrl(this.endpoint + `/${id}`)
             .get()
             .then(({ data }) => {
-                const modeledData = new this.model(data || {});
+                const modeledData = new this.model(data.product || {});
                 CacheManager.set(cacheKey, modeledData);
                 return modeledData;
             })
-            .catch((e) => e);
+            .catch((e) => {
+                throw e;
+            });
     }
 }

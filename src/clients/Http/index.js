@@ -22,6 +22,13 @@ export default class Http {
         return this._send();
     }
 
+    put(url, data = {}, config = {}) {
+        this._construct();
+        this._prepareXhr(url, 'put', config);
+        this.config.data = data;
+        return this._send();
+    }
+
     delete(url, data = {}, config = {}) {
         this._construct();
         this._prepareXhr(url, 'delete', config);

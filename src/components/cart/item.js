@@ -1,9 +1,9 @@
 import { Row, Col, Image } from 'react-bootstrap';
 import QuantityModifier from './quantityModifier';
 
-const cartItem = ({ item }) => {
-    const amount = (price) => `P${price.toFixed(2)}`;
+import RemoveCartItemButton from './RemoveCartItemButton';
 
+const cartItem = ({ item }) => {
     return (
         <Row noGutters className='cart-item py-4 px-0'>
             <Col lg={5} className='text-center'>
@@ -17,12 +17,16 @@ const cartItem = ({ item }) => {
                     {item.description}
                 </div>
                 <QuantityModifier
-                    id={item.id}
-                    quantity={item.quantity}
+                    id={item.product_id}
+                    quantity={item.qty}
                 ></QuantityModifier>
+
+                <RemoveCartItemButton
+                    id={item.product_id}
+                ></RemoveCartItemButton>
             </Col>
             <Col lg={2} className='text-right byob-text-small font-weight-bold'>
-                {amount(item.quantity * item.price)}
+                {item.displayPrice}
             </Col>
         </Row>
     );

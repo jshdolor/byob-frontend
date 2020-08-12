@@ -1,7 +1,38 @@
 import { Button } from 'react-bootstrap';
-import { addCartItem, setCartItems } from '~/store/cart/actions';
-import { connect, useStore } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { SET_CART_ITEMS, RESET_CART } from '~/store/cart/actions';
+import { TOGGLE_CART_MENU } from '~/store/cartMenu/actions';
+
+import UpdateCartRequest from '~/services/Cart/requests/UpdateCartRequest';
+import CartService from '~/services/Cart/CartService';
+
+const addToCart = async (product_id) => {
+    const item = {
+        product_id,
+        qty: 1,
+    };
+
+    const request = new UpdateCartRequest(item);
+    try {
+        const cart = await CartService.updateCart(request);
+        window.Store.dispatch({
+            type: RESET_CART,
+            payload: [],
+        });
+        window.Store.dispatch({
+            type: SET_CART_ITEMS,
+            payload: cart.map((cartItem) => cartItem.getLocalData()),
+        });
+    } catch (e) {
+        throw e;
+    }
+};
+
+const openCartMenu = () => {
+    window.Store.dispatch({
+        type: TOGGLE_CART_MENU,
+        payload: true,
+    });
+};
 
 const addCart = (props) => {
     const {
@@ -11,8 +42,10 @@ const addCart = (props) => {
         style,
     } = props;
 
-    const handleClick = () => {
-        addCartItem;
+    const handleClick = async () => {
+        addToCart(id).then(() => {
+            openCartMenu();
+        });
     };
 
     return (
@@ -27,18 +60,4 @@ const addCart = (props) => {
     );
 };
 
-const mapStateToProps = function (state) {
-    return state;
-};
-
-const mapDispatchToProps = function (dispatch) {
-    return bindActionCreators(
-        {
-            addCartItem,
-            setCartItems,
-        },
-        dispatch
-    );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(addCart);
+export default addCart;

@@ -7,7 +7,7 @@ import {
 } from './actions';
 import io from 'socket.io-client';
 import ClientStorage from '~/lib/ClientStorage';
-
+import { combineDistinctCartItems } from '~/helpers';
 const socket = io();
 
 export default (state = [], { type, payload }) => {
@@ -16,8 +16,8 @@ export default (state = [], { type, payload }) => {
     switch (type) {
         case INCREMENT_ITEM:
             updatedState = updatedState.map((item) => {
-                if (item.id === payload) {
-                    item.quantity = item.quantity + 1;
+                if (item.product_id === payload) {
+                    item.qty = item.qty + 1;
                 }
                 return item;
             });
@@ -28,18 +28,18 @@ export default (state = [], { type, payload }) => {
         case DECREMENT_ITEM:
             updatedState = updatedState
                 .map((item) => {
-                    if (item.id === payload) {
-                        item.quantity = item.quantity - 1;
+                    if (item.product_id === payload) {
+                        item.qty = item.qty - 1;
                     }
                     return item;
                 })
-                .filter((item) => item.quantity !== 0);
+                .filter((item) => item.qty !== 0);
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
             break;
 
         case ADD_CART_ITEM:
-            updatedState = [...updatedState, payload];
+            updatedState = combineDistinctCartItems(updatedState, payload);
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
             break;

@@ -11,46 +11,42 @@ export default class CartService {
             .then(({ data }) => {
                 return data.map((d) => new CartModel(d));
             })
-            .catch((e) => new ExceptionHandler('CartService - getCart', e));
-    }
-
-    static updateCart(request) {
-        //will update or create an entry on the user's cart
-        return Client.setUrl(this.endpoint)
-            .withAuth()
-            .put()
-            .then(({ data }) => {
-                return new CartModel(data);
-            })
-            .catch((e) => new ExceptionHandler('CartService - updateCart', e));
-    }
-
-    //will be called after login
-    async initializeCart() {
-        await this.getCart();
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - getCart', e);
+            });
     }
 
     static setCart(localCartRequest) {
-        console.log(localCartRequest.getCart());
-        return (
-            Client.setUrl(this.endpoint)
-                // .withAuth()
-                .post(localCartRequest.getCart())
-                .then(({ data }) => {
-                    return data.map((d) => new CartModel(d));
-                })
-                .catch((e) => new ExceptionHandler('CartService - setCart', e))
-        );
+        return Client.setUrl(this.endpoint)
+            .post(localCartRequest)
+            .then(({ data }) => {
+                return data.map((d) => new CartModel(d));
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - setCart', e);
+            });
     }
 
-    static removeItem(productId) {
+    static updateCart(request) {
         return Client.setUrl(this.endpoint)
-            .withAuth()
-            .delete(productId)
+            .put(request.toFormData(true))
             .then(({ data }) => {
-                return new CartModel(data);
+                return data.map((d) => new CartModel(d));
             })
-            .catch((e) => new ExceptionHandler('CartService - removeItem', e));
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - updateCart', e);
+            });
+    }
+
+    static removeFromCart(product) {
+        return Client.setUrl(this.endpoint)
+            .delete(product)
+            .then(({ data }) => {
+                return data.map((d) => new CartModel(d));
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - removeItem', e);
+            });
     }
 
     setItem() {}

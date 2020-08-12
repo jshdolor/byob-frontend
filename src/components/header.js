@@ -41,7 +41,7 @@ const Header = (props) => {
 
     const getCurrentCart = () => {
         const cart = ClientStorage.get('cart');
-        setCartCount((cart || []).reduce((a, b) => a + b.quantity, 0));
+        setCartCount((cart || []).reduce((a, b) => a + b.qty, 0));
     };
 
     useEffect(() => {
@@ -115,16 +115,20 @@ const Header = (props) => {
                     <Nav.Link href='#' onClick={() => props.toggleCartMenu()}>
                         <div className='position-relative'>
                             <FaShoppingCart></FaShoppingCart>
-                            <Badge
-                                style={{
-                                    bottom: '-50%',
-                                    left: '-50%',
-                                }}
-                                variant='accent'
-                                className='text-light rounded-circle position-absolute'
-                            >
-                                {cartCount}
-                            </Badge>
+                            {cartCount !== 0 ? (
+                                <Badge
+                                    style={{
+                                        bottom: '-50%',
+                                        left: '-50%',
+                                    }}
+                                    variant='accent'
+                                    className='text-light rounded-circle position-absolute'
+                                >
+                                    {cartCount}
+                                </Badge>
+                            ) : (
+                                ''
+                            )}
                         </div>
                     </Nav.Link>
                 </Nav>
