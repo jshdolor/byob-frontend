@@ -7,7 +7,7 @@ const cartItem = ({ item }) => {
     return (
         <Row noGutters className='cart-item py-4 px-0'>
             <Col lg={5} className='text-center'>
-                {/* <Image src={item.image} fluid></Image> */}
+                <Image src={item.image} fluid></Image>
             </Col>
             <Col lg={5} className='px-1'>
                 <div className='byob-text-small font-weight-bold cart-item-name'>
