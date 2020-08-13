@@ -7,12 +7,7 @@ export default class SetCartRequest extends FormData {
     }
 
     get localCart() {
-        return this._localCart.map((cartItem) => {
-            return {
-                qty: cartItem.quantity,
-                product_id: cartItem.id,
-            };
-        });
+        return this._localCart;
     }
 
     getCart() {

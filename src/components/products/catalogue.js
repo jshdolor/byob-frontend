@@ -4,13 +4,7 @@ import ProductService from '~/services/Product';
 import Item from './item';
 import { Row, Col } from 'react-bootstrap';
 
-const Catalogue = () => {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        ProductService.getAll().then((prod) => setProducts(prod));
-    }, []);
-
+const Catalogue = ({ products }) => {
     return (
         <Row>
             {(products || []).map((product) => (

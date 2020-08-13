@@ -1,6 +1,7 @@
 import { LOGIN_USER, LOGOUT_USER } from './actions';
 import io from 'socket.io-client';
 import CookieManager from '~/lib/CookieManager';
+import ClientStorage from '~/lib/ClientStorage';
 
 const socket = io();
 
@@ -20,6 +21,8 @@ export default (state = initialState, { type, payload }) => {
         case LOGOUT_USER:
             updatedState = { ...state, isLoggedIn: false };
             socket.emit('userLogout', updatedState);
+            socket.emit('setCart', []);
+            ClientStorage.set('cart', []);
             CookieManager.delete('b-at');
             break;
 

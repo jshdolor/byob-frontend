@@ -3,14 +3,14 @@ import ButtonAddCart from '~/components/buttons/addCart';
 import Link from 'next/link';
 
 const Item = (props) => {
-    const { id, name, image, displayPrice, slug } = props.data;
+    const { id, name, image, displayPrice, slug, type } = props.data;
 
     const buttonProps = {
         id,
         text: <i className='byob-text-small'>Add to Cart</i>,
         style: { marginTop: '-10px' },
+        type,
     };
-
     return (
         <div className='my-3'>
             <Link href={`/products/${slug}`}>

@@ -1,3 +1,5 @@
+import { amountPrecision } from '~/config/app';
+
 export default class Product {
     constructor(data) {
         this._id = data.id;
@@ -10,18 +12,23 @@ export default class Product {
         this._category = data.category;
         this._brand = data.brand;
         this._type = data.type;
+        this._average_ratings = data.average_ratings;
     }
 
     get price() {
-        return this._price;
+        return parseFloat(this._price);
     }
 
     get displayPrice() {
-        return 'P' + parseFloat(this.price).toFixed(2);
+        return 'P' + parseFloat(this.price).toFixed(amountPrecision);
     }
 
     get id() {
         return this._id;
+    }
+
+    get average_ratings() {
+        return parseInt(this._average_ratings);
     }
 
     get image() {
@@ -47,6 +54,6 @@ export default class Product {
         return this._brand;
     }
     get type() {
-        return { ...this._type, name: this._type.type };
+        return { ...this._type, name: this._type?.type };
     }
 }

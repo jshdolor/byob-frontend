@@ -2,55 +2,95 @@ import CartModel from '~/models/cart';
 import Client from '~/clients/ApiClient';
 import ExceptionHandler from '~/exception/Handler';
 
+import ProductService from '~/services/Product';
+
 export default class CartService {
     static endpoint = '/cart';
 
-    static getCart() {
-        return Client.setUrl(this.endpoint)
+    static async getCart() {
+        const cart = await Client.setUrl(this.endpoint)
             .get()
             .then(({ data }) => {
-                return data.map((d) => new CartModel(d));
+                return data.map((d) => {
+                    return ProductService.getById(d.product_id).then(
+                        (product) => {
+                            return new CartModel(d, product);
+                        }
+                    );
+                });
             })
-            .catch((e) => new ExceptionHandler('CartService - getCart', e));
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - getCart', e);
+            });
+
+        return Promise.all(cart);
     }
 
-    static updateCart(request) {
-        //will update or create an entry on the user's cart
-        return Client.setUrl(this.endpoint)
-            .withAuth()
-            .put()
+    // static setCart(localCartRequest) {
+    //     return Client.setUrl(this.endpoint)
+    //         .post(localCartRequest)
+    //         .then(({ data }) => {
+    //             return data.map((d) => new CartModel(d));
+    //         })
+    //         .catch((e) => {
+    //             throw new ExceptionHandler('CartService - setCart', e);
+    //         });
+    // }
+
+    static async updateCartItem(request) {
+        const cart = await Client.setUrl(this.endpoint)
+            .patch(request.toFormData(true))
             .then(({ data }) => {
-                return new CartModel(data);
+                return data.map((d) => {
+                    return ProductService.getById(d.product_id).then(
+                        (product) => {
+                            return new CartModel(d, product);
+                        }
+                    );
+                });
             })
-            .catch((e) => new ExceptionHandler('CartService - updateCart', e));
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - updateCartItem', e);
+            });
+
+        return Promise.all(cart);
     }
 
-    //will be called after login
-    async initializeCart() {
-        await this.getCart();
-    }
-
-    static setCart(localCartRequest) {
-        console.log(localCartRequest.getCart());
-        return (
-            Client.setUrl(this.endpoint)
-                // .withAuth()
-                .post(localCartRequest.getCart())
-                .then(({ data }) => {
-                    return data.map((d) => new CartModel(d));
-                })
-                .catch((e) => new ExceptionHandler('CartService - setCart', e))
-        );
-    }
-
-    static removeItem(productId) {
-        return Client.setUrl(this.endpoint)
-            .withAuth()
-            .delete(productId)
+    static async updateCart(request) {
+        const cart = await Client.setUrl(this.endpoint)
+            .put(request.toFormData(true))
             .then(({ data }) => {
-                return new CartModel(data);
+                return data.map((d) => {
+                    return ProductService.getById(d.product_id).then(
+                        (product) => {
+                            return new CartModel(d, product);
+                        }
+                    );
+                });
             })
-            .catch((e) => new ExceptionHandler('CartService - removeItem', e));
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - updateCart', e);
+            });
+
+        return Promise.all(cart);
+    }
+
+    static async removeFromCart(product) {
+        const cart = await Client.setUrl(this.endpoint)
+            .delete(product)
+            .then(({ data }) => {
+                return data.map((d) => {
+                    return ProductService.getById(d.product_id).then(
+                        (product) => {
+                            return new CartModel(d, product);
+                        }
+                    );
+                });
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('CartService - removeItem', e);
+            });
+        return Promise.all(cart);
     }
 
     setItem() {}

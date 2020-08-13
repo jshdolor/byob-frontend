@@ -1,8 +1,21 @@
 import Head from 'next/head';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Banner, Filter, Catalogue } from '~/components/products';
+import { useState, useEffect } from 'react';
+import ProductService from '~/services/Product';
+import SortFilter from '~/components/products/SortFilter';
 
-export default function ProductsPage() {
+function ProductsPage() {
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        ProductService.getAll().then((prod) => {
+            setProducts(prod);
+            setFilteredProducts(prod);
+        });
+    }, []);
+
     return (
         <>
             <Head>
@@ -24,12 +37,10 @@ export default function ProductsPage() {
                                     Sort by:
                                 </Form.Label>
                                 <Col>
-                                    <Form.Control as='select'>
-                                        <option>Popularity</option>
-                                        <option>test</option>
-                                        <option>test2</option>
-                                        <option>test1</option>
-                                    </Form.Control>
+                                    <SortFilter
+                                        products={filteredProducts}
+                                        handle={setFilteredProducts}
+                                    ></SortFilter>
                                 </Col>
                             </Form.Row>
                         </Form.Group>
@@ -37,13 +48,21 @@ export default function ProductsPage() {
                 </Row>
                 <Row>
                     <Col lg={2}>
-                        <Filter></Filter>
+                        <Filter
+                            products={products}
+                            handle={setFilteredProducts}
+                        ></Filter>
                     </Col>
                     <Col>
-                        <Catalogue className='my-5'></Catalogue>
+                        <Catalogue
+                            products={filteredProducts}
+                            className='my-5'
+                        ></Catalogue>
                     </Col>
                 </Row>
             </Container>
         </>
     );
 }
+
+export default ProductsPage;

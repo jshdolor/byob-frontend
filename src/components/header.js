@@ -2,6 +2,7 @@ import { Nav, Navbar, Badge } from 'react-bootstrap';
 import Link from 'next/link';
 
 import ByobLink from '~/components/widgets/ByobLink';
+import { bottlePerMl } from '../config/app';
 
 import { FaShoppingCart, FaSearch } from 'react-icons/fa';
 
@@ -41,7 +42,15 @@ const Header = (props) => {
 
     const getCurrentCart = () => {
         const cart = ClientStorage.get('cart');
-        setCartCount((cart || []).reduce((a, b) => a + b.quantity, 0));
+        setCartCount(
+            (cart || []).reduce((a, b) => {
+                if (b.type.id === 1) {
+                    return a + b.qty;
+                }
+
+                return a + Math.ceil(b.qty / bottlePerMl);
+            }, 0)
+        );
     };
 
     useEffect(() => {
@@ -49,6 +58,7 @@ const Header = (props) => {
 
         if (session.isLoggedIn) {
             setUserNav(accountLink);
+            getCurrentCart();
         }
 
         socket.on('newCart', () => {
@@ -115,16 +125,20 @@ const Header = (props) => {
                     <Nav.Link href='#' onClick={() => props.toggleCartMenu()}>
                         <div className='position-relative'>
                             <FaShoppingCart></FaShoppingCart>
-                            <Badge
-                                style={{
-                                    bottom: '-50%',
-                                    left: '-50%',
-                                }}
-                                variant='accent'
-                                className='text-light rounded-circle position-absolute'
-                            >
-                                {cartCount}
-                            </Badge>
+                            {cartCount !== 0 ? (
+                                <Badge
+                                    style={{
+                                        bottom: '-50%',
+                                        left: '-50%',
+                                    }}
+                                    variant='accent'
+                                    className='text-light rounded-circle position-absolute'
+                                >
+                                    {cartCount}
+                                </Badge>
+                            ) : (
+                                ''
+                            )}
                         </div>
                     </Nav.Link>
                 </Nav>

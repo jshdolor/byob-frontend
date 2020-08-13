@@ -10,118 +10,164 @@ import { bindActionCreators } from 'redux';
 
 import CookieManager from '~/lib/CookieManager';
 
-import { loginUser } from '~/store/session/actions';
+import { loginUser, logoutUser } from '~/store/session/actions';
 
 import LoginRequest from '~/services/Authentication/requests/LoginRequest';
 import LoginService from '~/services/Authentication/LoginService';
+
+import SetCartRequest from '~/services/Cart/requests/SetCartRequest';
+import CartService from '~/services/Cart/CartService';
+import ClientStorage from '~/lib/ClientStorage';
+
+import postLogin from '~/lib/postLogin';
+
 class LoginForm extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      isFormSubmitting: false,
-      apiMessage: false,
-      visible: false,
-      initialForm: {
-        email: '',
-        password: '',
-      },
-    };
-  }
-
-  componentDidMount() {}
-
-  async handleFormSubmit(values, resetForm) {
-    this.setState({ ...this.state, isFormSubmitting: true });
-    const loginRequest = new LoginRequest(values);
-    try {
-      const { access_token } = await LoginService.handle(loginRequest);
-      CookieManager.set('b-at', access_token);
-      this.props.loginUser(true);
-
-      resetForm(this.state.initialForm);
-      this.setState({
-        ...this.state,
-        visible: true,
-        apiMessage: false,
-      });
-
-      Router.replace('/');
-    } catch (e) {
-      const errors = e.getErrors();
-      this.setState({
-        ...this.state,
-        visible: true,
-        apiMessage: { success: false, messages: errors },
-      });
+        this.state = {
+            isFormSubmitting: false,
+            apiMessage: false,
+            visible: false,
+            initialForm: {
+                email: '',
+                password: '',
+            },
+        };
     }
-    this.setState({ ...this.state, isFormSubmitting: false });
-  }
 
-  handleOk = () => {
-    this.setState({ visible: false });
-  };
+    componentDidMount() {}
 
-  render() {
-    return (
-      <>
-        {this.state.apiMessage ? (
-          <Modal visible={this.state.visible} onOk={this.handleOk} onCancel={this.handleCancel} className='byob-popup' closable={false} footer={null}>
-            <h1 className='title'>{this.state.apiMessage.success ? 'success' : 'error'}</h1>
-            {this.state.apiMessage.messages.map((msg) => (
-              <p>{msg}</p>
-            ))}
+    async handleFormSubmit(values, resetForm) {
+        this.setState({ ...this.state, isFormSubmitting: true });
+        const loginRequest = new LoginRequest(values);
+        try {
+            const { access_token } = await LoginService.handle(loginRequest);
+            CookieManager.set('b-at', access_token);
+            this.props.loginUser(true);
 
-            <Button type='primary' onClick={this.handleOk}>
-              Okay
-            </Button>
-          </Modal>
-        ) : (
-          ''
-        )}
+            resetForm(this.state.initialForm);
+            this.setState({
+                ...this.state,
+                visible: true,
+                apiMessage: false,
+            });
 
-        <Spin spinning={this.state.isFormSubmitting}>
-          <Formik initialValues={this.state.initialForm} validationSchema={loginFormSchema} onSubmit={(values, { resetForm }) => this.handleFormSubmit(values, resetForm)}>
-            {(props) => (
-              <Form
-                onChange={() =>
-                  this.setState({
+            await postLogin();
+
+            Router.replace('/');
+        } catch (e) {
+            if (e.getErrors) {
+                const errors = e.getErrors();
+                this.setState({
                     ...this.state,
-                    apiMessage: false,
-                  })
-                }
-              >
-                <Form.Item name='email'>
-                  <Input name='email' className='px-3 py-3' placeholder='Username / Email' />
-                </Form.Item>
+                    visible: true,
+                    apiMessage: { success: false, messages: errors },
+                });
+            }
 
-                <Form.Item name='password'>
-                  <Input name='password' type='password' className='px-3 py-3' placeholder='Password*' />
-                </Form.Item>
+            //fail so delete token from cookie
+            CookieManager.delete('b-at');
+            this.props.logoutUser(true);
+        }
+        this.setState({ ...this.state, isFormSubmitting: false });
+    }
 
-                <button type='submit' className='btn py-3 px-3 btn-primary btn-block' disabled={this.state.isFormSubmitting}>
-                  Login
-                </button>
-              </Form>
-            )}
-          </Formik>
-        </Spin>
-      </>
-    );
-  }
+    handleOk = () => {
+        this.setState({ visible: false });
+    };
+
+    render() {
+        return (
+            <>
+                {this.state.apiMessage ? (
+                    <Modal
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        className='byob-popup'
+                        closable={false}
+                        footer={null}
+                    >
+                        <h1 className='title'>
+                            {this.state.apiMessage.success
+                                ? 'success'
+                                : 'error'}
+                        </h1>
+                        {this.state.apiMessage.messages.map((msg) => (
+                            <p>{msg}</p>
+                        ))}
+
+                        <Button type='primary' onClick={this.handleOk}>
+                            Okay
+                        </Button>
+                    </Modal>
+                ) : (
+                    ''
+                )}
+
+                <Spin spinning={this.state.isFormSubmitting}>
+                    <Formik
+                        initialValues={this.state.initialForm}
+                        validationSchema={loginFormSchema}
+                        onSubmit={(values, { resetForm }) =>
+                            this.handleFormSubmit(values, resetForm)
+                        }
+                    >
+                        {(props) => (
+                            <Form
+                                onChange={() =>
+                                    this.setState({
+                                        ...this.state,
+                                        apiMessage: false,
+                                    })
+                                }
+                            >
+                                <Form.Item name='email'>
+                                    <Input
+                                        name='email'
+                                        className='px-3 py-3'
+                                        placeholder='Username / Email'
+                                    />
+                                </Form.Item>
+
+                                <Form.Item name='password'>
+                                    <Input
+                                        name='password'
+                                        type='password'
+                                        className='px-3 py-3'
+                                        placeholder='Password*'
+                                    />
+                                </Form.Item>
+
+                                <button
+                                    type='submit'
+                                    className='btn py-3 px-3 btn-primary btn-block'
+                                    disabled={this.state.isFormSubmitting}
+                                >
+                                    Login
+                                </button>
+                            </Form>
+                        )}
+                    </Formik>
+                </Spin>
+            </>
+        );
+    }
 }
 
 const mapStateToProps = function (state) {
-  return state;
+    return state;
 };
 
 const mapDispatchToProps = function (dispatch) {
-  return bindActionCreators(
-    {
-      loginUser,
-    },
-    dispatch
-  );
+    return bindActionCreators(
+        {
+            loginUser,
+            logoutUser,
+        },
+        dispatch
+    );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
