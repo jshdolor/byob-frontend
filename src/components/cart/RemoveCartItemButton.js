@@ -34,7 +34,9 @@ const handle = async (product_id) => {
 const RemoveCartItemButton = ({ id }) => {
     return (
         <FaTrashAlt
-            className='float-right'
+            size='1.3em'
+            className='position-absolute text-primary'
+            style={{ bottom: 0, right: 0 }}
             onClick={() => handle(id)}
         ></FaTrashAlt>
     );

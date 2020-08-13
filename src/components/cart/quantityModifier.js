@@ -23,7 +23,6 @@ const QuantityModifier = ({
     id,
     quantity,
     type = 1,
-    bottles = 0,
 }) => {
     const updateCartItem = async (qty) => {
         if (!window.Store.getState()?.session?.isLoggedIn) {
@@ -100,7 +99,6 @@ const QuantityModifier = ({
                     onChange={updateCartItem}
                     onKeyPress={(e) => console.log(e)}
                 />
-                <span>{bottles}</span>
             </>
         );
     //TODO: make this debounce

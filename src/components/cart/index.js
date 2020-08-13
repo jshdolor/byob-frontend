@@ -16,6 +16,10 @@ import CartItemModel from '~/models/cart';
 
 import ProductService from '~/services/Product';
 
+import { Typography } from 'antd';
+const { Text } = Typography;
+import { amountPrecision, bottlePrice } from '~/config/app';
+
 const Cart = (props) => {
     const store = useStore();
     const { cart } = store.getState();
@@ -73,6 +77,39 @@ const Cart = (props) => {
                             <CartItem item={cartItem} key={i}></CartItem>
                         ))}
                     </div>
+
+                    <Row className='mt-4'>
+                        <Col>Subtotal</Col>
+                        <Col className='text-right'>
+                            P
+                            {(cartItems || [])
+                                .reduce(
+                                    (a, b) => a + parseFloat(b.total) ?? 0,
+                                    0
+                                )
+                                .toFixed(amountPrecision)}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            Bottle (x
+                            {cartItems
+                                .filter((item) => item.type.id === 2)
+                                .reduce((a, b) => a + b.bottles, 0)}
+                            )
+                        </Col>
+                        <Col className='text-right'>
+                            P
+                            {cartItems
+                                .filter((item) => item.type.id === 2)
+                                .reduce(
+                                    (a, b) => a + b.bottles + bottlePrice,
+                                    0
+                                )
+                                .toFixed(amountPrecision)}
+                        </Col>
+                    </Row>
+
                     <Button
                         onClick={() => Router.push('/checkout')}
                         block
@@ -84,10 +121,13 @@ const Cart = (props) => {
                             P
                             {(cartItems || [])
                                 .reduce(
-                                    (a, b) => a + parseFloat(b.total) ?? 0,
+                                    (a, b) =>
+                                        a +
+                                            parseFloat(b.total) +
+                                            b.bottles * bottlePrice ?? 0,
                                     0
                                 )
-                                .toFixed(2)}
+                                .toFixed(amountPrecision)}
                         </span>
                     </Button>
                     <div className='my-2 byob-text-small text-center byob-text-secondary'>

@@ -21,7 +21,6 @@ const cartItem = ({ item }) => {
                     id={item.product_id}
                     type={item.type}
                     quantity={item.qty}
-                    bottles={item.bottles}
                 ></QuantityModifier>
 
                 <RemoveCartItemButton

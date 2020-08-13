@@ -41,14 +41,7 @@ export default class CartItem {
 
     //custom fields
     get total() {
-        const computedPrice = parseFloat(this.qty * this.price).toFixed(
-            amountPrecision
-        );
-
-        return this.type.id === 1
-            ? computedPrice
-            : parseFloat(computedPrice) +
-                  parseFloat(this.bottles * bottlePrice);
+        return parseFloat(this.qty * this.price).toFixed(amountPrecision);
     }
 
     get displayPrice() {
@@ -56,7 +49,6 @@ export default class CartItem {
     }
 
     get bottles() {
-        // 1 bottle per 100ml
         return Math.ceil(this.qty / bottlePerMl);
     }
 
