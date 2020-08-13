@@ -72,20 +72,20 @@ const Filter = ({ products, handle }) => {
     useEffect(() => {
         const groupedFilters = {
             Type: products
-                .map((o) => o['type'])
+                .map((o) => o?.type)
                 .filter(
                     (thing, index, self) =>
                         index === self.findIndex((t) => t.id === thing.id)
                 ),
             Brand: products
-                .map((o) => o['brand'])
+                .map((o) => o?.brand)
                 .filter(
                     (thing, index, self) =>
                         index === self.findIndex((t) => t.id === thing.id)
                 )
                 .sort(sortFilters),
             'Product Category': products
-                .map((o) => o['category'])
+                .map((o) => o?.category)
                 .filter(
                     (thing, index, self) =>
                         index === self.findIndex((t) => t.id === thing.id)

@@ -1,3 +1,5 @@
+import { amountPrecision } from '~/config/app';
+
 export default class Product {
     constructor(data) {
         this._id = data.id;
@@ -18,7 +20,7 @@ export default class Product {
     }
 
     get displayPrice() {
-        return 'P' + parseFloat(this.price).toFixed(2);
+        return 'P' + parseFloat(this.price).toFixed(amountPrecision);
     }
 
     get id() {
@@ -52,6 +54,6 @@ export default class Product {
         return this._brand;
     }
     get type() {
-        return { ...this._type, name: this._type.type };
+        return { ...this._type, name: this._type?.type };
     }
 }

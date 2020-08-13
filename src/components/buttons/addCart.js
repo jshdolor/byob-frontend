@@ -9,13 +9,13 @@ import { TOGGLE_CART_MENU } from '~/store/cartMenu/actions';
 import UpdateCartRequest from '~/services/Cart/requests/UpdateCartRequest';
 import CartService from '~/services/Cart/CartService';
 
-const addToCart = async (product_id, type) => {
+const addToCart = async (product_id, type, qty = 1) => {
     const item = {
         product_id,
-        qty: 1,
+        qty,
         type,
     };
-
+    console.log(item);
     if (!window.Store.getState()?.session?.isLoggedIn) {
         window.Store.dispatch({
             type: ADD_CART_ITEM,
@@ -27,7 +27,6 @@ const addToCart = async (product_id, type) => {
     const request = new UpdateCartRequest(item);
     try {
         const cart = await CartService.updateCart(request);
-        console.log(cart);
         window.Store.dispatch({
             type: RESET_CART,
             payload: [],
@@ -55,16 +54,20 @@ const addCart = (props) => {
         text = 'Add to Cart',
         cls = 'py-0 px-0 text-primary text-capitalize',
         style,
+        qty = 1,
         type,
+        children,
     } = props;
 
     const handleClick = () => {
-        addToCart(id, type).then(() => {
+        addToCart(id, type, qty).then(() => {
             openCartMenu();
         });
     };
 
-    return (
+    return children ? (
+        <div onClick={handleClick}>{children}</div>
+    ) : (
         <Button
             onClick={handleClick}
             variant='link'

@@ -3,9 +3,20 @@ import Slider from 'react-slick';
 import { Row, Col } from 'antd';
 import { Container } from 'react-bootstrap';
 import Product from '~/components/products/Product';
+import ProductService from '~/services/Product';
 
 class HomeTPL extends Component {
-    state = {};
+    state = {
+        products: [],
+    };
+
+    componentDidMount() {
+        (async () => {
+            const products = await ProductService.getFeatured();
+            this.setState({ products });
+        })();
+    }
+
     render() {
         var settings = {
             dots: true,
@@ -30,28 +41,6 @@ class HomeTPL extends Component {
             ],
         };
 
-        var products = [
-            {
-                name: 'test 1',
-                price: 'P20',
-                image: 'https://via.placeholder.com/500',
-            },
-            {
-                name: 'test 2',
-                price: 'P30',
-                image: 'https://via.placeholder.com/500',
-            },
-            {
-                name: 'test 3',
-                price: 'P40',
-                image: 'https://via.placeholder.com/500',
-            },
-            {
-                name: 'test 4',
-                price: 'P50',
-                image: 'https://via.placeholder.com/500',
-            },
-        ];
         return (
             <div className='home-container'>
                 <div className='home-slider'>
@@ -107,7 +96,7 @@ class HomeTPL extends Component {
                         <h1 className='byob-title'>Featured Products</h1>
                         <div className='product-list'>
                             <Slider {...productSettings}>
-                                {products.map((product, i) => (
+                                {this.state.products.map((product, i) => (
                                     <Product
                                         key={i}
                                         products={product}

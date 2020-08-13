@@ -2,7 +2,7 @@ import { Nav, Navbar, Badge } from 'react-bootstrap';
 import Link from 'next/link';
 
 import ByobLink from '~/components/widgets/ByobLink';
-import { bottlePrice } from '../config/app';
+import { bottlePerMl } from '../config/app';
 
 import { FaShoppingCart, FaSearch } from 'react-icons/fa';
 
@@ -48,7 +48,7 @@ const Header = (props) => {
                     return a + b.qty;
                 }
 
-                return a + Math.ceil(b.qty / bottlePrice);
+                return a + Math.ceil(b.qty / bottlePerMl);
             }, 0)
         );
     };
