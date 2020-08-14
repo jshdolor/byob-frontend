@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "node server/index.js",
+        "staging": "env QUIET_MODE=1 npm run dev",
         "build": "next build",
         "start": "next start"
     },
@@ -27,6 +28,7 @@
         "react-hook-form": "^6.3.0",
         "react-hook-form-input": "^1.1.10",
         "react-icons": "^3.10.0",
+        "react-modal-video": "^1.2.5",
         "react-redux": "^7.2.0",
         "react-sidebar": "^3.0.2",
         "react-slick": "^0.27.3",
