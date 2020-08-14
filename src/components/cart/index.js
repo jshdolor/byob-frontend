@@ -103,7 +103,7 @@ const Cart = (props) => {
                             {cartItems
                                 .filter((item) => item.type.id === 2)
                                 .reduce(
-                                    (a, b) => a + b.bottles + bottlePrice,
+                                    (a, b) => a + b.bottles * bottlePrice,
                                     0
                                 )
                                 .toFixed(amountPrecision)}
