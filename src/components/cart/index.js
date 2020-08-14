@@ -60,7 +60,7 @@ const Cart = (props) => {
     <Container className='bg-light pt-5'>
       <Row>
         <Col>
-          <div className='byob-title my-3 text-primary text-uppercase cart-title'>
+          <div className='byob-title my-3 text-primary text-uppercase'>
             Cart
             <Button
               variant='link'
@@ -91,7 +91,7 @@ const Cart = (props) => {
               P
               {cartItems
                 .filter((item) => item.type.id === 2)
-                .reduce((a, b) => a + b.bottles + bottlePrice, 0)
+                .reduce((a, b) => a + b.bottles * bottlePrice, 0)
                 .toFixed(amountPrecision)}
             </Col>
           </Row>
