@@ -4,7 +4,13 @@ const io = require('socket.io')(server);
 const next = require('next');
 const cookieParser = require('cookie-parser');
 const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next({ dev });
+
+const nextAppSettings = {
+    dev,
+    quiet: process.env.QUIET_MODE === '1',
+};
+
+const nextApp = next(nextAppSettings);
 const nextHandler = nextApp.getRequestHandler();
 const axios = require('axios');
 const port = 3000;
@@ -17,49 +23,20 @@ io.on('connection', (socket) => {
 
     socket.on('setCart', (foo) => {
         io.sockets.emit('newCart', true);
-
-        // for (var clientId in clients) {
-        //     var clientSocket = io.sockets.connected[clientId];
-        //     clientSocket.emit('fetchCart', foo);
-        // }
     });
 
     socket.on('userLogin', (details) => {
         io.sockets.emit('userLoggedIn', true);
-        console.log(details);
-        // console.log('logged in');
-        // socket.join('joshua', () => {});
-
-        // var clients = io.sockets.adapter.rooms['joshua'].sockets;
-        // setInterval(() => {
-        //     console.log('clients', clients);
-        //     io.to('joshua').emit('test', 'tryyyyy');
-        // }, 3000);
     });
 
     socket.on('userLogout', () => {
         io.sockets.emit('userLoggedOut', true);
     });
+
+    //TODO: handle logged in users add to cart on different domains ( mobile x web)
 });
 
 nextApp.prepare().then(() => {
-    //can handle middleware here..
-
-    // app.get('/account(/*)?', async (req, res) => {
-    //     console.log('hit');
-    //     try {
-    //         const d = await ProfileService.get(req);
-    //         nextHandler(req, res);
-    //     } catch (e) {
-    //         console.log(e);
-
-    //         io.on('connect', (socket) => {
-    //             io.sockets.emit('userLoggedOut', true);
-    //         });
-    //         res.redirect(301, '/login');
-    //     }
-    // });
-
     app.get('/registration/step-2', async (req, res) => {
         const regToken = req.query.regToken;
         const url = `${process.env.NEXT_PUBLIC_BYOB_HOST}/api/v1/check-registration-token`;

@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "node server/index.js",
+        "staging": "env QUIET_MODE=1 npm run dev",
         "build": "next build",
         "start": "next start"
     },
