@@ -7,7 +7,8 @@ export const INCREMENT_ITEM = 'INCREMENT_ITEM';
 export const DECREMENT_ITEM = 'DECREMENT_ITEM';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
 export const SET_CART_ITEM = 'SET_CART_ITEM';
-
+export const SET_CART = 'SET_CART';
+SET_CART;
 export const addCartItem = (payload) => ({
     type: ADD_CART_ITEM,
     payload,
@@ -41,4 +42,9 @@ export const decrementItem = (id) => ({
 export const removeCartItem = (id) => ({
     type: REMOVE_CART_ITEM,
     payload: id,
+});
+
+export const setCart = (payload) => ({
+    type: SET_CART,
+    payload,
 });

@@ -1,5 +1,6 @@
 #app {
     color: $default-text-color;
+
     #byob-navbar {
         .nav-link {
             text-transform: uppercase;
@@ -26,6 +27,7 @@
             &-name {
                 font-weight: bold;
             }
+
             &-description {
                 color: #404040;
             }
@@ -59,6 +61,7 @@
         padding-bottom: $input-padding;
         text-transform: uppercase;
         font-size: $common-font-size;
+
         &.btn-primary {
             color: $white;
         }
