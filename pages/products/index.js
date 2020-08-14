@@ -23,37 +23,37 @@ function ProductsPage() {
             </Head>
             <Container id='products-page'>
                 <Row>
-                    <Col lg={2}></Col>
-                    <Col>
-                        <Banner></Banner>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col></Col>
                     <Col lg={3}>
-                        <Form.Group className='my-3'>
-                            <Form.Row>
-                                <Form.Label column='sm' lg={4}>
-                                    Sort by:
-                                </Form.Label>
-                                <Col>
-                                    <SortFilter
-                                        products={filteredProducts}
-                                        handle={setFilteredProducts}
-                                    ></SortFilter>
-                                </Col>
-                            </Form.Row>
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={2}>
                         <Filter
                             products={products}
                             handle={setFilteredProducts}
                         ></Filter>
                     </Col>
-                    <Col>
+                    <Col lg={9}>
+                        <Banner></Banner>
+                        <Row>
+                            <Col lg={8}>
+                                <Form.Label className='pt-3'>
+                                    {filteredProducts.length} Results
+                                </Form.Label>
+                            </Col>
+                            <Col lg={4} className='text-right'>
+                                <Form.Group className='my-3'>
+                                    <Form.Row>
+                                        <Form.Label column='sm' lg={4}>
+                                            Sort by:
+                                        </Form.Label>
+                                        <Col>
+                                            <SortFilter
+                                                products={filteredProducts}
+                                                handle={setFilteredProducts}
+                                            ></SortFilter>
+                                        </Col>
+                                    </Form.Row>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
                         <Catalogue
                             products={filteredProducts}
                             className='my-5'

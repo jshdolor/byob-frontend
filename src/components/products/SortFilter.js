@@ -35,7 +35,6 @@ const SortFilter = ({ products, handle }) => {
 
     return (
         <select className='form-control' onChange={handleChange}>
-            <option value='0'>No Sorting</option>
             <option value='1'>Popularity</option>
             <option value='2'>Price: Low - High</option>
             <option value='3'>Price: High - Low</option>
