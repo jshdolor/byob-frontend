@@ -32,6 +32,7 @@
     background-image: url('/images/1.png');
     height: 400px;
     background-size: cover;
+    background-position: center;
     @include for-tablet-portrait-up {
       height: 600px;
     }
@@ -40,6 +41,7 @@
     background-image: url('/images/2.png');
     height: 400px;
     background-size: cover;
+    background-position: center;
     @include for-tablet-portrait-up {
       height: 600px;
     }
@@ -54,11 +56,18 @@
   }
 
   .product-list .product-preview {
-    width: 250px;
+    width: 100%;
+
+    @include for-tablet-portrait-up {
+      width: 98%;
+    }
   }
 }
 
 .product-preview {
+  a {
+    color: $gray;
+  }
   margin-right: 20px;
   .name {
     font-weight: bold;
