@@ -6,6 +6,7 @@ import {
     DECREMENT_ITEM,
     REMOVE_CART_ITEM,
     SET_CART_ITEM,
+    SET_CART,
 } from './actions';
 import io from 'socket.io-client';
 import ClientStorage from '~/lib/ClientStorage';
@@ -76,6 +77,9 @@ export default (state = [], { type, payload }) => {
             updatedState = payload;
 
             break;
+        case SET_CART:
+            updatedState = [...payload];
+            break;
 
         case RESET_CART:
             updatedState = [];
@@ -86,6 +90,6 @@ export default (state = [], { type, payload }) => {
         default:
             updatedState = state;
     }
-
+    console.log(updatedState);
     return updatedState;
 };

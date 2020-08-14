@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { toggleCartMenu } from '~/store/cartMenu/actions';
-import { setCartItems } from '~/store/cart/actions';
+import { setCartItems, setCart } from '~/store/cart/actions';
 import { connect, useStore } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -22,7 +22,7 @@ import { amountPrecision, bottlePrice } from '~/config/app';
 
 const Cart = (props) => {
     const store = useStore();
-    const { cart } = props;
+    const { cart } = store.getState();
 
     const [cartItems, setCartItems] = useState(cart);
 
@@ -53,7 +53,8 @@ const Cart = (props) => {
     }, []);
 
     const updateCurrentCart = (cartValue) => {
-        props.setCartItems(cartValue);
+        setCartItems(cartValue);
+        props.setCart(cartValue);
     };
 
     return (
@@ -140,7 +141,7 @@ const Cart = (props) => {
 };
 
 const mapStateToProps = function (state) {
-    return { cartMenu: state.cartMenu, cart: state.cart };
+    return state.cartMenu;
 };
 
 const mapDispatchToProps = function (dispatch) {
@@ -148,6 +149,7 @@ const mapDispatchToProps = function (dispatch) {
         {
             toggleCartMenu,
             setCartItems,
+            setCart,
         },
         dispatch,
     );
