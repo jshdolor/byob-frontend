@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, Radio } from 'formik-antd';
-import { Row, Col, Select } from 'antd';
+import { Form, Radio, Select, Input } from 'formik-antd';
+import { Row, Col } from 'antd';
 import Link from 'next/link';
 import { get } from 'lodash';
 import CFDividerHeader from './CFDivider';
 import { CLAIMING_METHOD } from '../../../config/checkout';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 const { Option } = Select;
 
 const tempLockerSchedule = [
@@ -60,7 +60,7 @@ const tempLockerSchedule = [
     },
 ];
 
-const CFClaimingMethod = () => {
+const CFClaimingMethod = ({ setFieldValue }) => {
     const { formValues, currentStep, steps } = useSelector(
         (state) => state.checkout,
     );
@@ -70,20 +70,41 @@ const CFClaimingMethod = () => {
 
     const [date, setDate] = useState(formValues.lockerDate);
     const [time, setTime] = useState(formValues.lockerTime);
+    const [prevDate, setPrevDate] = useState(formValues.lockerDate);
+
+    const getTimeList = (_date) => {
+        return get(
+            tempLockerSchedule.find((t) => t.date === _date),
+            'time',
+            [],
+        );
+    };
+    useEffect(() => {
+        if (prevDate != date) {
+            setPrevDate(date);
+            setTime('');
+            setFieldValue('lockerTime', '');
+        }
+    }, [date, prevDate]);
 
     useEffect(() => {
-        setTime('');
-    }, [date]);
-
-    const timeList = get(
-        tempLockerSchedule.find((t) => t.date === date),
-        'time',
-        [],
-    );
+        if (date) {
+            const list = getTimeList(date);
+            const lockerTimeText = get(
+                list.find((t) => t.id == time),
+                'name',
+                '',
+            );
+            setFieldValue('lockerTimeText', lockerTimeText);
+        }
+    }, [time, date]);
+    const timeList = getTimeList(date);
     return (
         <>
             <CFDividerHeader title="Claiming Method" />
-
+            <Form.Item style={{ display: 'none' }} name="lockerTimeText">
+                <Input name="lockerTimeText" />
+            </Form.Item>
             <Form.Item name="claimingMethod">
                 <Radio.Group
                     onChange={(e) => {
@@ -93,7 +114,11 @@ const CFClaimingMethod = () => {
                     className="checkout-input claiming-method-input"
                     placeholder="Mobile Number"
                 >
-                    <Radio className="cm-item" value={CLAIMING_METHOD.LOCKER}>
+                    <Radio
+                        className="cm-item"
+                        disabled
+                        value={CLAIMING_METHOD.LOCKER}
+                    >
                         Locker (maximum of 10 items per locker)
                     </Radio>
                     <Radio className="cm-item" value={CLAIMING_METHOD.BYOB}>
@@ -131,7 +156,6 @@ const CFClaimingMethod = () => {
                                 onChange={(v) => {
                                     setTime(v);
                                 }}
-                                value={time}
                                 style={{ width: '100%' }}
                                 name="lockerTime"
                                 className="checkout-input"

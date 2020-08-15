@@ -12,10 +12,10 @@ const CFPaymentMethod = () => {
         <div style={{ marginTop: 70 }}>
             <CFDividerHeader title="Payment Method" />
 
-            <Form.Item name="paymentMethod">
+            <Form.Item name="payment_gateway">
                 <Radio.Group
                     style={{ width: '100%' }}
-                    name="paymentMethod"
+                    name="payment_gateway"
                     className="checkout-input claiming-method-input"
                     placeholder="Mobile Number"
                 >

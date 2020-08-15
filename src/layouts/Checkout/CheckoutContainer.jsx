@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import CheckoutBreadCrumbs from './CheckoutBreadcrumbs';
 import CheckoutForm from './CheckoutForm';
 
@@ -9,7 +9,7 @@ const CheckoutContainer = () => {
             <div className="checkout-content">
                 <Row>
                     <Col>
-                        <div className="logo"></div>
+                        <div className="checkout-logo"></div>
                     </Col>
                 </Row>
                 <Row>

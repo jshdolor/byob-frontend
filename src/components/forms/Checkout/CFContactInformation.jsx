@@ -9,6 +9,7 @@ import { editForm } from '../../../store/checkout/actions';
 
 const CFContactInformation = () => {
     const { currentStep } = useSelector((state) => state.checkout);
+    const { isLoggedIn } = useSelector((state) => state.session);
     const dispatch = useDispatch();
     const handleBack = () => {
         dispatch(editForm());
@@ -18,9 +19,14 @@ const CFContactInformation = () => {
             <CFDividerHeader
                 title="Contact Information"
                 action={
-                    <>
-                        Already have an account? <Link href="#">Login</Link>
-                    </>
+                    !isLoggedIn ? (
+                        <>
+                            Already have an account?{' '}
+                            <Link href="/login">Login</Link>
+                        </>
+                    ) : (
+                        <span></span>
+                    )
                 }
             />
             <Form.Item name="email">
@@ -32,27 +38,27 @@ const CFContactInformation = () => {
             </Form.Item>
             <Row gutter={14}>
                 <Col xs={24} sm={24} md={12} span={12}>
-                    <Form.Item name="firstName">
+                    <Form.Item name="firstname">
                         <Input
-                            name="firstName"
+                            name="firstname"
                             className="checkout-input"
                             placeholder="First Name"
                         />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} span={12}>
-                    <Form.Item name="lastName">
+                    <Form.Item name="lastname">
                         <Input
-                            name="lastName"
+                            name="lastname"
                             className="checkout-input"
                             placeholder="Last Name"
                         />
                     </Form.Item>
                 </Col>
             </Row>
-            <Form.Item name="mobileNumber">
+            <Form.Item name="mobile_number">
                 <Input
-                    name="mobileNumber"
+                    name="mobile_number"
                     className="checkout-input"
                     placeholder="Mobile Number"
                 />

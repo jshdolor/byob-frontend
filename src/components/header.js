@@ -81,6 +81,7 @@ const Header = (props) => {
   }, []);
 
   const navBarProps = {
+    collapseOnSelect: true,
     expand: 'lg',
     bg: 'primary',
     variant: 'dark',

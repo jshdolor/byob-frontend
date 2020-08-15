@@ -4,6 +4,7 @@ import Router from 'next/router';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { toggleCartMenu } from '~/store/cartMenu/actions';
+
 import { setCartItems, setCart } from '~/store/cart/actions';
 import { connect, useStore } from 'react-redux';
 import { bindActionCreators } from 'redux';

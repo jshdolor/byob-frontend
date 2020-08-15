@@ -113,7 +113,6 @@ class SingleProductTPL extends Component {
                     Buy Now
                   </Button>
                 </div>
-
                 <AddCart id={id} type={type} qty={quantity} className='add-cart-btn'>
                   <Button type='primary' id={id} size='large'>
                     Add to Cart

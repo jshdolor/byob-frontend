@@ -10,7 +10,7 @@ const authCheck = async (ctx) => {
 
     if (isServer) {
         try {
-            const data = await ProfileService.get(ctx);
+            return await ProfileService.get(ctx);
         } catch (e) {
             CookieManager.delete('b-at');
             res.writeHead(302, { Location: '/login' });
@@ -20,7 +20,7 @@ const authCheck = async (ctx) => {
 
     if (isBrowser) {
         try {
-            const data = await ProfileService.get(null);
+            return await ProfileService.get(null);
         } catch (e) {
             CookieManager.delete('b-at');
             Router.replace('/login');
