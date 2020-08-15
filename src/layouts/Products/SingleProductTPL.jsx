@@ -127,6 +127,7 @@ class SingleProductTPL extends Component {
                                     <InputNumber
                                         onChange={this.onQuantityChange}
                                         defaultValue='1'
+                                        type='number'
                                         size='large'
                                         min={1}
                                         max={9999}
