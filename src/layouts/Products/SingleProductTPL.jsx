@@ -38,6 +38,17 @@ class SingleProductTPL extends Component {
         );
     };
 
+    onQuantityChange = (value) => {
+        value = parseInt(value) ?? 1;
+
+        this.setState(
+            {
+                quantity: this.state.quantity > 0 ? value : 1,
+            },
+            this.computeSubTotal
+        );
+    };
+
     computeSubTotal = () => {
         const subtotal = this.state.quantity * this.state.price;
 
@@ -59,6 +70,7 @@ class SingleProductTPL extends Component {
             description,
             displayPrice,
             name,
+            brand,
             id,
             image,
             average_rating,
@@ -94,25 +106,43 @@ class SingleProductTPL extends Component {
                         </div>
                         <div className='product-order'>
                             <div className='quantity-cont'>
-                                <div className='quantity'>
-                                    <h5 className='title'>Quantity</h5>
-                                    <div className='counter-cont'>
-                                        <MinusOutlined
-                                            className='minus-btn'
-                                            onClick={this.onMinus}
-                                        />
-                                        <span className='order-quantity'>
-                                            {quantity}
-                                        </span>
-                                        <PlusOutlined
-                                            className='plus-btn'
-                                            onClick={this.onAdd}
-                                        />
+                                {type.id === 1 ? (
+                                    <div className='quantity'>
+                                        <h5 className='title'>Quantity</h5>
+                                        <div className='counter-cont'>
+                                            <MinusOutlined
+                                                className='minus-btn'
+                                                onClick={this.onMinus}
+                                            />
+                                            <span className='order-quantity'>
+                                                {quantity}
+                                            </span>
+                                            <PlusOutlined
+                                                className='plus-btn'
+                                                onClick={this.onAdd}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <InputNumber
+                                        onChange={this.onQuantityChange}
+                                        defaultValue='1'
+                                        size='large'
+                                        min={1}
+                                        max={9999}
+                                        value={quantity}
+                                        placeholder='Input ML'
+                                    ></InputNumber>
+                                )}
+
                                 <div className='subtotal-cont'>
                                     <p>
-                                        Subtotal: P<span>{total}</span>
+                                        Subtotal: P
+                                        <span>
+                                            {parseFloat(total).toFixed(
+                                                amountPrecision
+                                            )}
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -136,7 +166,7 @@ class SingleProductTPL extends Component {
                             </div>
                         </div>
                         <div className='more-products'>
-                            <p>More from Datu Puti</p>
+                            <p>More from {brand?.name}</p>
                             <div className='more-product-cont'>
                                 {suggestions.map((product, i) => (
                                     <Product
