@@ -87,7 +87,6 @@ const CheckoutForm = () => {
                                     setFieldValue={setFieldValue}
                                 />
                             )}
-
                             {step.title === CHECKOUT_STEPS.INFORMATION &&
                                 informationEditing && <CFContactInformation />}
                             {step.title === CHECKOUT_STEPS.INFORMATION &&
