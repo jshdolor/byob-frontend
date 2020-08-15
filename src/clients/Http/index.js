@@ -89,7 +89,6 @@ const intercept = () => {
             if (process.browser) {
                 window.callInProgress = false;
             }
-            console.log('error');
             //todo handle server calls
             throw error;
         }

@@ -28,6 +28,7 @@
         "react-hook-form": "^6.3.0",
         "react-hook-form-input": "^1.1.10",
         "react-icons": "^3.10.0",
+        "react-lazyload": "^3.0.0",
         "react-modal-video": "^1.2.5",
         "react-redux": "^7.2.0",
         "react-sidebar": "^3.0.2",

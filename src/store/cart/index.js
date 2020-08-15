@@ -90,6 +90,5 @@ export default (state = [], { type, payload }) => {
         default:
             updatedState = state;
     }
-    console.log(updatedState);
     return updatedState;
 };

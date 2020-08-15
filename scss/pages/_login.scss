@@ -5,16 +5,16 @@
 
     .ant-form-item-has-error .ant-form-item-explain {
         font-style: italic;
-        color: $byob-accent !important;
+        color: $danger !important;
         font-size: 12px;
     }
 
     .ant-form-item-has-error {
         input.ant-input {
             &:hover {
-                border: 1px solid $byob-accent !important;
+                border: 1px solid $danger !important;
             }
-            border: 1px solid $byob-accent !important;
+            border: 1px solid $danger !important;
         }
     }
 
