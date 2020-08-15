@@ -9,6 +9,7 @@ import { editForm } from '../../../store/checkout/actions';
 
 const CFContactInformation = () => {
     const { currentStep } = useSelector((state) => state.checkout);
+    const { isLoggedIn } = useSelector((state) => state.session);
     const dispatch = useDispatch();
     const handleBack = () => {
         dispatch(editForm());
@@ -18,9 +19,14 @@ const CFContactInformation = () => {
             <CFDividerHeader
                 title="Contact Information"
                 action={
-                    <>
-                        Already have an account? <Link href="#">Login</Link>
-                    </>
+                    !isLoggedIn ? (
+                        <>
+                            Already have an account?{' '}
+                            <Link href="/login">Login</Link>
+                        </>
+                    ) : (
+                        <span></span>
+                    )
                 }
             />
             <Form.Item name="email">

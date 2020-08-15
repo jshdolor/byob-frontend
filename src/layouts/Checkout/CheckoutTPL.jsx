@@ -6,10 +6,10 @@ import CartContainer from './CartContainer';
 const CheckoutTPL = () => {
     return (
         <Row className="checkout-page">
-            <Col xs={24} sm={24} lg={12} className="">
+            <Col xs={24} sm={24} lg={12}>
                 <CheckoutContainer />
             </Col>
-            <Col xs={24} sm={24} lg={12} className="">
+            <Col xs={24} sm={24} lg={12}>
                 <CartContainer />
             </Col>
         </Row>
