@@ -62,10 +62,10 @@ const tempLockerSchedule = [
 
 const CFClaimingMethod = ({ setFieldValue }) => {
     const { formValues, currentStep, steps } = useSelector(
-        (state) => state.checkout,
+        (state) => state.checkout
     );
     const [claimingMethod, setClaimingMethod] = useState(
-        formValues.claimingMethod,
+        formValues.claimingMethod
     );
 
     const [date, setDate] = useState(formValues.lockerDate);
@@ -76,7 +76,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
         return get(
             tempLockerSchedule.find((t) => t.date === _date),
             'time',
-            [],
+            []
         );
     };
     useEffect(() => {
@@ -93,7 +93,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
             const lockerTimeText = get(
                 list.find((t) => t.id == time),
                 'name',
-                '',
+                ''
             );
             setFieldValue('lockerTimeText', lockerTimeText);
         }
@@ -101,27 +101,27 @@ const CFClaimingMethod = ({ setFieldValue }) => {
     const timeList = getTimeList(date);
     return (
         <>
-            <CFDividerHeader title="Claiming Method" />
-            <Form.Item style={{ display: 'none' }} name="lockerTimeText">
-                <Input name="lockerTimeText" />
+            <CFDividerHeader title='Claiming Method' />
+            <Form.Item style={{ display: 'none' }} name='lockerTimeText'>
+                <Input name='lockerTimeText' />
             </Form.Item>
-            <Form.Item name="claimingMethod">
+            <Form.Item name='claimingMethod'>
                 <Radio.Group
                     onChange={(e) => {
                         setClaimingMethod(e.target.value);
                     }}
-                    name="claimingMethod"
-                    className="checkout-input claiming-method-input"
-                    placeholder="Mobile Number"
+                    name='claimingMethod'
+                    className='checkout-input claiming-method-input'
+                    placeholder='Mobile Number'
                 >
                     <Radio
-                        className="cm-item"
+                        className='cm-item'
                         disabled
                         value={CLAIMING_METHOD.LOCKER}
                     >
                         Locker (maximum of 10 items per locker)
                     </Radio>
-                    <Radio className="cm-item" value={CLAIMING_METHOD.BYOB}>
+                    <Radio className='cm-item' value={CLAIMING_METHOD.BYOB}>
                         Bring Your Own Bote Booth
                         <br />
                         (At The Mind Museum BGC Taguig)
@@ -131,13 +131,13 @@ const CFClaimingMethod = ({ setFieldValue }) => {
             {claimingMethod == CLAIMING_METHOD.LOCKER && (
                 <Row gutter={14}>
                     <Col xs={24} sm={24} md={12} span={12}>
-                        <Form.Item name="lockerDate">
+                        <Form.Item name='lockerDate'>
                             <Select
                                 onChange={(v) => setDate(v)}
                                 style={{ width: '100%' }}
-                                name="lockerDate"
-                                className="checkout-input"
-                                placeholder="Select Date"
+                                name='lockerDate'
+                                className='checkout-input'
+                                placeholder='Select Date'
                             >
                                 {tempLockerSchedule.map((o) => (
                                     <Option
@@ -151,15 +151,15 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={12} span={12}>
-                        <Form.Item name="lockerTime">
+                        <Form.Item name='lockerTime'>
                             <Select
                                 onChange={(v) => {
                                     setTime(v);
                                 }}
                                 style={{ width: '100%' }}
-                                name="lockerTime"
-                                className="checkout-input"
-                                placeholder="Select Time"
+                                name='lockerTime'
+                                className='checkout-input'
+                                placeholder='Select Time'
                             >
                                 {timeList.map((o) => (
                                     <Option
@@ -174,11 +174,14 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                     </Col>
                 </Row>
             )}
-            <p className="-normal-text -italic">
+            <p className='-normal-text -italic'>
                 You will recieve an SMS notification after purchase completion
                 when the products are ready for pickup. The BYOB Booth are open
                 Monday to Sunday 8:00AM-5:00PM Please check our{' '}
-                <Link href="faq">FAQ</Link> for details.
+                <Link href='faqs'>
+                    <a>FAQ</a>
+                </Link>{' '}
+                for details.
             </p>
         </>
     );

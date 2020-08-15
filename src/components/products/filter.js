@@ -17,6 +17,8 @@ const sortFilters = (a, b) => {
 
 let filters = [];
 
+const refillLogo = '/images/refill-logo.png';
+
 const Filter = ({ products, handle }) => {
     const handleFilter = (filter, type, e) => {
         const includeToFilters = e.target.checked;
@@ -120,8 +122,19 @@ const Filter = ({ products, handle }) => {
                                             )
                                         }
                                     >
-                                        <span className='byob-text-small byob-text-secondary'>
-                                            {type.name}
+                                        <span className='byob-text-small byob-text-secondary '>
+                                            {type.id === 2 &&
+                                            filter === 'Type' ? (
+                                                <span>
+                                                    Refill by
+                                                    <img
+                                                        src={refillLogo}
+                                                        className='filter-refill-logo'
+                                                    />
+                                                </span>
+                                            ) : (
+                                                type.name
+                                            )}
                                         </span>
                                     </Checkbox>
                                 </Form.Item>

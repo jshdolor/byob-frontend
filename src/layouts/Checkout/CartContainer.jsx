@@ -23,7 +23,6 @@ const CartContainer = () => {
         .reduce((a, b) => a + b.bottles * bottlePrice, 0)
         .toFixed(amountPrecision);
     const total = parseFloat(subtotal) + parseFloat(bottle);
-    console.log(subtotal, bottle);
     return (
         <div id='checkout-cart' className='checkout-page-container -cart'>
             <div className='cart-content'>

@@ -10,8 +10,8 @@ import {
 } from './actions';
 import io from 'socket.io-client';
 import ClientStorage from '~/lib/ClientStorage';
-import { combineDistinctCartItems } from '~/helpers';
 const socket = io();
+import { combineDistinctCartItems } from '~/helpers';
 
 export default (state = [], { type, payload }) => {
     let updatedState = ClientStorage.get('cart') || state;
@@ -32,7 +32,7 @@ export default (state = [], { type, payload }) => {
             updatedState = updatedState
                 .map((item) => {
                     if (item.product_id === payload) {
-                        item.qty = item.qty - 1;
+                        item.qty = item.qty <= 1 ? 1 : item.qty - 1;
                     }
                     return item;
                 })

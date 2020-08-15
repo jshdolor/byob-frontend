@@ -1,5 +1,3 @@
-import ClientStorage from '~/lib/ClientStorage';
-
 export const ADD_CART_ITEM = 'ADD_CART_ITEM';
 export const RESET_CART = 'RESET_CART';
 export const SET_CART_ITEMS = 'SET_CART_ITEMS';
@@ -25,7 +23,7 @@ export const setCartItem = (payload) => ({
 });
 
 export const resetCart = (payload) => ({
-    type: SET_CART_ITEMS,
+    type: RESET_CART,
     payload: [],
 });
 

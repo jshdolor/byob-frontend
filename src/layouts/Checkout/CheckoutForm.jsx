@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Form, Input, Radio } from 'formik-antd';
 import { Row, Col, Spin, Select, message, Button } from 'antd';
-import Link from 'next/link';
+import Router from 'next/router';
 import checkoutFormSchema from '../../../config/forms/schema/checkoutFormSchema';
 import { get } from 'lodash';
 import CFContactInformation from '../../components/forms/Checkout/CFContactInformation';
@@ -23,6 +23,8 @@ import CheckoutService from '../../services/Checkout/Checkout';
 import SetCartRequest from '../../services/Cart/requests/SetCartRequest';
 import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
+import { resetCart } from '~/store/cart/actions';
+
 const CheckoutForm = () => {
     const {
         formValues,
@@ -40,6 +42,7 @@ const CheckoutForm = () => {
             const localRequest = new CheckoutRequest(request);
 
             const response = await CheckoutService.checkout(localRequest);
+            dispatch(resetCart([]));
             window.location.href = response.data;
         } catch (e) {
             dispatch(stopLoading());
@@ -78,7 +81,7 @@ const CheckoutForm = () => {
             {({ setFieldValue, values }) => {
                 return (
                     <Spin spinning={false}>
-                        <Form className="checkout-form">
+                        <Form className='checkout-form'>
                             {step.title === CHECKOUT_STEPS.CART && (
                                 <CFContactInformation />
                             )}
@@ -113,33 +116,41 @@ const FormFooter = () => {
     const handlePrev = () => {
         dispatch(prevStep());
     };
+
+    const goToPage = (path) => {
+        Router.push(path);
+    };
+
     return (
-        <div className="form-footer">
-            <div className="footer-action">
+        <div className='form-footer'>
+            <div className='footer-action'>
                 {step.title === CHECKOUT_STEPS.CART && (
-                    <Link className="-italic" href="cart">
+                    <a
+                        className='-italic'
+                        onClick={() => goToPage('/products?open=1')}
+                    >
                         &lt; Return to Cart
-                    </Link>
+                    </a>
                 )}
                 {currentStep > 0 && (
-                    <a className="-italic" onClick={handlePrev} href="#">
+                    <a className='-italic' onClick={handlePrev} href='#'>
                         &lt; Return to information
                     </a>
                 )}
             </div>
-            <div className="footer-action">
+            <div className='footer-action'>
                 {currentStep <= 0 && (
                     <button
                         type={'submit'}
-                        className="btn py-3 px-4 btn-primary btn-block"
+                        className='btn py-3 px-4 btn-primary btn-block'
                     >
                         Continue
                     </button>
                 )}
                 {step.title === CHECKOUT_STEPS.INFORMATION && (
                     <button
-                        type="submit"
-                        className="btn py-3 px-4 btn-primary btn-block"
+                        type='submit'
+                        className='btn py-3 px-4 btn-primary btn-block'
                     >
                         PAYMENT
                     </button>
