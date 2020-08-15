@@ -13,12 +13,6 @@ class Signup2TPL extends Component {
       <div className='signup-container'>
         <Container>
           <h4 className='signup-title'>Set Password</h4>
-          <p>
-            Already have an account?{' '}
-            <Link href='/login'>
-              <a className='login-btn'>Login</a>
-            </Link>
-          </p>
           <div className='form-container'>
             <FinalRegistrationForm {...this.props}></FinalRegistrationForm>
           </div>

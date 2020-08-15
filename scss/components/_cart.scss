@@ -53,9 +53,7 @@ button.add-to-cart {
   box-shadow: none !important;
 }
 
-
 #checkout-cart.checkout-page-container.-cart {
-
   .cart-content {
     width: 100%;
     max-width: 490px;
@@ -67,13 +65,18 @@ button.add-to-cart {
       .item-image {
         text-align: left;
       }
-
     }
 
     .item-image img {
       height: 80px;
-
     }
   }
-
+}
+.subtotal-cont {
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  .col {
+    padding: 0;
+  }
 }
