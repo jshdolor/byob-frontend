@@ -20,7 +20,7 @@ export default class CheckoutService {
             .catch((e) => {
                 throw new ExceptionHandler(
                     'CheckoutService - expressCheckout',
-                    e
+                    e,
                 );
             });
     }

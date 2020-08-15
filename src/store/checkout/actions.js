@@ -5,6 +5,16 @@ export const NEXT_STEP = DOCUMENT + 'NEXT_STEP';
 export const PREV_STEP = DOCUMENT + 'PREV_STEP';
 export const SET_FORM_VALUES = DOCUMENT + 'SET_FORM_VALUES';
 export const EDIT_FORM = DOCUMENT + 'EDIT_FORM';
+export const START_LOADING = DOCUMENT + 'START_LOADING';
+export const STOP_LOADING = DOCUMENT + 'STOP_LOADING';
+
+export const startLoading = () => ({
+    type: START_LOADING,
+});
+
+export const stopLoading = () => ({
+    type: STOP_LOADING,
+});
 
 export const setStep = (payload) => ({
     type: SET_STEP,

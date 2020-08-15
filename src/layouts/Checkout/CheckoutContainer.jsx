@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import CheckoutBreadCrumbs from './CheckoutBreadcrumbs';
 import CheckoutForm from './CheckoutForm';
 

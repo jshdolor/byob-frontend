@@ -9,18 +9,19 @@ const init = {
     ],
     isFormSaved: false,
     informationEditing: false,
+
     formValues: {
         email: '',
-        firstName: '',
-        lastName: '',
-        mobileNumber: '',
+        firstname: '',
+        lastname: '',
+        mobile_number: '',
         claimingMethod: CLAIMING_METHOD.BYOB,
         lockerDate: '',
         lockerTime: '',
         lockerTimeText: '',
-        paymentMethod: 'paypal',
+        payment_gateway: 'paypal',
     },
-    isLoading: '',
+    isLoading: false,
 };
 
 export default (state = init, { type, payload }) => {
@@ -30,6 +31,7 @@ export default (state = init, { type, payload }) => {
                 ...state,
                 currentStep: payload,
             };
+
         case actions.EDIT_FORM:
             return {
                 ...state,
@@ -59,6 +61,16 @@ export default (state = init, { type, payload }) => {
                     ...state.formValues,
                     [key]: value,
                 },
+            };
+        case actions.START_LOADING:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case actions.STOP_LOADING:
+            return {
+                ...state,
+                isLoading: false,
             };
         default:
             return state;

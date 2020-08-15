@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Form, Input, Radio } from 'formik-antd';
-import { Row, Col, Spin, Select } from 'antd';
+import { Row, Col, Spin, Select, message, Button } from 'antd';
 import Link from 'next/link';
 import checkoutFormSchema from '../../../config/forms/schema/checkoutFormSchema';
 import { get } from 'lodash';
@@ -13,10 +13,15 @@ import {
     setFormValues,
     prevStep,
     editForm,
+    startLoading,
+    stopLoading,
 } from '../../store/checkout/actions';
 import { CHECKOUT_STEPS } from '../../config/checkout';
 import CFCheckoutInformation from '../../components/forms/Checkout/CFCheckoutInformation';
 import CFPaymentMethod from '../../components/forms/Checkout/CFPaymentMethod';
+import CheckoutService from '../../services/Checkout/Checkout';
+import SetCartRequest from '../../services/Cart/requests/SetCartRequest';
+import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
 const CheckoutForm = () => {
     const {
@@ -25,10 +30,28 @@ const CheckoutForm = () => {
         steps = [],
         informationEditing,
     } = useSelector((state) => state.checkout);
+    const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
-    const handlePayment = (values) => {
-        console.log('PAYMENT', values);
+    const handlePayment = async (values) => {
+        dispatch(startLoading());
+        try {
+            const request = { ...values, cart };
+            const localRequest = new CheckoutRequest(request);
+
+            const response = await CheckoutService.checkout(localRequest);
+            window.location.href = response.data;
+        } catch (e) {
+            dispatch(stopLoading());
+            message.error({
+                content: 'Something went wrong with the connection.',
+                className: 'custom-class',
+                style: {
+                    marginTop: '20vh',
+                    zIndex: 100000,
+                },
+            });
+        }
     };
 
     const handleSubmit = (values) => {
@@ -116,7 +139,7 @@ const FormFooter = () => {
                 )}
                 {step.title === CHECKOUT_STEPS.INFORMATION && (
                     <button
-                        type={'submit'}
+                        type="submit"
                         className="btn py-3 px-4 btn-primary btn-block"
                     >
                         PAYMENT

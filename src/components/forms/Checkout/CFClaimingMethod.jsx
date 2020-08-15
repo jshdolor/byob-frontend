@@ -114,7 +114,11 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                     className="checkout-input claiming-method-input"
                     placeholder="Mobile Number"
                 >
-                    <Radio className="cm-item" value={CLAIMING_METHOD.LOCKER}>
+                    <Radio
+                        className="cm-item"
+                        disabled
+                        value={CLAIMING_METHOD.LOCKER}
+                    >
                         Locker (maximum of 10 items per locker)
                     </Radio>
                     <Radio className="cm-item" value={CLAIMING_METHOD.BYOB}>
