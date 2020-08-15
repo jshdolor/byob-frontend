@@ -4,6 +4,7 @@ import Router from 'next/router';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { toggleCartMenu } from '~/store/cartMenu/actions';
+
 import { setCartItems, setCart } from '~/store/cart/actions';
 import { connect, useStore } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -55,6 +56,11 @@ const Cart = (props) => {
     const updateCurrentCart = (cartValue) => {
         setCartItems(cartValue);
         props.setCart(cartValue);
+    };
+
+    const handleCheckout = () => {
+        Router.push('/checkout');
+        props.toggleCartMenu();
     };
 
     return (
@@ -112,7 +118,7 @@ const Cart = (props) => {
                     </Row>
 
                     <Button
-                        onClick={() => Router.push('/checkout')}
+                        onClick={handleCheckout}
                         block
                         className="mt-4"
                         variant="primary"

@@ -8,7 +8,7 @@ export default function PaymentSuccessOrder(props) {
     return (
         <>
             <Head>
-                <title>BYOB | Products</title>
+                <title>BYOB | Payment Success</title>
             </Head>
             <Container className="payment-success-page">
                 <Row justify="space-around" align="middle">

@@ -109,9 +109,10 @@ const QuantityModifier = ({
                     step={1}
                     min={1}
                     max={9999}
-                    type='number'
+                    type="number"
                     value={quantity}
-                    placeholder='Input ML'
+                    disabled={disabled}
+                    placeholder="Input ML"
                     onChange={(value) => {
                         value = isNaN(parseInt(value)) ? 1 : value;
                         value = value < 1 ? 1 : value;
