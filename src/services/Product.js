@@ -103,7 +103,10 @@ export default class ProductService {
 
         return Client.setUrl(`${this.endpoint}/${id}/reviews`)
             .get()
-            .then(({ data }) => data.reviews)
+            .then(({ data }) => {
+                CacheManager.set(reviewsKey, data.reviews);
+                return data.reviews;
+            })
             .catch((e) => {
                 throw e;
             });
@@ -120,7 +123,19 @@ export default class ProductService {
 
         return Client.setUrl(`${this.endpoint}/${id}/suggestions`)
             .get()
-            .then(({ data }) => data.suggestions)
+            .then(({ data }) => {
+                CacheManager.set(suggestionKey, data.suggestions);
+                return data.suggestions;
+            })
+            .catch((e) => {
+                throw e;
+            });
+    }
+
+    static postReview(id, request) {
+        return Client.setUrl(`${this.endpoint}/${id}/reviews`)
+            .post(request.toJSON())
+            .then(({ message }) => message)
             .catch((e) => {
                 throw e;
             });

@@ -225,7 +225,7 @@ class SingleProductTPL extends Component {
                                         </p>
                                     </div>
                                     <div className='review-form'>
-                                        <ReviewForm></ReviewForm>
+                                        <ReviewForm product={id}></ReviewForm>
                                     </div>
                                 </div>
                             )}
