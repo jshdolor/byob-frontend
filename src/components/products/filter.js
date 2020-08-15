@@ -1,6 +1,8 @@
 import { Form, Checkbox, Collapse } from 'antd';
 import { useState, useEffect, Fragment } from 'react';
 
+const { Panel } = Collapse;
+
 const sortFilters = (a, b) => {
     const sortA = a.sort;
     const sortB = b.sort;
@@ -98,41 +100,42 @@ const Filter = ({ products, handle }) => {
 
     return (
         <div className='filter-container'>
-            {Object.keys(filterValues).map((filter, filterKey) => {
-                return (
-                    <Fragment key={filterKey}>
-                        <div
+            <Collapse defaultActiveKey={['0', '1', '2']}>
+                {Object.keys(filterValues).map((filter, filterKey) => {
+                    return (
+                        <Panel
                             key={filterKey}
                             className='byob-title byob-text-small'
+                            header={filter}
                         >
-                            {filter}
-                        </div>
-                        {filterValues[filter].map((type, i) => (
-                            <Form.Item key={i}>
-                                <Checkbox
-                                    name={filter}
-                                    onChange={(e) =>
-                                        handleFilter(
-                                            filter.toLowerCase(),
-                                            type,
-                                            e
-                                        )
-                                    }
-                                >
-                                    <span className='byob-text-small byob-text-secondary'>
-                                        {type.name}
-                                    </span>
-                                </Checkbox>
-                            </Form.Item>
-                        ))}
-                        {filterKey < Object.keys(filterValues).length - 1 ? (
-                            <hr></hr>
-                        ) : (
-                            ''
-                        )}
-                    </Fragment>
-                );
-            })}
+                            {filterValues[filter].map((type, i) => (
+                                <Form.Item key={i}>
+                                    <Checkbox
+                                        name={filter}
+                                        onChange={(e) =>
+                                            handleFilter(
+                                                filter.toLowerCase(),
+                                                type,
+                                                e
+                                            )
+                                        }
+                                    >
+                                        <span className='byob-text-small byob-text-secondary'>
+                                            {type.name}
+                                        </span>
+                                    </Checkbox>
+                                </Form.Item>
+                            ))}
+                            {filterKey <
+                            Object.keys(filterValues).length - 1 ? (
+                                <hr></hr>
+                            ) : (
+                                ''
+                            )}
+                        </Panel>
+                    );
+                })}
+            </Collapse>
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
-import loginFormSchema from 'config/forms/schema/loginFormSchema';
 import { Form, Input } from 'formik-antd';
+import loginFormSchema from 'config/forms/schema/loginFormSchema';
+
 import { Button, Spin, Modal } from 'antd';
 import Router from 'next/router';
 
@@ -85,11 +86,11 @@ class LoginForm extends Component {
                         visible={this.state.visible}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
-                        className='byob-popup'
+                        className="byob-popup"
                         closable={false}
                         footer={null}
                     >
-                        <h1 className='title'>
+                        <h1 className="title">
                             {this.state.apiMessage.success
                                 ? 'success'
                                 : 'error'}
@@ -98,7 +99,7 @@ class LoginForm extends Component {
                             <p>{msg}</p>
                         ))}
 
-                        <Button type='primary' onClick={this.handleOk}>
+                        <Button type="primary" onClick={this.handleOk}>
                             Okay
                         </Button>
                     </Modal>
@@ -123,26 +124,26 @@ class LoginForm extends Component {
                                     })
                                 }
                             >
-                                <Form.Item name='email'>
+                                <Form.Item name="email">
                                     <Input
-                                        name='email'
-                                        className='px-3 py-3'
-                                        placeholder='Username / Email'
+                                        name="email"
+                                        className="px-3 py-3"
+                                        placeholder="Username / Email"
                                     />
                                 </Form.Item>
 
-                                <Form.Item name='password'>
+                                <Form.Item name="password">
                                     <Input
-                                        name='password'
-                                        type='password'
-                                        className='px-3 py-3'
-                                        placeholder='Password*'
+                                        name="password"
+                                        type="password"
+                                        className="px-3 py-3"
+                                        placeholder="Password*"
                                     />
                                 </Form.Item>
 
                                 <button
-                                    type='submit'
-                                    className='btn py-3 px-3 btn-primary btn-block'
+                                    type="submit"
+                                    className="btn py-3 px-3 btn-primary btn-block"
                                     disabled={this.state.isFormSubmitting}
                                 >
                                     Login
@@ -166,7 +167,7 @@ const mapDispatchToProps = function (dispatch) {
             loginUser,
             logoutUser,
         },
-        dispatch
+        dispatch,
     );
 };
 

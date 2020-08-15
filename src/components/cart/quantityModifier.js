@@ -96,8 +96,15 @@ const QuantityModifier = ({
                     defaultValue={quantity}
                     step={1}
                     min={1}
-                    onChange={updateCartItem}
-                    onKeyPress={(e) => console.log(e)}
+                    max={9999}
+                    type='number'
+                    value={quantity}
+                    placeholder='Input ML'
+                    onChange={(value) => {
+                        value = isNaN(parseInt(value)) ? 1 : value;
+                        value = value < 1 ? 1 : value;
+                        updateCartItem(value);
+                    }}
                 />
             </>
         );

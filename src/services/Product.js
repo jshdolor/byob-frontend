@@ -84,7 +84,7 @@ export default class ProductService {
 
                     return modeledProduct;
                 });
-                CacheManager.set(this.cacheKey, modeledData);
+                CacheManager.set(featuredKey, modeledData);
                 return modeledData;
             })
             .catch((e) => {
