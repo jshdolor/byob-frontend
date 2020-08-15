@@ -21,6 +21,7 @@ const QuantityModifier = ({
     incrementItem,
     decrementItem,
     id,
+    disabled = false,
     quantity,
     type = 1,
 }) => {
@@ -65,28 +66,39 @@ const QuantityModifier = ({
             throw e;
         }
     };
+    const disabledStyle = disabled
+        ? {
+              fill: '#d7d7d7',
+          }
+        : {};
 
     const modifier =
         type?.id === 1 ? (
             <>
                 <FaMinus
-                    className='mx-1'
+                    className="mx-1"
                     size={size}
+                    style={disabledStyle}
                     onClick={() => {
-                        updateCartItem(quantity - 1);
+                        if (!disabled) {
+                            updateCartItem(quantity - 1);
+                        }
                     }}
                 ></FaMinus>
                 <span
-                    className='mx-1 quantity-count'
+                    className="mx-1 quantity-count"
                     style={{ fontSize: size }}
                 >
                     {quantity}
                 </span>
                 <FaPlus
-                    className='mx-1'
+                    style={disabledStyle}
+                    className="mx-1"
                     size={size}
                     onClick={() => {
-                        updateCartItem(quantity + 1);
+                        if (!disabled) {
+                            updateCartItem(quantity + 1);
+                        }
                     }}
                 ></FaPlus>
             </>
@@ -111,7 +123,7 @@ const QuantityModifier = ({
     //TODO: make this debounce
     //TODO: limit
 
-    return <div className='quantity-modifier'>{modifier}</div>;
+    return <div className="quantity-modifier">{modifier}</div>;
 };
 
 const mapStateToProps = function (state) {
@@ -124,7 +136,7 @@ const mapDispatchToProps = function (dispatch) {
             incrementItem,
             decrementItem,
         },
-        dispatch
+        dispatch,
     );
 };
 

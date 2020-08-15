@@ -30,6 +30,8 @@ export const editForm = () => ({
 
 export const updateForm = (key, value) => ({
     type: UPDATE_FORM,
-    key,
-    value,
+    payload: {
+        key,
+        value,
+    },
 });

@@ -19,6 +19,7 @@ h6,
 .byob-title {
     font-family: 'Circular Black', Fallback, sans-serif;
     font-size: $title-font-size;
+
     small {
         display: block;
         font-size: $small-font-size;
@@ -31,10 +32,30 @@ h6,
     &text-small {
         font-size: $small-font-size;
     }
+
     &text-secondary {
         color: $secondary-text-color;
     }
+
     &text-default {
         color: $default-text-color;
+    }
+
+    &.regular-font {
+        font-family: 'Circular Regular', Fallback, sans-serif;
+    }
+
+    &italic-font {
+        font-family: 'Circular Regular', Fallback, sans-serif;
+    }
+}
+
+.byob {
+    &.-regular-font {
+        font-family: $primary-font;
+    }
+
+    &.-italic-font {
+        font-family: 'Circular Regular', Fallback, sans-serif;
     }
 }

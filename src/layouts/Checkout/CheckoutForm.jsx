@@ -26,12 +26,22 @@ const CheckoutForm = () => {
         informationEditing,
     } = useSelector((state) => state.checkout);
     const dispatch = useDispatch();
+
+    const handlePayment = (values) => {
+        console.log('PAYMENT', values);
+    };
+
     const handleSubmit = (values) => {
         dispatch(setFormValues(values));
+
         if (informationEditing) {
             dispatch(editForm());
         } else {
-            dispatch(nextStep());
+            if (currentStep > 0) {
+                handlePayment(values);
+            } else {
+                dispatch(nextStep());
+            }
         }
     };
 
@@ -42,23 +52,34 @@ const CheckoutForm = () => {
             validationSchema={checkoutFormSchema}
             onSubmit={handleSubmit}
         >
-            <Spin spinning={false}>
-                <Form className="checkout-form">
-                    {step.title === CHECKOUT_STEPS.CART && (
-                        <CFContactInformation />
-                    )}
-                    {step.title === CHECKOUT_STEPS.CART && <CFClaimingMethod />}
+            {({ setFieldValue, values }) => {
+                return (
+                    <Spin spinning={false}>
+                        <Form className="checkout-form">
+                            {step.title === CHECKOUT_STEPS.CART && (
+                                <CFContactInformation />
+                            )}
+                            {step.title === CHECKOUT_STEPS.CART && (
+                                <CFClaimingMethod
+                                    setFieldValue={setFieldValue}
+                                />
+                            )}
 
-                    {step.title === CHECKOUT_STEPS.INFORMATION &&
-                        informationEditing && <CFContactInformation />}
-                    {step.title === CHECKOUT_STEPS.INFORMATION &&
-                        !informationEditing && <CFCheckoutInformation />}
-                    {step.title === CHECKOUT_STEPS.INFORMATION && (
-                        <CFPaymentMethod />
-                    )}
-                    <FormFooter />
-                </Form>
-            </Spin>
+                            {step.title === CHECKOUT_STEPS.INFORMATION &&
+                                informationEditing && <CFContactInformation />}
+                            {step.title === CHECKOUT_STEPS.INFORMATION &&
+                                !informationEditing && (
+                                    <CFCheckoutInformation />
+                                )}
+                            {step.title === CHECKOUT_STEPS.INFORMATION && (
+                                <CFPaymentMethod />
+                            )}
+
+                            <FormFooter />
+                        </Form>
+                    </Spin>
+                );
+            }}
         </Formik>
     );
 };

@@ -2,11 +2,15 @@ import React, { PureComponent } from 'react';
 import { Row, Col } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { editForm } from '../../../store/checkout/actions';
+import { CLAIMING_METHOD } from '../../../config/checkout';
 
 const CFCheckoutInformation = () => {
-    const { email = '', claimingMethod = 'locker' } = useSelector(
-        (state) => state.checkout.formValues,
-    );
+    const {
+        email = '',
+        claimingMethod = CLAIMING_METHOD.LOCKER,
+        lockerDate,
+        lockerTimeText,
+    } = useSelector((state) => state.checkout.formValues);
     const dispatch = useDispatch();
     const handleClick = () => {
         dispatch(editForm());
@@ -33,12 +37,16 @@ const CFCheckoutInformation = () => {
                     <Col>{claimingMethod}</Col>
                 </Row>
             </li>
-            <li className="information-item">
-                <Row>
-                    <Col span={7}>Contact</Col>
-                    <Col>{email}</Col>
-                </Row>
-            </li>
+            {claimingMethod === CLAIMING_METHOD.LOCKER && (
+                <li className="information-item">
+                    <Row>
+                        <Col span={7}>Date</Col>
+                        <Col>
+                            {lockerDate} --- {lockerTimeText}
+                        </Col>
+                    </Row>
+                </li>
+            )}
         </ul>
     );
 };

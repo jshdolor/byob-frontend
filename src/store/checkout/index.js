@@ -17,6 +17,7 @@ const init = {
         claimingMethod: CLAIMING_METHOD.BYOB,
         lockerDate: '',
         lockerTime: '',
+        lockerTimeText: '',
         paymentMethod: 'paypal',
     },
     isLoading: '',
@@ -46,7 +47,6 @@ export default (state = init, { type, payload }) => {
                 currentStep: ++state.currentStep,
             };
         case actions.PREV_STEP:
-            console.log('here');
             return {
                 ...state,
                 currentStep: --state.currentStep,

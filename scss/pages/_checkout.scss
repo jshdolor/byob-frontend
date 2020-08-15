@@ -16,7 +16,7 @@
 
     &.-checkout {
         background-color: #f0f0f0;
-
+        height: 100%;
         display: flex;
         justify-content: flex-end;
 
@@ -36,13 +36,19 @@
 
 }
 
+.checkout-page-container.-cart {
+    .checkout-content {
+        width: 100%;
+        max-width: 490px;
+    }
+}
 
 .checkout-page-container.-checkout {
     .checkout-content {
         width: 100%;
         max-width: 600px;
 
-        .logo {
+        .checkout-logo {
             width: 176px;
             height: 140px;
             background-image: url('/images/logo-green.png');
@@ -262,6 +268,3 @@
         width: 100%;
     }
 }
-
-
-.checkout-page-container.-cart {}

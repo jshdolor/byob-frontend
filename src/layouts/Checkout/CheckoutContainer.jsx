@@ -9,7 +9,7 @@ const CheckoutContainer = () => {
             <div className="checkout-content">
                 <Row>
                     <Col>
-                        <div className="logo"></div>
+                        <div className="checkout-logo"></div>
                     </Col>
                 </Row>
                 <Row>
