@@ -8,6 +8,7 @@ const hasAuth = async (ctx) => {
 
     if (isServer) {
         try {
+            console.log(ctx);
             await ProfileService.get(ctx);
             res.writeHead(302, { Location: '/' });
             res.end();
