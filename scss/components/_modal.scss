@@ -22,5 +22,92 @@
     text-transform: uppercase;
     font-family: $bold-font;
     background: $byob-primary;
+    border: none;
+  }
+  &.change-password {
+    .title {
+      font-size: 28px;
+    }
+  }
+
+  &.delete-account {
+    .title {
+      font-size: 20px;
+    }
+    .content-cont {
+      padding-top: 20px;
+    }
+    .delete-form {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+      p {
+        margin-bottom: 0;
+        &.italic {
+          font-style: italic;
+        }
+      }
+      .checkbox-cont {
+        margin-top: 10px;
+      }
+      .ant-checkbox-group {
+        text-align-last: left;
+        width: 300px;
+      }
+      .ant-checkbox-group-item {
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+    .delete-title {
+      font-size: 16px;
+      color: $gray;
+      margin-bottom: 0;
+    }
+
+    .content {
+      height: 300px;
+      overflow-y: scroll;
+      padding: 20px 0;
+      .content-title {
+        font-size: 16px;
+        color: $gray;
+        margin-bottom: 20px;
+      }
+    }
+
+    .close-modal {
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      svg {
+        font-size: 20px;
+      }
+    }
+    .other-check {
+      display: block;
+      width: 300px;
+      text-align: left;
+      margin-left: 26px;
+    }
+
+    .terms-check {
+      display: block;
+      margin-top: 20px;
+    }
+
+    .other-input {
+      width: 300px;
+      display: block;
+      margin: 0 auto;
+      margin-top: 20px;
+    }
+  }
+
+  .ant-modal-close {
+    background: transparent;
+    width: inherit;
+    height: inherit;
+    margin-top: inherit;
   }
 }

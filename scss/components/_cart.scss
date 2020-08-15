@@ -43,3 +43,12 @@ button.add-to-cart {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.subtotal-cont {
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  .col {
+    padding: 0;
+  }
+}
