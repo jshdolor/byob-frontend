@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Formik } from 'formik';
 import finalRegistrationFormSchema from 'config/forms/schema/finalRegistrationFormSchema';
 import { Form, Input } from 'formik-antd';
-import { MOBILE_NUMBER_NO_ZERO, NUMBERS_ONLY } from 'config/forms/regex';
+import { MOBILE_NUMBER_NO_ZERO, NUMBERS_ONLY, SPECIAL_CHARACTERS } from 'config/forms/regex';
 import { Button, Spin, Modal } from 'antd';
 import FinalRegistrationRequest from '~/services/Registration/requests/FinalRegistrationRequest';
 import RegistrationService from '~/services/Registration/RegistrationService';
