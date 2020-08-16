@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
+import Link from 'next/link';
 
 const { Panel } = Collapse;
 
@@ -36,9 +37,11 @@ class FaqsTPL extends Component {
           </div>
           <p>
             Can't find what you're looking for?
-            <a href='#' className='contact-btn'>
-              Contact Us
-            </a>
+            <Link href='/contact-us'>
+              <a href='#' className='contact-btn'>
+                Contact Us
+              </a>
+            </Link>
           </p>
         </Container>
       </div>
