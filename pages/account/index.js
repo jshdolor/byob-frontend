@@ -5,12 +5,12 @@ import MyAccountTPL from '../../src/layouts/MyAccount/MyAccountTPL';
 
 const Account = (props) => {
     return (
-        <div className="my-account-container">
+        <div className='my-account-container'>
             <AccountLayout>
                 <Head>
                     <title>BYOB | My Account </title>
                 </Head>
-                <MyAccountTPL></MyAccountTPL>
+                <MyAccountTPL {...props}></MyAccountTPL>
             </AccountLayout>
         </div>
     );
