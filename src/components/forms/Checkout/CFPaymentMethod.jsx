@@ -1,11 +1,25 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
 import { Form, Radio } from 'formik-antd';
-import { Row, Col, Select } from 'antd';
-import Link from 'next/link';
-import { get } from 'lodash';
 import CFDividerHeader from './CFDivider';
-const { Option } = Select;
+
+const PAYMENT_METHODS = [
+    {
+        value: 'paypal',
+        title: 'Credit/Debit Card via Paypal',
+        image: '/images/Paypal-Logo.png',
+    },
+    {
+        value: 'gcash',
+        title: 'GCash',
+        image: '/images/Gcash-Logo.png',
+    },
+    {
+        value: 'paymaya',
+        title: 'Paymaya',
+        image: '/images/Paymaya-Logo.png',
+        disabled: true,
+    },
+];
 
 const CFPaymentMethod = () => {
     return (
@@ -19,18 +33,16 @@ const CFPaymentMethod = () => {
                     className="checkout-input claiming-method-input"
                     placeholder="Mobile Number"
                 >
-                    <Radio className="cm-item" value={'paypal'}>
-                        <span>Credit/Debit Card via Paypal</span>
-                        <img src={'/images/Paypal-Logo.png'} />
-                    </Radio>
-                    <Radio className="cm-item" value={'gcash'}>
-                        <span>GCash</span>
-                        <img src={'/images/Gcash-Logo.png'} />
-                    </Radio>
-                    <Radio className="cm-item" value={'paymaya'}>
-                        <span>Paymaya</span>
-                        <img src={'/images/Paymaya-Logo.png'} />
-                    </Radio>
+                    {PAYMENT_METHODS.map((pm) => (
+                        <Radio
+                            disabled={pm.disabled}
+                            className="cm-item"
+                            value={pm.value}
+                        >
+                            <span>{pm.title}</span>
+                            <img src={pm.image} />
+                        </Radio>
+                    ))}
                 </Radio.Group>
             </Form.Item>
         </div>

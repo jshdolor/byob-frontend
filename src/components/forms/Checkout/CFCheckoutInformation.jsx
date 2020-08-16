@@ -11,6 +11,7 @@ const CFCheckoutInformation = () => {
         lockerDate,
         lockerTimeText,
     } = useSelector((state) => state.checkout.formValues);
+    const { isLoggedIn } = useSelector((state) => state.session);
     const dispatch = useDispatch();
     const handleClick = () => {
         dispatch(editForm());
@@ -21,14 +22,16 @@ const CFCheckoutInformation = () => {
                 <Row>
                     <Col span={7}>Contact</Col>
                     <Col>{email}</Col>
-                    <a
-                        className="change-link"
-                        href={'#'}
-                        onClick={handleClick}
-                        style={{ marginLeft: 'auto' }}
-                    >
-                        Change
-                    </a>
+                    {!isLoggedIn && (
+                        <a
+                            className="change-link"
+                            href={'#'}
+                            onClick={handleClick}
+                            style={{ marginLeft: 'auto' }}
+                        >
+                            Change
+                        </a>
+                    )}
                 </Row>
             </li>
             <li className="information-item">

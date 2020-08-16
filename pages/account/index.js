@@ -5,7 +5,7 @@ import MyAccountTPL from '../../src/layouts/MyAccount/MyAccountTPL';
 
 const Account = (props) => {
     return (
-        <div className='my-account-container'>
+        <div className="my-account-container">
             <AccountLayout>
                 <Head>
                     <title>BYOB | My Account </title>
@@ -18,7 +18,8 @@ const Account = (props) => {
 
 Account.getInitialProps = async (ctx) => {
     const data = await authCheck(ctx);
-    return {};
+
+    return { data };
 };
 
 export default Account;

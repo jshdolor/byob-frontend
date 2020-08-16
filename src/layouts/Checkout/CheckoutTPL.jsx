@@ -7,15 +7,18 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const CheckoutTPL = () => {
     const { isLoading } = useSelector((state) => state.checkout);
+    const { open } = useSelector((state) => state.cartMenu);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: TOGGLE_CART_MENU, payload: false });
+        if (open) {
+            dispatch({ type: TOGGLE_CART_MENU, payload: false });
+        }
     }, []);
 
     return (
         <Spin spinning={isLoading}>
-            <Row className='checkout-page'>
+            <Row className="checkout-page">
                 <Col xs={24} sm={24} lg={12}>
                     <CheckoutContainer />
                 </Col>

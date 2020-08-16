@@ -52,11 +52,11 @@ const QuantityModifier = ({
                     product_id: id,
                 });
             }
-
-            window.Store.dispatch({
-                type: RESET_CART,
-                payload: [],
-            });
+            //When logged in, the cart flicker.
+            // window.Store.dispatch({
+            //     type: RESET_CART,
+            //     payload: [],
+            // });
             window.Store.dispatch({
                 type: SET_CART_ITEMS,
                 payload: cart.map((cartItem) => cartItem.getLocalData()),
@@ -75,7 +75,7 @@ const QuantityModifier = ({
         type?.id === 1 ? (
             <>
                 <FaMinus
-                    className='mx-1'
+                    className="mx-1"
                     size={size}
                     style={disabledStyle}
                     onClick={() => {
@@ -85,14 +85,14 @@ const QuantityModifier = ({
                     }}
                 ></FaMinus>
                 <span
-                    className='mx-1 quantity-count'
+                    className="mx-1 quantity-count"
                     style={{ fontSize: size }}
                 >
                     {quantity}
                 </span>
                 <FaPlus
                     style={disabledStyle}
-                    className='mx-1'
+                    className="mx-1"
                     size={size}
                     onClick={() => {
                         if (!disabled) {
@@ -108,10 +108,10 @@ const QuantityModifier = ({
                     step={1}
                     min={1}
                     max={9999}
-                    type='number'
+                    type="number"
                     value={quantity}
                     disabled={disabled}
-                    placeholder='Input ML'
+                    placeholder="Input ML"
                     onChange={(value) => {
                         value = isNaN(parseInt(value)) ? 1 : value;
                         value = value < 1 ? 1 : value;
@@ -123,7 +123,7 @@ const QuantityModifier = ({
     //TODO: make this debounce
     //TODO: limit
 
-    return <div className='quantity-modifier'>{modifier}</div>;
+    return <div className="quantity-modifier">{modifier}</div>;
 };
 
 const mapStateToProps = function (state) {
@@ -136,7 +136,7 @@ const mapDispatchToProps = function (dispatch) {
             incrementItem,
             decrementItem,
         },
-        dispatch
+        dispatch,
     );
 };
 

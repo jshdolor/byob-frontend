@@ -26,7 +26,7 @@ export default (state = [], { type, payload }) => {
             });
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
-            break;
+            return state;
 
         case DECREMENT_ITEM:
             updatedState = updatedState
@@ -39,7 +39,7 @@ export default (state = [], { type, payload }) => {
                 .filter((item) => item.qty !== 0);
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
-            break;
+            return state;
 
         case REMOVE_CART_ITEM:
             updatedState = updatedState.filter((item) => {
@@ -47,7 +47,7 @@ export default (state = [], { type, payload }) => {
             });
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
-            break;
+            return state;
 
         case SET_CART_ITEM:
             updatedState = updatedState.map((item) => {
@@ -58,25 +58,25 @@ export default (state = [], { type, payload }) => {
             });
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
-            break;
+            return state;
         ////
 
         case ADD_CART_ITEM:
             updatedState = combineDistinctCartItems(updatedState, payload);
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
-            break;
+            return state;
 
         case SET_CART_ITEMS:
-            updatedState = [...updatedState, ...payload];
+            updatedState = [...payload];
 
             if (updatedState.length !== 0) {
                 ClientStorage.set('cart', updatedState);
                 socket.emit('setCart', updatedState);
             }
-            updatedState = payload;
 
-            break;
+            return state;
+
         case SET_CART:
             updatedState = [...payload];
             break;
@@ -85,6 +85,7 @@ export default (state = [], { type, payload }) => {
             updatedState = [];
             socket.emit('setCart', updatedState);
             ClientStorage.set('cart', updatedState);
+            console.log(RESET_CART);
             break;
 
         default:

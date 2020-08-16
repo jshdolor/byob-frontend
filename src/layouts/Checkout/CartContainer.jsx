@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CartItem from '../../components/cart/item';
 import { Container, Row, Col, Button } from 'react-bootstrap';
@@ -6,7 +6,8 @@ import { amountPrecision, bottlePrice, bottlePerMl } from '~/config/app';
 import { Divider } from 'antd';
 
 const CartContainer = () => {
-    const cartItems = useSelector((state) => state.cart);
+    const cartItems = useSelector((state) => state.cart) || [];
+
     const { currentStep } = useSelector((state) => state.checkout);
     const cartCount = (cartItems || []).reduce((a, b) => {
         if (b.type.id === 1) {
@@ -22,12 +23,13 @@ const CartContainer = () => {
         .filter((item) => item.type.id === 2)
         .reduce((a, b) => a + b.bottles * bottlePrice, 0)
         .toFixed(amountPrecision);
-    const total = parseFloat(subtotal) + parseFloat(bottle);
+    const total = (parseFloat(subtotal) || 0) + (parseFloat(bottle) || 0);
+
     return (
-        <div id='checkout-cart' className='checkout-page-container -cart'>
-            <div className='cart-content'>
+        <div id="checkout-cart" className="checkout-page-container -cart">
+            <div className="cart-content">
                 <div>
-                    {(cartItems || []).map((cartItem, i) => (
+                    {cartItems.map((cartItem, i) => (
                         <CartItem
                             disabled={isDisabled}
                             checkout
@@ -36,15 +38,15 @@ const CartContainer = () => {
                         ></CartItem>
                     ))}
                 </div>
-                <Row className='mt-4 '>
+                <Row className="mt-4 ">
                     <Col className={'byod -regular-font'}>
                         Total Number of Items: <em>{cartCount}</em>
                     </Col>
                 </Row>
                 <Divider />
-                <Row className='mt-4'>
+                <Row className="mt-4">
                     <Col>Subtotal</Col>
-                    <Col className='text-right'>P{subtotal}</Col>
+                    <Col className="text-right">P{subtotal}</Col>
                 </Row>
                 <Row>
                     <Col>
@@ -54,12 +56,12 @@ const CartContainer = () => {
                             .reduce((a, b) => a + b.bottles, 0)}
                         )
                     </Col>
-                    <Col className='text-right'>P{bottle}</Col>
+                    <Col className="text-right">P{bottle}</Col>
                 </Row>
                 <Divider />
                 <Row>
                     <Col>Total</Col>
-                    <Col className='text-right'>
+                    <Col className="text-right">
                         P{total.toFixed(amountPrecision)}
                     </Col>
                 </Row>

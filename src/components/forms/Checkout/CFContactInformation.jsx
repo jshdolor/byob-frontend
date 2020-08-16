@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Form, Input } from 'formik-antd';
 import { Row, Col } from 'antd';
@@ -10,19 +10,23 @@ import { editForm } from '../../../store/checkout/actions';
 const CFContactInformation = () => {
     const { currentStep } = useSelector((state) => state.checkout);
     const { isLoggedIn } = useSelector((state) => state.session);
+    const [isDisabled, setDisabled] = useState(false);
     const dispatch = useDispatch();
     const handleBack = () => {
         dispatch(editForm());
     };
+    useEffect(() => {
+        setDisabled(isLoggedIn);
+    }, [isLoggedIn]);
     return (
         <>
             <CFDividerHeader
-                title='Contact Information'
+                title="Contact Information"
                 action={
                     !isLoggedIn ? (
                         <>
                             Already have an account?{' '}
-                            <Link href='/login?redirect=checkout'>
+                            <Link href="/login?redirect=checkout">
                                 <a>Login</a>
                             </Link>
                         </>
@@ -31,57 +35,61 @@ const CFContactInformation = () => {
                     )
                 }
             />
-            <Form.Item name='email'>
+            <Form.Item name="email">
                 <Input
-                    name='email'
-                    className='checkout-input'
-                    placeholder='Email'
+                    disabled={isDisabled}
+                    name="email"
+                    className="checkout-input"
+                    placeholder="Email"
                 />
             </Form.Item>
             <Row gutter={14}>
                 <Col xs={24} sm={24} md={12} span={12}>
-                    <Form.Item name='firstname'>
+                    <Form.Item name="firstname">
                         <Input
-                            name='firstname'
-                            className='checkout-input'
-                            placeholder='First Name'
+                            disabled={isDisabled}
+                            name="firstname"
+                            className="checkout-input"
+                            placeholder="First Name"
                         />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} span={12}>
-                    <Form.Item name='lastname'>
+                    <Form.Item name="lastname">
                         <Input
-                            name='lastname'
-                            className='checkout-input'
-                            placeholder='Last Name'
+                            disabled={isDisabled}
+                            name="lastname"
+                            className="checkout-input"
+                            placeholder="Last Name"
                         />
                     </Form.Item>
                 </Col>
             </Row>
-            <Form.Item name='mobile_number'>
+            <Form.Item name="mobile_number">
                 <Input
-                    name='mobile_number'
-                    className='checkout-input'
-                    placeholder='Mobile Number'
+                    disabled={isDisabled}
+                    name="mobile_number"
+                    className="checkout-input"
+                    placeholder="Mobile Number"
                 />
             </Form.Item>
             {currentStep > 0 && (
-                <div className='form-footer'>
-                    <div className='footer-action'>
+                <div className="form-footer">
+                    <div className="footer-action">
                         {currentStep > 0 && (
                             <a
-                                className='-italic'
+                                className="-italic"
                                 onClick={handleBack}
-                                href='#'
+                                href="#"
                             >
                                 &lt; Cancel
                             </a>
                         )}
                     </div>
-                    <div className='footer-action'>
+                    <div className="footer-action">
                         <button
                             type={'submit'}
-                            className='btn py-3 px-4 btn-primary btn-block'
+                            className="btn py-3 px-4 btn-primary btn-block"
                         >
                             Save
                         </button>

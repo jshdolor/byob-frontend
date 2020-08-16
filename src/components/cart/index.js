@@ -37,7 +37,6 @@ const Cart = (props) => {
 
             if (storedCart.length === 0) {
                 updateCurrentCart([]);
-
                 return;
             }
 
@@ -59,19 +58,19 @@ const Cart = (props) => {
     };
 
     return (
-        <Container className='bg-light pt-5'>
+        <Container className="bg-light pt-5">
             <Row>
                 <Col>
-                    <div className='byob-title my-3 text-primary text-uppercase'>
+                    <div className="byob-title my-3 text-primary text-uppercase">
                         Cart
                         <Button
-                            variant='link'
-                            className='float-right px-0'
+                            variant="link"
+                            className="float-right px-0"
                             onClick={() => {
                                 props.toggleCartMenu();
                             }}
                         >
-                            <GrFormClose size='2em'></GrFormClose>
+                            <GrFormClose size="2em"></GrFormClose>
                         </Button>
                     </div>
                     <div>
@@ -80,14 +79,14 @@ const Cart = (props) => {
                         ))}
                     </div>
 
-                    <Row className='subtotal-cont'>
+                    <Row className="subtotal-cont">
                         <Col>Subtotal</Col>
-                        <Col className='text-right'>
+                        <Col className="text-right">
                             P
                             {(cartItems || [])
                                 .reduce(
                                     (a, b) => a + parseFloat(b.total) ?? 0,
-                                    0
+                                    0,
                                 )
                                 .toFixed(amountPrecision)}
                         </Col>
@@ -100,13 +99,13 @@ const Cart = (props) => {
                                 .reduce((a, b) => a + b.bottles, 0)}
                             )
                         </Col>
-                        <Col className='text-right'>
+                        <Col className="text-right">
                             P
                             {cartItems
                                 .filter((item) => item.type.id === 2)
                                 .reduce(
                                     (a, b) => a + b.bottles * bottlePrice,
-                                    0
+                                    0,
                                 )
                                 .toFixed(amountPrecision)}
                         </Col>
@@ -115,12 +114,12 @@ const Cart = (props) => {
                     <Button
                         onClick={() => Router.push('/checkout')}
                         block
-                        className='mt-4'
-                        variant='primary'
+                        className="mt-4"
+                        variant="primary"
                         disabled={cartItems.length === 0}
                     >
                         Checkout —{' '}
-                        <span className='ml-2'>
+                        <span className="ml-2">
                             P
                             {(cartItems || [])
                                 .reduce(
@@ -128,7 +127,7 @@ const Cart = (props) => {
                                         a +
                                             parseFloat(b.total) +
                                             b.bottles * bottlePrice ?? 0,
-                                    0
+                                    0,
                                 )
                                 .toFixed(amountPrecision)}
                         </span>
@@ -150,7 +149,7 @@ const mapDispatchToProps = function (dispatch) {
             setCartItems,
             setCart,
         },
-        dispatch
+        dispatch,
     );
 };
 

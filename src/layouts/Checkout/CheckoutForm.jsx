@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
-import { Form, Input, Radio } from 'formik-antd';
-import { Row, Col, Spin, Select, message, Button } from 'antd';
+import { Form } from 'formik-antd';
 import Router from 'next/router';
+import { Spin } from 'antd';
 import checkoutFormSchema from '../../../config/forms/schema/checkoutFormSchema';
-import { get } from 'lodash';
 import CFContactInformation from '../../components/forms/Checkout/CFContactInformation';
 import CFClaimingMethod from '../../components/forms/Checkout/CFClaimingMethod';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,19 +19,16 @@ import { CHECKOUT_STEPS } from '../../config/checkout';
 import CFCheckoutInformation from '../../components/forms/Checkout/CFCheckoutInformation';
 import CFPaymentMethod from '../../components/forms/Checkout/CFPaymentMethod';
 import CheckoutService from '../../services/Checkout/Checkout';
-import SetCartRequest from '../../services/Cart/requests/SetCartRequest';
 import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
 import { resetCart } from '~/store/cart/actions';
 
 const CheckoutForm = () => {
-    const {
-        formValues,
-        currentStep,
-        steps = [],
-        informationEditing,
-    } = useSelector((state) => state.checkout);
+    const { formValues, currentStep, informationEditing } = useSelector(
+        (state) => state.checkout,
+    );
     const cart = useSelector((state) => state.cart);
+
     const dispatch = useDispatch();
 
     const handlePayment = async (values) => {
@@ -45,15 +41,8 @@ const CheckoutForm = () => {
             dispatch(resetCart([]));
             window.location.href = response.data;
         } catch (e) {
+            console.log(e);
             dispatch(stopLoading());
-            message.error({
-                content: 'Something went wrong with the connection.',
-                className: 'custom-class',
-                style: {
-                    marginTop: '20vh',
-                    zIndex: 100000,
-                },
-            });
         }
     };
 
@@ -71,41 +60,54 @@ const CheckoutForm = () => {
         }
     };
 
-    const step = steps.find((s) => s.id === currentStep);
     return (
         <Formik
             initialValues={formValues}
             validationSchema={checkoutFormSchema}
             onSubmit={handleSubmit}
         >
-            {({ setFieldValue, values }) => {
-                return (
-                    <Spin spinning={false}>
-                        <Form className='checkout-form'>
-                            {step.title === CHECKOUT_STEPS.CART && (
-                                <CFContactInformation />
-                            )}
-                            {step.title === CHECKOUT_STEPS.CART && (
-                                <CFClaimingMethod
-                                    setFieldValue={setFieldValue}
-                                />
-                            )}
-                            {step.title === CHECKOUT_STEPS.INFORMATION &&
-                                informationEditing && <CFContactInformation />}
-                            {step.title === CHECKOUT_STEPS.INFORMATION &&
-                                !informationEditing && (
-                                    <CFCheckoutInformation />
-                                )}
-                            {step.title === CHECKOUT_STEPS.INFORMATION && (
-                                <CFPaymentMethod />
-                            )}
-
-                            <FormFooter />
-                        </Form>
-                    </Spin>
-                );
-            }}
+            {({ setFieldValue }) => (
+                <FormContainer setFieldValue={setFieldValue} />
+            )}
         </Formik>
+    );
+};
+
+const FormContainer = (props) => {
+    const { setFieldValue } = props;
+    const { isLoggedIn, user } = useSelector((state) => state.session);
+    const { currentStep, steps = [], informationEditing } = useSelector(
+        (state) => state.checkout,
+    );
+
+    const step = steps.find((s) => s.id === currentStep);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            setFieldValue('email', user.email);
+            setFieldValue('firstname', user.firstName);
+            setFieldValue('lastname', user.lastName);
+            setFieldValue('mobile_number', user.mobileNumber);
+        }
+    }, [isLoggedIn, user]);
+
+    return (
+        <Spin spinning={false}>
+            <Form className="checkout-form">
+                {step.title === CHECKOUT_STEPS.CART && <CFContactInformation />}
+                {step.title === CHECKOUT_STEPS.CART && (
+                    <CFClaimingMethod setFieldValue={setFieldValue} />
+                )}
+                {step.title === CHECKOUT_STEPS.INFORMATION &&
+                    informationEditing && <CFContactInformation />}
+                {step.title === CHECKOUT_STEPS.INFORMATION &&
+                    !informationEditing && <CFCheckoutInformation />}
+                {step.title === CHECKOUT_STEPS.INFORMATION && (
+                    <CFPaymentMethod />
+                )}
+                <FormFooter />
+            </Form>
+        </Spin>
     );
 };
 
@@ -122,35 +124,35 @@ const FormFooter = () => {
     };
 
     return (
-        <div className='form-footer'>
-            <div className='footer-action'>
+        <div className="form-footer">
+            <div className="footer-action">
                 {step.title === CHECKOUT_STEPS.CART && (
                     <a
-                        className='-italic'
+                        className="-italic"
                         onClick={() => goToPage('/products?open=1')}
                     >
                         &lt; Return to Cart
                     </a>
                 )}
                 {currentStep > 0 && (
-                    <a className='-italic' onClick={handlePrev} href='#'>
+                    <a className="-italic" onClick={handlePrev} href="#">
                         &lt; Return to information
                     </a>
                 )}
             </div>
-            <div className='footer-action'>
+            <div className="footer-action">
                 {currentStep <= 0 && (
                     <button
                         type={'submit'}
-                        className='btn py-3 px-4 btn-primary btn-block'
+                        className="btn py-3 px-4 btn-primary btn-block"
                     >
                         Continue
                     </button>
                 )}
                 {step.title === CHECKOUT_STEPS.INFORMATION && (
                     <button
-                        type='submit'
-                        className='btn py-3 px-4 btn-primary btn-block'
+                        type="submit"
+                        className="btn py-3 px-4 btn-primary btn-block"
                     >
                         PAYMENT
                     </button>
