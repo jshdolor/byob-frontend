@@ -22,7 +22,7 @@ export default function CheckoutPage(props) {
 }
 
 CheckoutPage.getInitialProps = async (ctx) => {
-    const user = await authCheck(ctx);
+    const user = await authCheck(ctx, false);
 
     return { user };
 };

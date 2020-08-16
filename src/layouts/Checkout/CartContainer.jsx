@@ -1,13 +1,20 @@
 import React, { PureComponent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CartItem from '../../components/cart/item';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {
+    Container,
+    Row,
+    Col,
+    Button,
+    InputGroup,
+    FormControl,
+} from 'react-bootstrap';
 import { amountPrecision, bottlePrice, bottlePerMl } from '~/config/app';
 import { Divider } from 'antd';
 
 const CartContainer = () => {
     const cartItems = useSelector((state) => state.cart) || [];
-
+    const { isLoggedIn } = useSelector((state) => state.session);
     const { currentStep } = useSelector((state) => state.checkout);
     const cartCount = (cartItems || []).reduce((a, b) => {
         if (b.type.id === 1) {
@@ -43,11 +50,22 @@ const CartContainer = () => {
                         Total Number of Items: <em>{cartCount}</em>
                     </Col>
                 </Row>
-                <Divider />
+
+                {!isDisabled && isLoggedIn && (
+                    <Row>
+                        <Col>
+                            <VoucherInput />
+                        </Col>
+                    </Row>
+                )}
+
+                <Divider></Divider>
+
                 <Row className="mt-4">
                     <Col>Subtotal</Col>
                     <Col className="text-right">P{subtotal}</Col>
                 </Row>
+
                 <Row>
                     <Col>
                         Bottle (x
@@ -58,7 +76,15 @@ const CartContainer = () => {
                     </Col>
                     <Col className="text-right">P{bottle}</Col>
                 </Row>
-                <Divider />
+
+                {isDisabled && isLoggedIn && (
+                    <Row>
+                        <Col>Discount Voucher (0%)</Col>
+                        <Col className="text-right">P{0}</Col>
+                    </Row>
+                )}
+
+                <Divider></Divider>
                 <Row>
                     <Col>Total</Col>
                     <Col className="text-right">
@@ -67,6 +93,21 @@ const CartContainer = () => {
                 </Row>
             </div>
         </div>
+    );
+};
+
+const VoucherInput = () => {
+    return (
+        <InputGroup className="voucher-input">
+            <FormControl
+                placeholder="Voucher Code"
+                aria-label="Voucher Code"
+                aria-describedby="Voucher Code"
+            />
+            <InputGroup.Append>
+                <Button variant="outline-secondary">APPLY</Button>
+            </InputGroup.Append>
+        </InputGroup>
     );
 };
 
