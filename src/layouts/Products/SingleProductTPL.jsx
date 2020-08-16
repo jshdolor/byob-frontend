@@ -96,12 +96,16 @@ class SingleProductTPL extends Component {
                       <span className='order-quantity'>{quantity}</span>
                       <PlusOutlined className='plus-btn' onClick={this.onAdd} />
                     </div>
+                    <span>pc/s</span>
                   </div>
                 ) : (
-                  <InputNumber onChange={this.onQuantityChange} defaultValue='1' type='number' size='large' min={1} max={9999} value={quantity} placeholder='Input ML'></InputNumber>
+                  <div className='input-number'>
+                    <InputNumber onChange={this.onQuantityChange} defaultValue='1' type='number' size='large' min={1} max={9999} value={quantity} placeholder='Input ML'></InputNumber>
+                    <span>ml</span>
+                  </div>
                 )}
 
-                <div className='subtotal-cont'>
+                <div className='subtotal-cont-single'>
                   <p>
                     Subtotal: P<span>{parseFloat(total).toFixed(amountPrecision)}</span>
                   </p>
