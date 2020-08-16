@@ -50,9 +50,14 @@ class LoginForm extends Component {
                 apiMessage: false,
             });
 
-            await postLogin();
+            const fromCheckout =
+                window.location.search.indexOf('checkout') > -1;
 
-            Router.replace('/');
+            const redirectPath = fromCheckout ? '/checkout' : '/';
+
+            await postLogin(fromCheckout);
+
+            Router.replace(redirectPath);
         } catch (e) {
             if (e.getErrors) {
                 const errors = e.getErrors();

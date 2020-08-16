@@ -98,8 +98,22 @@ const Cart = (props) => {
             </Col>
           </Row>
 
-          <Button onClick={() => Router.push('/checkout')} block className='mt-4' variant='primary' disabled={cartItems.length === 0 ? false : true}>
-            Checkout — <span className='ml-2'>P{(cartItems || []).reduce((a, b) => a + parseFloat(b.total) + b.bottles * bottlePrice ?? 0, 0).toFixed(amountPrecision)}</span>
+          <Button onClick={() => Router.push('/checkout')} block className='mt-4' variant='primary' disabled={cartItems.length === 0}>
+            Checkout —{' '}
+            <span className='ml-2'>
+              P
+              {(cartItems || [])
+                .reduce(
+                  (a, b) => {
+                    const bottles = b.type?.id === 2 ? b.bottles * bottlePrice : 0;
+
+                    return a + parseFloat(b.total) + bottles;
+                  },
+
+                  0
+                )
+                .toFixed(amountPrecision)}
+            </span>
           </Button>
         </Col>
       </Row>

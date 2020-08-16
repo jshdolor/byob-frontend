@@ -4,16 +4,25 @@ import { Banner, Filter, Catalogue } from '~/components/products';
 import { useState, useEffect } from 'react';
 import ProductService from '~/services/Product';
 import SortFilter from '~/components/products/SortFilter';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_CART_MENU } from '~/store/cartMenu/actions';
 
 function ProductsPage() {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [products, setProducts] = useState([]);
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         ProductService.getAll().then((prod) => {
             setProducts(prod);
             setFilteredProducts(prod);
         });
+
+        if (router.query['open']) {
+            dispatch({ type: TOGGLE_CART_MENU, payload: true });
+        }
     }, []);
 
     return (
