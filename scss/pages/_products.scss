@@ -1,10 +1,10 @@
 #products-page {
-  .filter-container {
-    position: sticky;
-    top: 60px;
+    .filter-container {
+        position: sticky;
+        top: 60px;
 
-    .ant-form-item {
-      margin-bottom: 0;
+        .ant-form-item {
+            margin-bottom: 0;
 
             .ant-checkbox-inner {
                 border-radius: 50%;
@@ -15,16 +15,15 @@
             height: 40px;
         }
     }
-  }
+}
 
-  input[type='radio'] {
+input[type='radio'] {
     &:checked:after {
-      content: '✓';
+        content: '✓';
     }
-  }
+}
 
-  .product-pagination {
+.product-pagination {
     text-align: center;
     margin-top: 20px;
-  }
 }
