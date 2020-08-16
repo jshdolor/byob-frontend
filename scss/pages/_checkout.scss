@@ -1,270 +1,255 @@
 .checkout-page {
-    margin-top: -68px;
-    margin-bottom: -120px;
-    font-family: 'Circular Black', Fallback, sans-serif;
+  margin-top: -68px;
+  margin-bottom: -120px;
+  font-family: 'Circular Black', Fallback, sans-serif;
 
-
-    .checkout-page-container {}
-
+  .checkout-page-container {
+  }
 }
 
 .checkout-page-container {
+  padding: 20px;
+  min-height: 100vh;
+  @include for-tablet-portrait-up {
     padding: 40px;
-    min-height: 100vh;
+  }
+  &.-checkout {
+    background-color: #f0f0f0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
 
-
-
-    &.-checkout {
-        background-color: #f0f0f0;
-        height: 100%;
-        display: flex;
-        justify-content: flex-end;
-
-        @include for-desktop-up {
-            padding-right: 130px;
-        }
+    @include for-desktop-up {
+      padding-right: 130px;
     }
+  }
 
-    &.-cart {
-        display: flex;
-        justify-content: flex-start;
+  &.-cart {
+    display: flex;
+    justify-content: flex-start;
 
-        @include for-desktop-up {
-            padding-left: 90px;
-        }
+    @include for-desktop-up {
+      padding-left: 90px;
     }
-
+  }
 }
 
 .checkout-page-container.-cart {
-    .checkout-content {
-        width: 100%;
-        max-width: 490px;
-    }
+  .checkout-content {
+    width: 100%;
+    max-width: 490px;
+  }
 }
 
 .checkout-page-container.-checkout {
-    .checkout-content {
-        width: 100%;
-        max-width: 600px;
+  .checkout-content {
+    width: 100%;
+    max-width: 600px;
 
-        .checkout-logo {
-            width: 176px;
-            height: 140px;
-            background-image: url('/images/logo-green.png');
-            margin-bottom: 30px;
-        }
+    .checkout-logo {
+      width: 176px;
+      height: 140px;
+      background-image: url('/images/logo-green.png');
+      margin-bottom: 30px;
     }
+  }
 }
 
 .checkout-page .ant-breadcrumb {
-    // margin-bottom: 30px;
+  // margin-bottom: 30px;
 
-    .b-item {
-        color: $secondary-text-color;
-        font-family: $primary-font;
-    }
+  .b-item {
+    color: $secondary-text-color;
+    font-family: $primary-font;
+  }
 
-    .-active {
-        color: $byob-primary;
-        font-family: $bold-font;
-    }
+  .-active {
+    color: $byob-primary;
+    font-family: $bold-font;
+  }
 }
 
-
 .checkout-form {
-    .-normal-text {
-        font-family: $primary-font;
+  .-normal-text {
+    font-family: $primary-font;
+    letter-spacing: normal;
+    font-size: 16px;
+    line-height: 16px;
+    color: $gray;
+  }
+
+  .-italic {
+    font-family: $italic-font;
+  }
+
+  .ant-form-item {
+    margin-bottom: 14px;
+  }
+
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    padding: 17px;
+    height: 67px;
+    padding-left: 23px;
+  }
+
+  .ant-form-item-has-error .ant-form-item-explain {
+    font-style: italic;
+    color: $byob-accent !important;
+    font-size: 12px;
+  }
+
+  .ant-form-item-has-error {
+    input.ant-input {
+      &:hover {
+        border: 1px solid $byob-accent !important;
+      }
+
+      border: 1px solid $byob-accent !important;
+    }
+  }
+
+  input.ant-input {
+    box-shadow: none !important;
+    border: none;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 23px;
+    font-family: $primary-font;
+
+    &::placeholder {
+      font-family: $primary-font;
+      color: $secondary-text-color;
+    }
+  }
+
+  .divider-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 21px;
+    margin-top: 30px;
+
+    h1 {
+      font-family: $primary-font;
+      color: $byob-primary;
+      margin-bottom: 0;
+    }
+
+    span {
+      font-family: $primary-font;
+      letter-spacing: normal;
+      font-size: 16px;
+      color: $gray;
+    }
+
+    a {
+      color: $byob-primary;
+    }
+  }
+
+  .claiming-method-input {
+    padding: 0px;
+    width: 100%;
+
+    .cm-item {
+      border: 1px solid $byob-primary;
+      height: 100px;
+      @include for-tablet-portrait-up {
+        height: 67px;
+      }
+
+      padding-left: 20px;
+      padding-right: 20px;
+      display: flex;
+      align-items: center;
+      margin-bottom: -1px;
+      font-family: $primary-font;
+      color: #555;
+      letter-spacing: normal;
+      font-size: 16px;
+
+      line-height: 16px;
+
+      .ant-radio-inner::after {
+        top: 0;
+        left: 0;
+        width: 14px;
+        height: 14px;
+      }
+
+      .ant-radio-inner {
+        border-color: $byob-primary;
+      }
+    }
+
+    .cm-item > span:not(.ant-radio) {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dot {
+      border: 1px solid $byob-primary;
+      min-height: 12px;
+      min-width: 12px;
+      border-radius: 50%;
+
+      margin-right: 10px;
+    }
+
+    @include for-desktop-up {
+      .dot {
+        margin-right: 21px;
+        min-height: 15px;
+        min-width: 15px;
+      }
+
+      .cm-item {
+        padding-left: 33px;
+      }
+    }
+  }
+
+  .form-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 36px;
+    align-items: center;
+
+    .footer-action {
+      width: 50%;
+
+      a {
+        font-family: $italic-font;
+        color: $byob-primary;
         letter-spacing: normal;
         font-size: 16px;
         line-height: 16px;
-        color: $gray;
+      }
     }
-
-    .-italic {
-        font-family: $italic-font;
-    }
-
-    .ant-form-item {
-        margin-bottom: 14px;
-    }
-
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-        padding: 17px;
-        height: 67px;
-        padding-left: 23px;
-    }
-
-
-    .ant-form-item-has-error .ant-form-item-explain {
-        font-style: italic;
-        color: $byob-accent !important;
-        font-size: 12px;
-    }
-
-    .ant-form-item-has-error {
-        input.ant-input {
-            &:hover {
-                border: 1px solid $byob-accent !important;
-            }
-
-            border: 1px solid $byob-accent !important;
-        }
-    }
-
-    input.ant-input {
-        box-shadow: none !important;
-        border: none;
-        font-size: 16px;
-        line-height: 16px;
-        padding: 23px;
-        font-family: $primary-font;
-
-        &::placeholder {
-            font-family: $primary-font;
-            color: $secondary-text-color;
-        }
-    }
-
-
-    .divider-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 21px;
-        margin-top: 30px;
-
-        h1 {
-            font-family: $primary-font;
-            color: $byob-primary;
-            margin-bottom: 0;
-        }
-
-        span {
-            font-family: $primary-font;
-            letter-spacing: normal;
-            font-size: 16px;
-            color: $gray;
-        }
-
-        a {
-            color: $byob-primary;
-        }
-    }
-
-    .claiming-method-input {
-        padding: 0px;
-        width: 100%;
-
-        .cm-item {
-            border: 1px solid $byob-primary;
-            height: 67px;
-
-            padding-left: 20px;
-            padding-right: 20px;
-            display: flex;
-            align-items: center;
-            margin-bottom: -1px;
-            font-family: $primary-font;
-            color: #555;
-            letter-spacing: normal;
-            font-size: 16px;
-
-            line-height: 16px;
-
-
-            .ant-radio-inner::after {
-                top: 0;
-                left: 0;
-                width: 14px;
-                height: 14px;
-            }
-
-            .ant-radio-inner {
-                border-color: $byob-primary
-            }
-        }
-
-        .cm-item>span:not(.ant-radio) {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-
-
-        }
-
-        .dot {
-            border: 1px solid $byob-primary;
-            min-height: 12px;
-            min-width: 12px;
-            border-radius: 50%;
-
-            margin-right: 10px;
-
-
-        }
-
-        @include for-desktop-up {
-            .dot {
-                margin-right: 21px;
-                min-height: 15px;
-                min-width: 15px;
-            }
-
-            .cm-item {
-                padding-left: 33px;
-            }
-        }
-
-
-
-
-    }
-
-    .form-footer {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 36px;
-        align-items: center;
-
-        .footer-action {
-            width: 50%;
-
-            a {
-                font-family: $italic-font;
-                color: $byob-primary;
-                letter-spacing: normal;
-                font-size: 16px;
-                line-height: 16px;
-            }
-        }
-
-
-    }
-
-
+  }
 }
 
 .ant-select-dropdown {
-    z-index: 10000 !important;
+  z-index: 10000 !important;
 }
 
 .checkout-information {
-    padding: 0px;
-    list-style: none;
-    margin-top: 30px;
+  padding: 0px;
+  list-style: none;
+  margin-top: 30px;
 
-    .change-link {
-        font-family: $italic-font;
-        color: $byob-primary;
-    }
+  .change-link {
+    font-family: $italic-font;
+    color: $byob-primary;
+  }
 
-    .information-item {
-        padding: 26px 31px;
-        font-family: $primary-font;
-        border: solid $byob-primary 1px;
-        line-height: 16px;
-        font-size: 16px;
-        margin-bottom: -1px;
-        width: 100%;
-    }
+  .information-item {
+    padding: 26px 31px;
+    font-family: $primary-font;
+    border: solid $byob-primary 1px;
+    line-height: 16px;
+    font-size: 16px;
+    margin-bottom: -1px;
+    width: 100%;
+  }
 }
