@@ -111,9 +111,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
           placeholder='Mobile Number'
         >
           <Radio className='cm-item' disabled value={CLAIMING_METHOD.LOCKER}>
-            Locker
-            <br />
-            (maximum of 10 items per locker)
+            Locker (maximum of 10 items per locker)
           </Radio>
           <Radio className='cm-item' value={CLAIMING_METHOD.BYOB}>
             Bring Your Own Bote Booth
@@ -158,7 +156,10 @@ const CFClaimingMethod = ({ setFieldValue }) => {
       )}
       <p className='-normal-text -italic'>
         You will recieve an SMS notification after purchase completion when the products are ready for pickup. The BYOB Booth are open Monday to Sunday 8:00AM-5:00PM Please check our{' '}
-        <Link href='faq'>FAQ</Link> for details.
+        <Link href='faqs'>
+          <a>FAQ</a>
+        </Link>{' '}
+        for details.
       </p>
     </>
   );

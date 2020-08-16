@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Form, Input } from 'formik-antd';
 import { Row, Col } from 'antd';
@@ -10,10 +10,14 @@ import { editForm } from '../../../store/checkout/actions';
 const CFContactInformation = () => {
     const { currentStep } = useSelector((state) => state.checkout);
     const { isLoggedIn } = useSelector((state) => state.session);
+    const [isDisabled, setDisabled] = useState(false);
     const dispatch = useDispatch();
     const handleBack = () => {
         dispatch(editForm());
     };
+    useEffect(() => {
+        setDisabled(isLoggedIn);
+    }, [isLoggedIn]);
     return (
         <>
             <CFDividerHeader
@@ -22,15 +26,18 @@ const CFContactInformation = () => {
                     !isLoggedIn ? (
                         <>
                             Already have an account?{' '}
-                            <Link href="/login">Login</Link>
+                            <Link href="/login?redirect=checkout">
+                                <a>Login</a>
+                            </Link>
                         </>
                     ) : (
-                        <span></span>
+                        ''
                     )
                 }
             />
             <Form.Item name="email">
                 <Input
+                    disabled={isDisabled}
                     name="email"
                     className="checkout-input"
                     placeholder="Email"
@@ -40,6 +47,7 @@ const CFContactInformation = () => {
                 <Col xs={24} sm={24} md={12} span={12}>
                     <Form.Item name="firstname">
                         <Input
+                            disabled={isDisabled}
                             name="firstname"
                             className="checkout-input"
                             placeholder="First Name"
@@ -49,6 +57,7 @@ const CFContactInformation = () => {
                 <Col xs={24} sm={24} md={12} span={12}>
                     <Form.Item name="lastname">
                         <Input
+                            disabled={isDisabled}
                             name="lastname"
                             className="checkout-input"
                             placeholder="Last Name"
@@ -58,6 +67,7 @@ const CFContactInformation = () => {
             </Row>
             <Form.Item name="mobile_number">
                 <Input
+                    disabled={isDisabled}
                     name="mobile_number"
                     className="checkout-input"
                     placeholder="Mobile Number"

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
-import { Form, Input, Radio } from 'formik-antd';
-import { Row, Col, Spin, Select, message, Button } from 'antd';
-import Link from 'next/link';
+import { Form } from 'formik-antd';
+import Router from 'next/router';
+import { Spin } from 'antd';
 import checkoutFormSchema from '../../../config/forms/schema/checkoutFormSchema';
-import { get } from 'lodash';
 import CFContactInformation from '../../components/forms/Checkout/CFContactInformation';
 import CFClaimingMethod from '../../components/forms/Checkout/CFClaimingMethod';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,17 +19,16 @@ import { CHECKOUT_STEPS } from '../../config/checkout';
 import CFCheckoutInformation from '../../components/forms/Checkout/CFCheckoutInformation';
 import CFPaymentMethod from '../../components/forms/Checkout/CFPaymentMethod';
 import CheckoutService from '../../services/Checkout/Checkout';
-import SetCartRequest from '../../services/Cart/requests/SetCartRequest';
 import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
+import { resetCart } from '~/store/cart/actions';
+
 const CheckoutForm = () => {
-    const {
-        formValues,
-        currentStep,
-        steps = [],
-        informationEditing,
-    } = useSelector((state) => state.checkout);
+    const { formValues, currentStep, informationEditing } = useSelector(
+        (state) => state.checkout,
+    );
     const cart = useSelector((state) => state.cart);
+
     const dispatch = useDispatch();
 
     const handlePayment = async (values) => {
@@ -40,17 +38,11 @@ const CheckoutForm = () => {
             const localRequest = new CheckoutRequest(request);
 
             const response = await CheckoutService.checkout(localRequest);
+            dispatch(resetCart([]));
             window.location.href = response.data;
         } catch (e) {
+            console.log(e);
             dispatch(stopLoading());
-            message.error({
-                content: 'Something went wrong with the connection.',
-                className: 'custom-class',
-                style: {
-                    marginTop: '20vh',
-                    zIndex: 100000,
-                },
-            });
         }
     };
 
@@ -68,41 +60,54 @@ const CheckoutForm = () => {
         }
     };
 
-    const step = steps.find((s) => s.id === currentStep);
     return (
         <Formik
             initialValues={formValues}
             validationSchema={checkoutFormSchema}
             onSubmit={handleSubmit}
         >
-            {({ setFieldValue, values }) => {
-                return (
-                    <Spin spinning={false}>
-                        <Form className="checkout-form">
-                            {step.title === CHECKOUT_STEPS.CART && (
-                                <CFContactInformation />
-                            )}
-                            {step.title === CHECKOUT_STEPS.CART && (
-                                <CFClaimingMethod
-                                    setFieldValue={setFieldValue}
-                                />
-                            )}
-                            {step.title === CHECKOUT_STEPS.INFORMATION &&
-                                informationEditing && <CFContactInformation />}
-                            {step.title === CHECKOUT_STEPS.INFORMATION &&
-                                !informationEditing && (
-                                    <CFCheckoutInformation />
-                                )}
-                            {step.title === CHECKOUT_STEPS.INFORMATION && (
-                                <CFPaymentMethod />
-                            )}
-
-                            <FormFooter />
-                        </Form>
-                    </Spin>
-                );
-            }}
+            {({ setFieldValue }) => (
+                <FormContainer setFieldValue={setFieldValue} />
+            )}
         </Formik>
+    );
+};
+
+const FormContainer = (props) => {
+    const { setFieldValue } = props;
+    const { isLoggedIn, user } = useSelector((state) => state.session);
+    const { currentStep, steps = [], informationEditing } = useSelector(
+        (state) => state.checkout,
+    );
+
+    const step = steps.find((s) => s.id === currentStep);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            setFieldValue('email', user.email);
+            setFieldValue('firstname', user.firstName);
+            setFieldValue('lastname', user.lastName);
+            setFieldValue('mobile_number', user.mobileNumber);
+        }
+    }, [isLoggedIn, user]);
+
+    return (
+        <Spin spinning={false}>
+            <Form className="checkout-form">
+                {step.title === CHECKOUT_STEPS.CART && <CFContactInformation />}
+                {step.title === CHECKOUT_STEPS.CART && (
+                    <CFClaimingMethod setFieldValue={setFieldValue} />
+                )}
+                {step.title === CHECKOUT_STEPS.INFORMATION &&
+                    informationEditing && <CFContactInformation />}
+                {step.title === CHECKOUT_STEPS.INFORMATION &&
+                    !informationEditing && <CFCheckoutInformation />}
+                {step.title === CHECKOUT_STEPS.INFORMATION && (
+                    <CFPaymentMethod />
+                )}
+                <FormFooter />
+            </Form>
+        </Spin>
     );
 };
 
@@ -113,13 +118,21 @@ const FormFooter = () => {
     const handlePrev = () => {
         dispatch(prevStep());
     };
+
+    const goToPage = (path) => {
+        Router.push(path);
+    };
+
     return (
         <div className="form-footer">
             <div className="footer-action">
                 {step.title === CHECKOUT_STEPS.CART && (
-                    <Link className="-italic" href="cart">
+                    <a
+                        className="-italic"
+                        onClick={() => goToPage('/products?open=1')}
+                    >
                         &lt; Return to Cart
-                    </Link>
+                    </a>
                 )}
                 {currentStep > 0 && (
                     <a className="-italic" onClick={handlePrev} href="#">

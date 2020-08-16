@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Spin } from 'antd';
 import CheckoutContainer from './CheckoutContainer';
 import CartContainer from './CartContainer';
-import { useSelector } from 'react-redux';
+import { TOGGLE_CART_MENU } from '~/store/cartMenu/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const CheckoutTPL = () => {
     const { isLoading } = useSelector((state) => state.checkout);
+    const { open } = useSelector((state) => state.cartMenu);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (open) {
+            dispatch({ type: TOGGLE_CART_MENU, payload: false });
+        }
+    }, []);
+
     return (
         <Spin spinning={isLoading}>
             <Row className="checkout-page">

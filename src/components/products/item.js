@@ -13,7 +13,7 @@ const Item = (props) => {
     };
     return (
         <div className='my-3'>
-            <Link href={`/products/${slug}`}>
+            <Link href={`/products/[slug]`} as={`/products/${slug}`}>
                 <a className='byob-text-default'>
                     <Image src={image} style={{ width: '100%' }} fluid></Image>
                     <div className='byob-text-small font-weight-bold d-block mt-3'>

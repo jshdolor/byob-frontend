@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from './actions';
+import { LOGIN_USER, LOGOUT_USER, SET_USER } from './actions';
 import io from 'socket.io-client';
 import CookieManager from '~/lib/CookieManager';
 import ClientStorage from '~/lib/ClientStorage';
@@ -7,6 +7,7 @@ const socket = io();
 
 const initialState = {
     isLoggedIn: !!CookieManager.get('b-at'),
+    user: {},
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -25,7 +26,11 @@ export default (state = initialState, { type, payload }) => {
             ClientStorage.set('cart', []);
             CookieManager.delete('b-at');
             break;
-
+        case SET_USER:
+            return {
+                ...state,
+                user: payload,
+            };
         default:
             return state;
     }

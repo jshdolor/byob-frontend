@@ -7,7 +7,7 @@ const Product = (props) => {
     const { name, slug, image, displayPrice, id, type } = products;
     return (
         <div className='product-preview'>
-            <Link href={`/products/${slug}`}>
+            <Link href={`/products/[slug]`} as={`/products/${slug}`}>
                 <a>
                     <div className='product-img'>
                         <img src={image} alt='' />

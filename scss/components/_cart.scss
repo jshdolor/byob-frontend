@@ -69,6 +69,7 @@ button.add-to-cart {
 
       .item-image {
         text-align: left;
+        min-height: 80px
       }
     }
 
@@ -80,10 +81,12 @@ button.add-to-cart {
     }
   }
 }
+
 .subtotal-cont {
   justify-content: space-between;
   width: 100%;
   margin: 0;
+
   .col {
     padding: 0;
   }

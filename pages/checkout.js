@@ -1,10 +1,16 @@
 import Head from 'next/head';
-import { Container } from 'react-bootstrap';
-import HowToOrderTPL from '../src/layouts/HowToOrder/HowToOrderTPL';
-import Cart from '~/components/cart';
 import CheckoutTPL from '../src/layouts/Checkout/CheckoutTPL';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { setUser } from '../src/store/session/actions';
+import authCheck from '../src/middleware/auth';
 
-export default function CheckoutPage() {
+export default function CheckoutPage(props) {
+    const { user = {} } = props;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(setUser(user));
+    }, []);
     return (
         <div>
             <Head>
@@ -14,3 +20,9 @@ export default function CheckoutPage() {
         </div>
     );
 }
+
+CheckoutPage.getInitialProps = async (ctx) => {
+    const user = await authCheck(ctx, false);
+
+    return { user };
+};

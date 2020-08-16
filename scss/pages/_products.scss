@@ -10,16 +10,20 @@
         border-radius: 50%;
       }
     }
-  }
 
-  input[type='radio'] {
-    &:checked:after {
-      content: '✓';
+    .filter-refill-logo {
+      height: 40px;
     }
   }
+}
 
-  .product-pagination {
-    text-align: center;
-    margin-top: 20px;
+input[type='radio'] {
+  &:checked:after {
+    content: '✓';
   }
+}
+
+.product-pagination {
+  text-align: center;
+  margin-top: 20px;
 }

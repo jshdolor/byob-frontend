@@ -1,9 +1,8 @@
 import CartService from '~/services/Cart/CartService';
 
 import { SET_CART_ITEMS, RESET_CART } from '~/store/cart/actions';
-import ProductService from '~/services/Product';
 
-const postLogin = async () => {
+const postLogin = async (useLocalCart = false) => {
     try {
         const userCart = await CartService.getCart();
 

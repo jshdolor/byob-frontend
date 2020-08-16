@@ -3,16 +3,17 @@
   margin-bottom: -120px;
   font-family: 'Circular Black', Fallback, sans-serif;
 
-  .checkout-page-container {
-  }
+  .checkout-page-container {}
 }
 
 .checkout-page-container {
   padding: 20px;
   min-height: 100vh;
+
   @include for-tablet-portrait-up {
     padding: 40px;
   }
+
   &.-checkout {
     background-color: #f0f0f0;
     height: 100%;
@@ -153,6 +154,7 @@
     .cm-item {
       border: 1px solid $byob-primary;
       height: 100px;
+
       @include for-tablet-portrait-up {
         height: 67px;
       }
@@ -181,7 +183,7 @@
       }
     }
 
-    .cm-item > span:not(.ant-radio) {
+    .cm-item>span:not(.ant-radio) {
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -251,5 +253,30 @@
     font-size: 16px;
     margin-bottom: -1px;
     width: 100%;
+  }
+}
+
+
+.voucher-input {
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  input.form-control {
+    padding: 27px;
+    line-height: 16px;
+    min-height: 67px;
+    border-color: $byob-primary;
+
+    &::placeholder {
+      font-family: $primary-font;
+      color: $secondary-text-color;
+    }
+  }
+
+  button.btn {
+    background-color: $byob-primary;
+    color: white;
+    border-color: $byob-primary;
+    padding: 0px 69px;
   }
 }

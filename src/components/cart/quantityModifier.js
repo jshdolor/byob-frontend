@@ -23,18 +23,17 @@ const QuantityModifier = ({
     id,
     disabled = false,
     quantity,
-    type = 1,
+    type = { id: 1 },
 }) => {
     const updateCartItem = async (qty) => {
         if (!window.Store.getState()?.session?.isLoggedIn) {
-            if (type === 1) {
+            if (type.id === 1) {
                 window.Store.dispatch({
                     type: qty > quantity ? INCREMENT_ITEM : DECREMENT_ITEM,
                     payload: id,
                 });
                 return;
             }
-
             window.Store.dispatch({
                 type: SET_CART_ITEM,
                 payload: { id, qty },
@@ -53,11 +52,11 @@ const QuantityModifier = ({
                     product_id: id,
                 });
             }
-
-            window.Store.dispatch({
-                type: RESET_CART,
-                payload: [],
-            });
+            //When logged in, the cart flicker.
+            // window.Store.dispatch({
+            //     type: RESET_CART,
+            //     payload: [],
+            // });
             window.Store.dispatch({
                 type: SET_CART_ITEMS,
                 payload: cart.map((cartItem) => cartItem.getLocalData()),
