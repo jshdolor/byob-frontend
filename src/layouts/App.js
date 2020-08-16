@@ -2,14 +2,12 @@ import Header from '~/components/header';
 import Footer from '~/components/footer';
 import CartSidebar from '~/components/cart/sidebar';
 
-import { Button, notification, Divider, Space } from 'antd';
+import { notification } from 'antd';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CookieManager from '~/lib/CookieManager';
 
 const AppLayout = ({ children }) => {
-    const [showCookiemodal, setShowCookiemodal] = useState(false);
-
     useEffect(() => {
         const cookieUsageAccepted = CookieManager.get('byob-cookie');
 
@@ -29,7 +27,6 @@ const AppLayout = ({ children }) => {
 
     const acceptCookieAgreement = () => {
         CookieManager.set('byob-cookie', true, { maxAge: 5000000 });
-        setShowCookiemodal(false);
     };
 
     return (

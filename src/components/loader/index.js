@@ -12,6 +12,7 @@ function Loading() {
         // handleComplete event was not firing
         const handleComplete = (url) => {
             setLoading(false);
+            window.scrollTo(0, 0);
         };
 
         router.events.on('routeChangeStart', handleStart);
