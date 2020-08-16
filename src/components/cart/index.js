@@ -124,10 +124,17 @@ const Cart = (props) => {
                             P
                             {(cartItems || [])
                                 .reduce(
-                                    (a, b) =>
-                                        a +
-                                            parseFloat(b.total) +
-                                            b.bottles * bottlePrice ?? 0,
+                                    (a, b) => {
+                                        const bottles =
+                                            b.type?.id === 2
+                                                ? b.bottles * bottlePrice
+                                                : 0;
+
+                                        return (
+                                            a + parseFloat(b.total) + bottles
+                                        );
+                                    },
+
                                     0
                                 )
                                 .toFixed(amountPrecision)}
