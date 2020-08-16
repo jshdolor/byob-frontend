@@ -2,7 +2,7 @@ import Header from '~/components/header';
 import Footer from '~/components/footer';
 import CartSidebar from '~/components/cart/sidebar';
 
-import { Modal, Button } from 'antd';
+import { Button, notification, Divider, Space } from 'antd';
 
 import { useEffect, useState } from 'react';
 import CookieManager from '~/lib/CookieManager';
@@ -11,8 +11,20 @@ const AppLayout = ({ children }) => {
     const [showCookiemodal, setShowCookiemodal] = useState(false);
 
     useEffect(() => {
-        const byobCookie = CookieManager.get('byob-cookie');
-        setShowCookiemodal(!byobCookie);
+        const cookieUsageAccepted = CookieManager.get('byob-cookie');
+
+        if (cookieUsageAccepted) {
+            return;
+        }
+
+        notification.info({
+            message: 'Cookie Usage',
+            description: `This website uses cookies to ensure you get the best
+                    experience in our website.`,
+            placement: 'bottomLeft',
+            duration: 0,
+            onClose: acceptCookieAgreement,
+        });
     }, []);
 
     const acceptCookieAgreement = () => {
@@ -22,20 +34,6 @@ const AppLayout = ({ children }) => {
 
     return (
         <div id='app'>
-            <Modal
-                visible={showCookiemodal}
-                className='byob-popup'
-                closable={false}
-                footer={null}
-            >
-                <p>
-                    This website uses cookies to ensure you get the best
-                    experience in our website.
-                </p>
-                <Button type='primary' onClick={() => acceptCookieAgreement()}>
-                    Okay
-                </Button>
-            </Modal>
             <CartSidebar>
                 <Header></Header>
                 <div id='byob-content'>{children}</div>
