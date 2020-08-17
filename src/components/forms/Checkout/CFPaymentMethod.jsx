@@ -17,7 +17,6 @@ const PAYMENT_METHODS = [
         value: 'paymaya',
         title: 'Paymaya',
         image: '/images/Paymaya-Logo.png',
-        disabled: true,
     },
 ];
 
