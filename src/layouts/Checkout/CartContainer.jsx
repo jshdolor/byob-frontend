@@ -56,7 +56,7 @@ const CartContainer = () => {
                     <Row>
                         <Col>
                             <VoucherInput disabled={!isLoggedIn} />
-                            {!isLoggedIn && (
+                            {!isLoggedIn ? (
                                 <small>
                                     Login to use a promo code. Don't have an
                                     account yet?{' '}
@@ -65,6 +65,8 @@ const CartContainer = () => {
                                     </Link>{' '}
                                     now!
                                 </small>
+                            ) : (
+                                ''
                             )}
                         </Col>
                     </Row>
