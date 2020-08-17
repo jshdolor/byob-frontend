@@ -20,7 +20,12 @@ export default class Product {
     }
 
     get displayPrice() {
-        return 'P' + parseFloat(this.price).toFixed(amountPrecision);
+        const additionalText = this._type?.id === 2 ? '/ml' : '';
+        return (
+            'P' +
+            parseFloat(this.price).toFixed(amountPrecision) +
+            additionalText
+        );
     }
 
     get id() {

@@ -17,7 +17,8 @@ import CartItemModel from '~/models/cart';
 
 import ProductService from '~/services/Product';
 
-import { Typography } from 'antd';
+import { Typography, Tooltip } from 'antd';
+import { InfoCircleFilled } from '@ant-design/icons';
 const { Text } = Typography;
 import { amountPrecision, bottlePrice } from '~/config/app';
 
@@ -79,7 +80,7 @@ const Cart = (props) => {
                         ))}
                     </div>
 
-                    <Row className='subtotal-cont'>
+                    <Row className='subtotal-cont '>
                         <Col>Subtotal</Col>
                         <Col className='text-right'>
                             P
@@ -91,8 +92,22 @@ const Cart = (props) => {
                                 .toFixed(amountPrecision)}
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className='align-items-center'>
                         <Col>
+                            <Tooltip
+                                placement='top'
+                                title={`Return the used bottle at BYOB booth to receive
+                                a refund code that you can use in your next
+                                purchase`}
+                                color={'#0da9d9'}
+                            >
+                                <InfoCircleFilled
+                                    style={{
+                                        color: '#0da9d9',
+                                        fontSize: '16px',
+                                    }}
+                                />
+                            </Tooltip>{' '}
                             Bottle (x
                             {cartItems
                                 .filter((item) => item.type.id === 2)
@@ -124,7 +139,6 @@ const Cart = (props) => {
                             {(cartItems || [])
                                 .reduce(
                                     (a, b) => {
-                                        console.log(b.product_id, b.type.id);
                                         const bottles =
                                             b.type.id === 2
                                                 ? b.bottles * bottlePrice
