@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { Container } from 'react-bootstrap';
 import Product from '~/components/products/Product';
 import ProductService from '~/services/Product';
+import Link from 'next/link';
 
 class HomeTPL extends Component {
   state = {
@@ -53,16 +54,28 @@ class HomeTPL extends Component {
         <div className='home-slider'>
           <Slider {...settings}>
             <div className='slide'>
-              <img className='-desktop' src='/images/carousel.png' alt='' />
-              <img className='-mobile' src='/images/carousel_mobile.png' alt='' />
+              <Link href='/products'>
+                <a>
+                  <img className='-desktop' src='/images/carousel.png' alt='' />
+                  <img className='-mobile' src='/images/carousel_mobile.png' alt='' />
+                </a>
+              </Link>
             </div>
             <div className='slide'>
-              <img className='-desktop' src='/images/carousel.png' alt='' />
-              <img className='-mobile' src='/images/carousel_mobile.png' alt='' />
+              <Link href='/products'>
+                <a>
+                  <img className='-desktop' src='/images/carousel.png' alt='' />
+                  <img className='-mobile' src='/images/carousel_mobile.png' alt='' />
+                </a>
+              </Link>
             </div>
             <div className='slide'>
-              <img className='-desktop' src='/images/carousel.png' alt='' />
-              <img className='-mobile' src='/images/carousel_mobile.png' alt='' />
+              <Link href='/products'>
+                <a>
+                  <img className='-desktop' src='/images/carousel.png' alt='' />
+                  <img className='-mobile' src='/images/carousel_mobile.png' alt='' />
+                </a>
+              </Link>
             </div>
           </Slider>
         </div>
@@ -83,6 +96,11 @@ class HomeTPL extends Component {
                   <Product key={i} products={product}></Product>
                 ))}
               </Slider>
+            </div>
+            <div className='button-cont'>
+              <Link href='/products'>
+                <Button className='shop-btn'>SHOP NOW</Button>
+              </Link>
             </div>
           </div>
         </Container>
