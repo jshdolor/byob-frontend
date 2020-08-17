@@ -24,20 +24,21 @@ const PAYMENT_METHODS = [
 const CFPaymentMethod = () => {
     return (
         <div style={{ marginTop: 70 }}>
-            <CFDividerHeader title="Payment Method" />
+            <CFDividerHeader title='Payment Method' />
 
-            <Form.Item name="payment_gateway">
+            <Form.Item name='payment_gateway'>
                 <Radio.Group
                     style={{ width: '100%' }}
-                    name="payment_gateway"
-                    className="checkout-input claiming-method-input"
-                    placeholder="Mobile Number"
+                    name='payment_gateway'
+                    className='checkout-input claiming-method-input'
+                    placeholder='Mobile Number'
                 >
-                    {PAYMENT_METHODS.map((pm) => (
+                    {PAYMENT_METHODS.map((pm, i) => (
                         <Radio
                             disabled={pm.disabled}
-                            className="cm-item"
+                            className='cm-item'
                             value={pm.value}
+                            key={i}
                         >
                             <span>{pm.title}</span>
                             <img src={pm.image} />

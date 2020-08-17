@@ -126,7 +126,7 @@ const Header = (props) => {
                             onClick={() => setNavbarExpanded(false)}
                             className='nav-link'
                         >
-                            Products
+                            Shop Now
                         </a>
                     </ByobLink>
                     <ByobLink href='/blogs'>
