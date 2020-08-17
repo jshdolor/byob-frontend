@@ -125,6 +125,8 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                         Bring Your Own Bote Booth
                         <br />
                         (At The Mind Museum BGC Taguig)
+                        <br />
+                        *For pick-up only
                     </Radio>
                 </Radio.Group>
             </Form.Item>
