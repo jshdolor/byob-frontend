@@ -25,4 +25,15 @@ export default class ProfileService {
                 throw new ExceptionHandler('ProfileService - get', e);
             });
     }
+
+    static updateProfile(request) {
+        return Client.setUrl(this.endpoint)
+            .put(request.toJSON())
+            .then(({ data }) => {
+                return new ProfileModel(data);
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('ProfileService - updateProfile', e);
+            });
+    }
 }
