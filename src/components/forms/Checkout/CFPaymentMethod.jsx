@@ -33,12 +33,7 @@ const CFPaymentMethod = () => {
                     placeholder='Mobile Number'
                 >
                     {PAYMENT_METHODS.map((pm, i) => (
-                        <Radio
-                            disabled={pm.disabled}
-                            className='cm-item'
-                            value={pm.value}
-                            key={i}
-                        >
+                        <Radio className='cm-item' value={pm.value} key={i}>
                             <span>{pm.title}</span>
                             <img src={pm.image} />
                         </Radio>
