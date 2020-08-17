@@ -1,7 +1,7 @@
 import { Image, Container, Row, Button, Col } from 'react-bootstrap';
 import Link from 'next/link';
 
-import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 const logo = 'images/footer-logo.png';
 
@@ -55,13 +55,19 @@ const AppFooter = () => (
         <Row className='mt-4 footer-social'>
           <Col>
             <span className='mr-3'>
-              <FaFacebookF size='1.2em'></FaFacebookF>
+              <a href='https://www.facebook.com/NutriAsia.Inc/' target='_blank'>
+                <FaFacebookF size='1.2em'></FaFacebookF>
+              </a>
             </span>
             <span className='mr-3'>
-              <FaTwitter size='1.2em'></FaTwitter>
+              <a href='https://youtube.com/nutriasiachannel' target='_blank'>
+                <FaYoutube size='1.2em'></FaYoutube>
+              </a>
             </span>
             <span className='mr-3'>
-              <FaInstagram size='1.2em'></FaInstagram>
+              <a href='https://www.linkedin.com/company/nutriasia' target='_blank'>
+                <FaLinkedin size='1.2em'></FaLinkedin>
+              </a>
             </span>
           </Col>
         </Row>

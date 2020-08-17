@@ -50,6 +50,9 @@ footer {
 
 .footer-social {
   text-align: center;
+  a {
+    color: #027a3a;
+  }
   @include for-tablet-portrait-up {
     text-align: left;
   }
