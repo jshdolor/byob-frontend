@@ -40,7 +40,7 @@ function ProductsPage() {
                     </Col>
                     <Col lg={9}>
                         <Banner></Banner>
-                        <Row>
+                        <Row className='align-items-center'>
                             <Col lg={8}>
                                 <Form.Label className='pt-3'>
                                     {filteredProducts.length} Results
@@ -60,6 +60,13 @@ function ProductsPage() {
                                         </Col>
                                     </Form.Row>
                                 </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                Return the used bottle at BYOB booth to receive
+                                a refund code that you can use in your next
+                                purchase
                             </Col>
                         </Row>
 
