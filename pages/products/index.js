@@ -11,6 +11,7 @@ import { TOGGLE_CART_MENU } from '~/store/cartMenu/actions';
 function ProductsPage() {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [products, setProducts] = useState([]);
+    const [typeFilter, setTypeFilter] = useState([]);
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -25,6 +26,19 @@ function ProductsPage() {
         }
     }, []);
 
+    const handleTypeFilter = (type) => {
+        const inTypeFilter = typeFilter.indexOf(type) > -1;
+        const newTypeFilter = [...typeFilter];
+
+        if (inTypeFilter) {
+            newTypeFilter.splice(typeFilter.indexOf(type), 1);
+        } else {
+            newTypeFilter.push(type);
+        }
+
+        setTypeFilter(newTypeFilter);
+    };
+
     return (
         <>
             <Head>
@@ -36,6 +50,7 @@ function ProductsPage() {
                         <Filter
                             products={products}
                             handle={setFilteredProducts}
+                            typeFilter={handleTypeFilter}
                         ></Filter>
                     </Col>
                     <Col lg={9}>
@@ -62,13 +77,15 @@ function ProductsPage() {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col>
-                                Return the used bottle at BYOB booth to receive
-                                a refund code that you can use in your next
-                                purchase
-                            </Col>
-                        </Row>
+                        {typeFilter.indexOf(2) > -1 && (
+                            <Row>
+                                <Col>
+                                    Return the used bottle at BYOB booth to
+                                    receive a refund code that you can use in
+                                    your next purchase.
+                                </Col>
+                            </Row>
+                        )}
 
                         <Catalogue
                             products={filteredProducts}

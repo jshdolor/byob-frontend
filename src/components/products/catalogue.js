@@ -17,7 +17,6 @@ class Catalogue extends Component {
     };
 
     handlePageChange = (page) => {
-        console.log('Changing page...');
         this.setState({ currentPage: page }, this.scrollToTopOfList);
     };
 
