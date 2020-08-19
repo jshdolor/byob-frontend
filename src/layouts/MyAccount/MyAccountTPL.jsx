@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import { Button, Modal, Checkbox, Input } from 'antd';
 import EditProfileForm from '../../components/forms/EditProfileForm/EditProfileForm';
+import ProfileService from '~/services/ProfileService';
 
 class MyAccountTPL extends Component {
     constructor(props) {
@@ -28,10 +29,15 @@ class MyAccountTPL extends Component {
         });
     };
 
-    updatePassword = () => {
-        this.setState({
-            visible: true,
-        });
+    updatePassword = async () => {
+        try {
+            await ProfileService.passwordChange();
+            this.setState({
+                visible: true,
+            });
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     handleOk = () => {

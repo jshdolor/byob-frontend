@@ -36,4 +36,18 @@ export default class ProfileService {
                 throw new ExceptionHandler('ProfileService - updateProfile', e);
             });
     }
+
+    static passwordChange() {
+        return Client.setUrl(this.endpoint + '/password')
+            .get()
+            .then(({ message }) => {
+                return message;
+            })
+            .catch((e) => {
+                throw new ExceptionHandler(
+                    'ProfileService - passwordChange',
+                    e
+                );
+            });
+    }
 }
