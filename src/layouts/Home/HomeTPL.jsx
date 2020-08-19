@@ -79,6 +79,7 @@ class HomeTPL extends Component {
             </div>
           </Slider>
         </div>
+        <h1 className='collect-title'>How Click & Collect Works</h1>
         <Row>
           <Col sm={24} lg={12} className='two-cols'>
             <div className='one-bg'></div>
