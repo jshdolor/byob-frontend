@@ -1,4 +1,5 @@
 import { Row, Col, Button } from 'antd';
+import ReOrderBtn from '~/components/buttons/reOrder';
 
 const DetailedOrder = (props) => {
     const {
@@ -74,7 +75,7 @@ const DetailedOrder = (props) => {
                     </div>
                 </Col>
                 <Col span={12} className='text-right'>
-                    <Button>Re-order</Button>
+                    <ReOrderBtn></ReOrderBtn>
                 </Col>
             </Row>
         </>
