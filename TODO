@@ -1,0 +1,10 @@
+- date format in order history (do this in the order model)
+- reorder button function
+- buy now button function
+- change `orderPendingAt` usage to `order_completed_at` or `order_confirmed_at`
+
+PAGE
+- handle change password request
+
+CART
+- adding items already on the cart (refillable)

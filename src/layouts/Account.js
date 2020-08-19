@@ -2,6 +2,7 @@ import Router, { useRouter } from 'next/router';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import ClientStorage from '~/lib/ClientStorage';
+import CookieManager from '~/lib/CookieManager';
 import { logoutUser } from '~/store/session/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,8 +25,9 @@ const AccountLayout = ({ children, logoutUser }) => {
 
     const logout = () => {
         ClientStorage.set('cart', []);
+        CookieManager.set('b-at', null);
         logoutUser(true);
-        Router.replace('/');
+        // Router.replace('/');
     };
 
     return (

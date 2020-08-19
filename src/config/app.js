@@ -21,4 +21,5 @@ module.exports = {
         },
     ],
     defaultRefillableValue: 250,
+    orderHistoryProductShow: 2,
 };
