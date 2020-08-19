@@ -19,10 +19,15 @@ let filters = [];
 
 const refillLogo = '/images/refill-logo.png';
 
-const Filter = ({ products, handle }) => {
+const Filter = ({ products, handle, typeFilter }) => {
     const handleFilter = (filter, type, e) => {
         const includeToFilters = e.target.checked;
 
+        if (type.id === 2 && filter === 'type') {
+            typeFilter(type.id);
+        }
+
+        console.log(filter, type);
         if (includeToFilters) {
             filters = [...filters, { [filter]: type }];
         } else {

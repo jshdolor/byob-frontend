@@ -9,6 +9,7 @@ import {
     InputGroup,
     FormControl,
 } from 'react-bootstrap';
+import Link from 'next/link';
 import { amountPrecision, bottlePrice, bottlePerMl } from '~/config/app';
 import { Divider } from 'antd';
 
@@ -33,8 +34,8 @@ const CartContainer = () => {
     const total = (parseFloat(subtotal) || 0) + (parseFloat(bottle) || 0);
 
     return (
-        <div id="checkout-cart" className="checkout-page-container -cart">
-            <div className="cart-content">
+        <div id='checkout-cart' className='checkout-page-container -cart'>
+            <div className='cart-content'>
                 <div>
                     {cartItems.map((cartItem, i) => (
                         <CartItem
@@ -45,25 +46,37 @@ const CartContainer = () => {
                         ></CartItem>
                     ))}
                 </div>
-                <Row className="mt-4 ">
+                <Row className='mt-4 '>
                     <Col className={'byod -regular-font'}>
                         Total Number of Items: <em>{cartCount}</em>
                     </Col>
                 </Row>
 
-                {!isDisabled && isLoggedIn && (
+                {!isDisabled && (
                     <Row>
                         <Col>
-                            <VoucherInput />
+                            <VoucherInput disabled={!isLoggedIn} />
+                            {!isLoggedIn ? (
+                                <small>
+                                    Login to use a promo code. Don't have an
+                                    account yet?{' '}
+                                    <Link href='/signup'>
+                                        <a>Sign up</a>
+                                    </Link>{' '}
+                                    now!
+                                </small>
+                            ) : (
+                                ''
+                            )}
                         </Col>
                     </Row>
                 )}
 
                 <Divider></Divider>
 
-                <Row className="mt-4">
+                <Row className='mt-4'>
                     <Col>Subtotal</Col>
-                    <Col className="text-right">P{subtotal}</Col>
+                    <Col className='text-right'>P{subtotal}</Col>
                 </Row>
 
                 <Row>
@@ -74,20 +87,20 @@ const CartContainer = () => {
                             .reduce((a, b) => a + b.bottles, 0)}
                         )
                     </Col>
-                    <Col className="text-right">P{bottle}</Col>
+                    <Col className='text-right'>P{bottle}</Col>
                 </Row>
 
                 {isDisabled && isLoggedIn && (
                     <Row>
                         <Col>Discount Voucher (0%)</Col>
-                        <Col className="text-right">P{0}</Col>
+                        <Col className='text-right'>P{0}</Col>
                     </Row>
                 )}
 
                 <Divider></Divider>
                 <Row>
                     <Col>Total</Col>
-                    <Col className="text-right">
+                    <Col className='text-right'>
                         P{total.toFixed(amountPrecision)}
                     </Col>
                 </Row>
@@ -96,16 +109,17 @@ const CartContainer = () => {
     );
 };
 
-const VoucherInput = () => {
+const VoucherInput = ({ disabled }) => {
     return (
-        <InputGroup className="voucher-input">
+        <InputGroup className='voucher-input'>
             <FormControl
-                placeholder="Voucher Code"
-                aria-label="Voucher Code"
-                aria-describedby="Voucher Code"
+                placeholder='Voucher Code'
+                aria-label='Voucher Code'
+                aria-describedby='Voucher Code'
+                disabled={disabled}
             />
             <InputGroup.Append>
-                <Button variant="outline-secondary">APPLY</Button>
+                <Button variant='outline-secondary'>APPLY</Button>
             </InputGroup.Append>
         </InputGroup>
     );

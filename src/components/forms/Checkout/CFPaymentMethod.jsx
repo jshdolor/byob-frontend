@@ -17,28 +17,23 @@ const PAYMENT_METHODS = [
         value: 'paymaya',
         title: 'Paymaya',
         image: '/images/Paymaya-Logo.png',
-        disabled: true,
     },
 ];
 
 const CFPaymentMethod = () => {
     return (
         <div style={{ marginTop: 70 }}>
-            <CFDividerHeader title="Payment Method" />
+            <CFDividerHeader title='Payment Method' />
 
-            <Form.Item name="payment_gateway">
+            <Form.Item name='payment_gateway'>
                 <Radio.Group
                     style={{ width: '100%' }}
-                    name="payment_gateway"
-                    className="checkout-input claiming-method-input"
-                    placeholder="Mobile Number"
+                    name='payment_gateway'
+                    className='checkout-input claiming-method-input'
+                    placeholder='Mobile Number'
                 >
-                    {PAYMENT_METHODS.map((pm) => (
-                        <Radio
-                            disabled={pm.disabled}
-                            className="cm-item"
-                            value={pm.value}
-                        >
+                    {PAYMENT_METHODS.map((pm, i) => (
+                        <Radio className='cm-item' value={pm.value} key={i}>
                             <span>{pm.title}</span>
                             <img src={pm.image} />
                         </Radio>
