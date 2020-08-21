@@ -26,6 +26,24 @@ export default class ProfileService {
             });
     }
 
+    static updatePassword({ password, password_confirmation }) {
+        const config = {
+            headers: {
+                'password-reset-token': CookieManager.get(
+                    'password-reset-token'
+                ),
+            },
+        };
+        return Client.setUrl(this.endpoint + '/password')
+            .put({ password, password_confirmation }, config)
+            .then(({ data }) => {
+                return new ProfileModel(data);
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('ProfileService - updateProfile', e);
+            });
+    }
+
     static updateProfile(request) {
         return Client.setUrl(this.endpoint)
             .put(request.toJSON())
