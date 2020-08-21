@@ -22,9 +22,9 @@ const DetailedOrder = (props) => {
             </Row>
             <Row className='mt-3'>
                 <Col span={14}>
-                    {products.map((product) => {
+                    {products.map((product, i) => {
                         return (
-                            <Row>
+                            <Row key={i}>
                                 <Col span={14}>{product.name}</Col>
                                 <Col span={10} className='text-right'>
                                     {product.product_type_id === 2
@@ -75,7 +75,7 @@ const DetailedOrder = (props) => {
                     </div>
                 </Col>
                 <Col span={12} className='text-right'>
-                    <ReOrderBtn></ReOrderBtn>
+                    <ReOrderBtn cart={products}></ReOrderBtn>
                 </Col>
             </Row>
         </>

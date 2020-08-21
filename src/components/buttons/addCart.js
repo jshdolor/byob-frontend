@@ -81,4 +81,5 @@ const addCart = (props) => {
     );
 };
 
+export { addToCart };
 export default addCart;
