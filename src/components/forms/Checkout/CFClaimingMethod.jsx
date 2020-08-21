@@ -12,57 +12,6 @@ import { availableLockers } from '~/config/app';
 
 const { Option } = Select;
 
-const tempLockerSchedule = [
-    {
-        date: 'August 14, 2020',
-        status: 'available',
-        time: [
-            {
-                id: 1, /// ID_DATE_TIME
-                name: '8AM - 9PM',
-                status: 'available',
-            },
-            {
-                id: 2,
-                name: '10AM - 11AM',
-                status: 'disabled',
-            },
-        ],
-    },
-    {
-        date: 'August 15, 2020',
-        status: 'disabled',
-        time: [
-            {
-                id: 3,
-                name: '8AM - 9PM',
-                status: 'disabled',
-            },
-            {
-                id: 4,
-                name: '10AM - 11AM',
-                status: 'disabled',
-            },
-        ],
-    },
-    {
-        date: 'August 16, 2020',
-        status: 'avaialable',
-        time: [
-            {
-                id: 5,
-                name: '8AM - 9PM',
-                status: 'avaialable',
-            },
-            {
-                id: 6,
-                name: '10AM - 11AM',
-                status: 'avaialable',
-            },
-        ],
-    },
-];
-
 const CFClaimingMethod = ({ setFieldValue }) => {
     const { formValues, currentStep, steps } = useSelector(
         (state) => state.checkout
@@ -73,6 +22,15 @@ const CFClaimingMethod = ({ setFieldValue }) => {
     const [claimingMethod, setClaimingMethod] = useState(
         formValues.claimingMethod
     );
+
+    const handleClaimingChange = (value) => {
+        setFieldValue('pickup_type', value);
+        setClaimingMethod(value);
+    };
+
+    useEffect(() => {
+        setFieldValue('pickup_type', claimingMethod);
+    }, []);
 
     const [lockerSchedules, setLockerSchedules] = useState([]);
     const [lockerSchedulesLoading, setLockerSchedulesLoading] = useState(false);
@@ -113,6 +71,9 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                 (t) => t.schedule_id == time
             );
 
+            setFieldValue('lockers.date', date);
+            setFieldValue('lockers.schedule_id', time);
+
             setFieldValue('lockerTimeText', lockerTimeText?.name);
         }
     }, [time, date]);
@@ -126,7 +87,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
             <Form.Item name='claimingMethod'>
                 <Radio.Group
                     onChange={(e) => {
-                        setClaimingMethod(e.target.value);
+                        handleClaimingChange(e.target.value);
                     }}
                     name='claimingMethod'
                     className='checkout-input claiming-method-input'

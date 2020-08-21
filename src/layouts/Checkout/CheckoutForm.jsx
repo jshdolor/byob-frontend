@@ -22,6 +22,7 @@ import CheckoutService from '../../services/Checkout/Checkout';
 import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
 import { resetCart } from '~/store/cart/actions';
+import { handle as removeItem } from '~/components/cart/RemoveCartItemButton';
 
 const CheckoutForm = () => {
     const { formValues, currentStep, informationEditing } = useSelector(
@@ -38,11 +39,11 @@ const CheckoutForm = () => {
             const localRequest = new CheckoutRequest(request);
 
             const response = await CheckoutService.checkout(localRequest);
-            dispatch(resetCart([]));
-            console.log(response);
-            // window.location.href = response.data;
+
+            await cart.map(async (item) => await removeItem(item.product_id));
+
+            window.location.href = response.data;
         } catch (e) {
-            console.log(e);
             dispatch(stopLoading());
         }
     };
