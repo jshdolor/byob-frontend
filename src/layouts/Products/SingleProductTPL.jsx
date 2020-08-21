@@ -182,11 +182,11 @@ class SingleProductTPL extends Component {
                                 </div>
                             </div>
                             <div className='order-button-cont'>
-                                <div className='buy-now-btn'>
+                                {/* <div className='buy-now-btn'>
                                     <Button type='success' size='large'>
                                         Buy Now
                                     </Button>
-                                </div>
+                                </div> */}
                                 <AddCart
                                     id={id}
                                     type={type}
