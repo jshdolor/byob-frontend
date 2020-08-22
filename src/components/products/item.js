@@ -2,14 +2,17 @@ import { Image, Row, Col, Space } from 'react-bootstrap';
 import ButtonAddCart from '~/components/buttons/addCart';
 import Link from 'next/link';
 
+import { defaultRefillableValue } from '~/config/app';
+
 const Item = (props) => {
     const { id, name, image, displayPrice, slug, type } = props.data;
-
+    const qty = type.id === 2 ? defaultRefillableValue : 1;
     const buttonProps = {
         id,
         text: <i className='byob-text-small'>Add to Cart</i>,
         style: { marginTop: '-10px' },
         type,
+        qty,
     };
     return (
         <div className='my-3'>

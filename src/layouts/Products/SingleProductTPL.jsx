@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import { Row, Col, InputNumber, Button } from 'antd';
+import { Row, Col, Select, Button } from 'antd';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import StarRatingComponent from 'react-star-rating-component';
 import Product from '~/components/products/Product';
 import ReviewForm from '../../components/forms/ReviewForm/ReviewForm';
 import ProductModel from '~/models/product';
 import AddCart from '~/components/buttons/addCart';
-
-import { amountPrecision } from '~/config/app';
+const { Option } = Select;
+import {
+    amountPrecision,
+    refillableOptions,
+    defaultRefillableValue,
+} from '~/config/app';
 
 class SingleProductTPL extends Component {
     state = {
-        quantity: 1,
-        total: this.props.product.price,
+        total:
+            this.props.product.price *
+            (this.props.product.type.id === 2 ? defaultRefillableValue : 1),
+        quantity: this.props.product.type.id === 2 ? defaultRefillableValue : 1,
+
         price: this.props.product.price,
         review: false,
     };
@@ -39,7 +46,7 @@ class SingleProductTPL extends Component {
     };
 
     onQuantityChange = (value) => {
-        value = parseInt(value) ?? 1;
+        value = parseInt(value) ?? defaultRefillableValue;
 
         this.setState(
             {
@@ -62,6 +69,19 @@ class SingleProductTPL extends Component {
             review: !this.state.review,
         });
     };
+
+    componentDidUpdate(prevProps) {
+        //resolves clicking a suggested product within the page - values stays the same without this
+        if (prevProps.product.id !== this.props.product.id) {
+            const { type, price } = new ProductModel(this.props.product);
+
+            this.setState({
+                price,
+                total: price * (type.id === 2 ? defaultRefillableValue : 1),
+                quantity: type.id === 2 ? defaultRefillableValue : 1,
+            });
+        }
+    }
 
     render() {
         const { quantity, total } = this.state;
@@ -131,17 +151,22 @@ class SingleProductTPL extends Component {
                                     </div>
                                 ) : (
                                     <div className='input-number'>
-                                        <InputNumber
-                                            onChange={this.onQuantityChange}
-                                            defaultValue='1'
-                                            type='number'
+                                        <Select
+                                            defaultValue={
+                                                defaultRefillableValue
+                                            }
                                             size='large'
-                                            min={1}
-                                            max={9999}
-                                            value={quantity}
-                                            placeholder='Input ML'
-                                        ></InputNumber>
-                                        <span>ml</span>
+                                            onChange={this.onQuantityChange}
+                                        >
+                                            {refillableOptions.map((option) => (
+                                                <Option
+                                                    key={option.value}
+                                                    value={option.value}
+                                                >
+                                                    {option.text}
+                                                </Option>
+                                            ))}
+                                        </Select>
                                     </div>
                                 )}
 
@@ -157,11 +182,11 @@ class SingleProductTPL extends Component {
                                 </div>
                             </div>
                             <div className='order-button-cont'>
-                                <div className='buy-now-btn'>
+                                {/* <div className='buy-now-btn'>
                                     <Button type='success' size='large'>
                                         Buy Now
                                     </Button>
-                                </div>
+                                </div> */}
                                 <AddCart
                                     id={id}
                                     type={type}

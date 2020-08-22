@@ -20,6 +20,11 @@ const init = {
         lockerTime: '',
         lockerTimeText: '',
         payment_gateway: 'paypal',
+        pickup_type: '',
+        lockers: {
+            date: '',
+            schedule_id: '',
+        },
     },
     isLoading: false,
 };

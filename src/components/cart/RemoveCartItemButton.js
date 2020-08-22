@@ -31,6 +31,8 @@ const handle = async (product_id) => {
     }
 };
 
+export { handle };
+
 const RemoveCartItemButton = ({ id, large, disabled = false }) => {
     const disabledStyle = disabled
         ? {
@@ -40,7 +42,7 @@ const RemoveCartItemButton = ({ id, large, disabled = false }) => {
     return (
         <FaTrashAlt
             size={large ? '20px' : '1.3em'}
-            className="position-absolute text-primary"
+            className='position-absolute text-primary'
             style={{ bottom: 0, right: 0, ...disabledStyle }}
             onClick={disabled ? () => {} : () => handle(id)}
         ></FaTrashAlt>

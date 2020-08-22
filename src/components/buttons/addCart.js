@@ -26,10 +26,10 @@ const addToCart = async (product_id, type, qty = 1) => {
     const request = new UpdateCartRequest(item);
     try {
         const cart = await CartService.updateCart(request);
-        window.Store.dispatch({
-            type: RESET_CART,
-            payload: [],
-        });
+        // window.Store.dispatch({
+        //     type: RESET_CART,
+        //     payload: [],
+        // });
 
         window.Store.dispatch({
             type: SET_CART_ITEMS,
@@ -81,4 +81,5 @@ const addCart = (props) => {
     );
 };
 
+export { addToCart };
 export default addCart;

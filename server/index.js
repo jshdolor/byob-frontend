@@ -37,6 +37,21 @@ io.on('connection', (socket) => {
 });
 
 nextApp.prepare().then(() => {
+    app.get('/password', async (req, res) => {
+        const passwordResetToken = req.query.token;
+
+        try {
+            res.cookie('password-reset-token', passwordResetToken, {
+                maxAge: 100000000,
+            });
+
+            res.redirect(302, '/update-password');
+        } catch (e) {
+            //has errors
+            res.redirect(302, '/');
+        }
+    });
+
     app.get('/registration/step-2', async (req, res) => {
         const regToken = req.query.regToken;
         const url = `${process.env.NEXT_PUBLIC_BYOB_HOST}/api/v1/check-registration-token`;

@@ -5,6 +5,6 @@ export const CHECKOUT_STEPS = {
 };
 
 export const CLAIMING_METHOD = {
-    BYOB: 'BYOB BOOTH',
-    LOCKER: 'LOCKER',
+    BYOB: 'booth',
+    LOCKER: 'locker',
 };

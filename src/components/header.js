@@ -21,27 +21,29 @@ import { userPages } from '~/config/routes';
 
 const logo = '/images/logo.png';
 
-const accountLink = (
-    <ByobLink href='/account'>
-        <a onClick={() => setNavbarExpanded(false)} className='nav-link'>
-            My Account
-        </a>
-    </ByobLink>
-);
-
-const loginLink = (
-    <ByobLink href='/login'>
-        <a onClick={() => setNavbarExpanded(false)} className='nav-link'>
-            Login
-        </a>
-    </ByobLink>
-);
-
 const Header = (props) => {
     const [cartCount, setCartCount] = useState(0);
     const { session } = useSelector((state) => state);
 
     const router = useRouter();
+    const [navbarExpanded, setNavbarExpanded] = useState(false);
+
+    const accountLink = (
+        <ByobLink href='/account'>
+            <a onClick={() => setNavbarExpanded(false)} className='nav-link'>
+                My Account
+            </a>
+        </ByobLink>
+    );
+
+    const loginLink = (
+        <ByobLink href='/login'>
+            <a onClick={() => setNavbarExpanded(false)} className='nav-link'>
+                Login
+            </a>
+        </ByobLink>
+    );
+
     const [userNav, setUserNav] = useState(loginLink);
 
     const getCurrentCart = () => {
@@ -92,8 +94,6 @@ const Header = (props) => {
         id: 'byob-navbar',
         fixed: 'top',
     };
-
-    const [navbarExpanded, setNavbarExpanded] = useState(false);
 
     return (
         <Navbar {...navBarProps} expanded={navbarExpanded}>

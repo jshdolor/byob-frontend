@@ -27,7 +27,6 @@ const Filter = ({ products, handle, typeFilter }) => {
             typeFilter(type.id);
         }
 
-        console.log(filter, type);
         if (includeToFilters) {
             filters = [...filters, { [filter]: type }];
         } else {
