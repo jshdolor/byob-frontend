@@ -1,0 +1,47 @@
+.ant-table-content {
+  thead {
+    background: $byob-primary;
+  }
+
+  .ant-btn {
+    width: 100px;
+    background: $byob-primary;
+    border: none;
+    font-family: $bold-font;
+    text-transform: uppercase;
+    height: 40px;
+    color: $white;
+  }
+}
+
+.ant-table-container table > thead > tr:first-child th:last-child {
+  height: 20px;
+  border: none;
+  background: $byob-primary;
+  color: $white;
+  display: none;
+
+  @include for-tablet-portrait-up {
+    display: block;
+  }
+}
+
+.ant-table-thead > tr > th {
+  border: none;
+  background: $byob-primary !important;
+  color: $white !important;
+  font-weight: bold !important;
+}
+
+.history-sub-cont {
+  padding-left: 10px;
+  border-left: 1px solid #ccc;
+}
+
+.history-product-cont {
+  padding-right: 10px;
+}
+
+.mobile-none {
+  display: none;
+}

@@ -1,0 +1,41 @@
+.oops-body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  .error-one {
+    position: absolute;
+    max-width: 100px;
+    @include for-tablet-portrait-up {
+      left: 30%;
+      top: -20px;
+    }
+  }
+  .error-two {
+    position: absolute;
+    max-width: 110px;
+    transform: rotate(190deg);
+    right: -50px;
+    bottom: -53px;
+    @include for-tablet-portrait-up {
+      right: 28%;
+      bottom: -50px;
+    }
+  }
+}
+.oops-cont {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  h1 {
+    color: $byob-primary;
+    text-align: center;
+    font-size: 50px;
+    text-transform: uppercase;
+  }
+  p {
+    font-size: 20px;
+  }
+}

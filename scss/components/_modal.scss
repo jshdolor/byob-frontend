@@ -89,6 +89,10 @@
       width: 300px;
       text-align: left;
       margin-left: 26px;
+
+      @include for-tablet-portrait-up {
+        margin-left: 87px;
+      }
     }
 
     .terms-check {
