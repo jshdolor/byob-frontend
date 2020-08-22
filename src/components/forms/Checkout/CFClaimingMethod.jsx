@@ -9,10 +9,13 @@ import { CLAIMING_METHOD } from '../../../config/checkout';
 import { useSelector, useDispatch } from 'react-redux';
 import LockerService from '~/services/Lockers/LockerService';
 import { availableLockers } from '~/config/app';
+import { setPickupType } from '~/store/checkout/actions';
 
 const { Option } = Select;
 
 const CFClaimingMethod = ({ setFieldValue }) => {
+    const dispatch = useDispatch();
+
     const { formValues, currentStep, steps } = useSelector(
         (state) => state.checkout
     );
@@ -24,6 +27,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
     );
 
     const handleClaimingChange = (value) => {
+        dispatch(setPickupType(value));
         setFieldValue('pickup_type', value);
         setClaimingMethod(value);
     };

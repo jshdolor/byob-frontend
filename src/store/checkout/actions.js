@@ -7,6 +7,7 @@ export const SET_FORM_VALUES = DOCUMENT + 'SET_FORM_VALUES';
 export const EDIT_FORM = DOCUMENT + 'EDIT_FORM';
 export const START_LOADING = DOCUMENT + 'START_LOADING';
 export const STOP_LOADING = DOCUMENT + 'STOP_LOADING';
+export const SET_PICKUPTYPE = DOCUMENT + 'STOP_LOADING';
 
 export const startLoading = () => ({
     type: START_LOADING,
@@ -36,6 +37,11 @@ export const setFormValues = (payload) => ({
 
 export const editForm = () => ({
     type: EDIT_FORM,
+});
+
+export const setPickupType = (payload) => ({
+    type: SET_PICKUPTYPE,
+    payload,
 });
 
 export const updateForm = (key, value) => ({

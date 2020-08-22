@@ -10,19 +10,27 @@ import {
     FormControl,
 } from 'react-bootstrap';
 import Link from 'next/link';
-import { amountPrecision, bottlePrice, bottlePerMl } from '~/config/app';
+import {
+    amountPrecision,
+    bottlePrice,
+    bottlePerMl,
+    itemsPerLocker,
+} from '~/config/app';
 import { Divider } from 'antd';
 
 const CartContainer = () => {
     const cartItems = useSelector((state) => state.cart) || [];
     const { isLoggedIn } = useSelector((state) => state.session);
-    const { currentStep } = useSelector((state) => state.checkout);
+    const { currentStep, pickupType } = useSelector((state) => state.checkout);
     const cartCount = (cartItems || []).reduce((a, b) => {
         if (b.type.id === 1) {
             return a + b.qty;
         }
         return a + Math.ceil(b.qty / bottlePerMl);
     }, 0);
+
+    const lockersNeeded = Math.ceil(cartCount / itemsPerLocker);
+
     const isDisabled = currentStep > 0;
     const subtotal = (cartItems || [])
         .reduce((a, b) => a + parseFloat(b.total) ?? 0, 0)
@@ -51,6 +59,14 @@ const CartContainer = () => {
                         Total Number of Items: <em>{cartCount}</em>
                     </Col>
                 </Row>
+
+                {pickupType === 'locker' && (
+                    <Row>
+                        <Col className={'byod -regular-font'}>
+                            Lockers to be used: <em>{lockersNeeded}</em>
+                        </Col>
+                    </Row>
+                )}
 
                 {!isDisabled && (
                     <Row>
