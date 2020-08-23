@@ -10,10 +10,13 @@ export default class CheckoutRequest extends FormData {
         this._email = data.email;
 
         this._pickup_type = data.pickup_type;
-        this._lockers = data.lockers;
+        this._schedule = data.lockers;
 
         this._cart = data.cart.map((item) => {
             return { product_id: item.product_id, qty: item.qty };
         });
+
+        //voucher code
+        this._code = data.code;
     }
 }
