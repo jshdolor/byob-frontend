@@ -3,89 +3,78 @@ import { Container } from 'react-bootstrap';
 import Link from 'next/link';
 import Blog from '../../components/blog/Blog';
 import ModalVideo from 'react-modal-video';
+import SocialService from '~/services/SocialService';
 
 class BlogsTPL extends Component {
-  state = {
-    video: '',
-    open: false,
-  };
+    state = {
+        video: '',
+        open: false,
+        blogs: [],
+    };
 
-  onOpen = (video) => {
-    console.log(video);
-    this.setState({ video: video }, this.openModal);
-  };
+    componentDidMount() {
+        (async () => {
+            const videos = await SocialService.videos();
+            const links = await SocialService.links();
+            this.setState({ blogs: [...videos, ...links] });
+        })();
+    }
 
-  openModal = () => {
-    this.setState({ open: true });
-  };
+    onOpen = (video) => {
+        this.setState({ video }, this.openModal);
+    };
 
-  closeModal = () => {
-    this.setState({ open: false });
-  };
+    openModal = () => {
+        this.setState({ open: true });
+    };
 
-  render() {
-    const { open, video } = this.state;
+    closeModal = () => {
+        this.setState({ open: false });
+    };
 
-    let blogs = [
-      {
-        image: 'images/blog.jpg',
-        title: 'Blog 1',
-        type: 'video',
-        video: 'L61p2uyiMSo',
-      },
-      {
-        image: 'images/blog.jpg',
-        title: 'Blog 2',
-        type: 'post',
-        link: 'https://facebook.com',
-      },
-      {
-        image: 'images/blog.jpg',
-        title: 'Blog 3',
-        type: 'post',
-        link: 'https://facebook.com',
-      },
-      {
-        image: 'images/blog.jpg',
-        title: 'Blog 4',
-        type: 'post',
-        link: 'https://facebook.com',
-      },
-      {
-        image: 'images/blog.jpg',
-        title: 'Blog 5',
-        type: 'post',
-        link: 'https://facebook.com',
-      },
-      {
-        image: 'images/blog.jpg',
-        title: 'Blog 6',
-        type: 'post',
-        link: 'https://facebook.com',
-      },
-    ];
+    render() {
+        const { open, video } = this.state;
 
-    return (
-      <>
-        <ModalVideo channel='youtube' isOpen={open} videoId={video} onClose={this.closeModal} />
-        <div className='blog-banner'></div>
-        <Container>
-          <div className='blogs-cont'>
-            <h1 className='title'>BLOGS</h1>
-            <div className='blog-list'>
-              {blogs.map((blog, i) =>
-                blog.type === 'video' ? (
-                  <Blog key={i} type={blog.type} image={blog.image} title={blog.title} onClick={() => this.onOpen(blog.video)}></Blog>
-                ) : (
-                  <Blog key={i} type={blog.type} image={blog.image} title={blog.title} link={blog.link}></Blog>
-                )
-              )}
-            </div>
-          </div>
-        </Container>
-      </>
-    );
-  }
+        let { blogs } = this.state;
+
+        return (
+            <>
+                <ModalVideo
+                    channel='youtube'
+                    isOpen={open}
+                    videoId={video}
+                    onClose={this.closeModal}
+                />
+                <div className='blog-banner'></div>
+                <Container>
+                    <div className='blogs-cont'>
+                        <h1 className='title'>BLOGS</h1>
+                        <div className='blog-list'>
+                            {blogs.map((blog, i) =>
+                                blog.type === 'video' ? (
+                                    <Blog
+                                        key={i}
+                                        type={blog.type}
+                                        image={blog.image}
+                                        title={blog.title}
+                                        onClick={() => this.onOpen(blog.video)}
+                                    ></Blog>
+                                ) : (
+                                    <Blog
+                                        key={i}
+                                        type={blog.type}
+                                        image={blog.image}
+                                        title={blog.title}
+                                        link={blog.link}
+                                    ></Blog>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </Container>
+            </>
+        );
+    }
 }
 
 export default BlogsTPL;
