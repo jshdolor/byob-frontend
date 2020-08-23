@@ -1,18 +1,17 @@
 import Client from '~/clients/ApiClient';
 import ExceptionHandler from '~/exception/Handler';
 
-export default class LegalDisclaimer {
-    static endpoint = '/legal';
+export default class CarouselService {
+    static endpoint = '/carousell';
 
-    static get() {
+    static getAll() {
         return Client.setUrl(this.endpoint)
             .get()
             .then(({ data }) => {
-                const { content = '' } = data[0];
-                return content;
+                return data.images || [];
             })
             .catch((e) => {
-                throw new ExceptionHandler('LegalDisclaimer - get', e);
+                throw new ExceptionHandler('CarouselService - getAll', e);
             });
     }
 }
