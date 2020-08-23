@@ -12,6 +12,13 @@ class Catalogue extends Component {
         this.browseContainer = React.createRef();
     }
 
+    componentDidUpdate(prevProps) {
+        //resolves clicking a suggested product within the page - values stays the same without this
+        if (prevProps.products.length !== this.props.products.length) {
+            this.handlePageChange(1);
+        }
+    }
+
     scrollToTopOfList = () => {
         window.scrollTo(0, this.browseContainer.current.offsetTop);
     };
