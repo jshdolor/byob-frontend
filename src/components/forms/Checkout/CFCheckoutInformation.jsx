@@ -17,14 +17,14 @@ const CFCheckoutInformation = () => {
         dispatch(editForm());
     };
     return (
-        <ul className="checkout-information">
-            <li className="information-item">
+        <ul className='checkout-information'>
+            <li className='information-item'>
                 <Row>
                     <Col span={7}>Contact</Col>
                     <Col>{email}</Col>
                     {!isLoggedIn && (
                         <a
-                            className="change-link"
+                            className='change-link'
                             href={'#'}
                             onClick={handleClick}
                             style={{ marginLeft: 'auto' }}
@@ -34,22 +34,20 @@ const CFCheckoutInformation = () => {
                     )}
                 </Row>
             </li>
-            <li className="information-item">
+            <li className='information-item'>
                 <Row>
                     <Col span={7}>Pickup Method</Col>
                     <Col>{claimingMethod}</Col>
                 </Row>
             </li>
-            {claimingMethod === CLAIMING_METHOD.LOCKER && (
-                <li className="information-item">
-                    <Row>
-                        <Col span={7}>Date</Col>
-                        <Col>
-                            {lockerDate} --- {lockerTimeText}
-                        </Col>
-                    </Row>
-                </li>
-            )}
+            <li className='information-item'>
+                <Row>
+                    <Col span={7}>Date</Col>
+                    <Col>
+                        {lockerDate} --- {lockerTimeText}
+                    </Col>
+                </Row>
+            </li>
         </ul>
     );
 };

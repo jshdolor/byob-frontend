@@ -53,7 +53,8 @@ const CheckoutForm = () => {
             }
 
             if (validURL(data)) {
-                window.location.href = response.data;
+                window.location.href = data;
+                return;
             }
 
             Router.replace('/404');

@@ -1,4 +1,4 @@
-import LockerModel from '~/models/locker';
+import BoothModel from '~/models/booth';
 import Client from '~/clients/ApiClient';
 import ExceptionHandler from '~/exception/Handler';
 
@@ -9,7 +9,7 @@ export default class BoothService {
         return Client.setUrl(this.endpoint)
             .post()
             .then(({ data }) => {
-                return data.available.map((datum) => new LockerModel(datum));
+                return data.map((datum) => new BoothModel(datum));
             })
             .catch((e) => {
                 throw new ExceptionHandler('BoothService - getSchedules', e);
