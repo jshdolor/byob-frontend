@@ -4,8 +4,10 @@ import ExceptionHandler from '~/exception/Handler';
 export default class CheckoutService {
     static endpoint = '/checkout';
 
-    static checkout(request) {
-        return Client.setUrl(this.endpoint)
+    static checkout(request, express = false) {
+        const endpoint = express ? `${this.endpoint}?express=1` : this.endpoint;
+
+        return Client.setUrl(endpoint)
             .post(request.toJSON())
             .then((data) => data)
             .catch((e) => {
@@ -20,7 +22,7 @@ export default class CheckoutService {
             .catch((e) => {
                 throw new ExceptionHandler(
                     'CheckoutService - expressCheckout',
-                    e,
+                    e
                 );
             });
     }

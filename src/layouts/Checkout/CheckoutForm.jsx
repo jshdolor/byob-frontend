@@ -21,8 +21,9 @@ import CFPaymentMethod from '../../components/forms/Checkout/CFPaymentMethod';
 import CheckoutService from '../../services/Checkout/Checkout';
 import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
-import { resetCart } from '~/store/cart/actions';
+import { resetExpressCart } from '~/store/express-cart/actions';
 import { handle as removeItem } from '~/components/cart/RemoveCartItemButton';
+import { validURL } from '~/helpers';
 
 const CheckoutForm = () => {
     const { formValues, currentStep, informationEditing } = useSelector(
@@ -38,11 +39,24 @@ const CheckoutForm = () => {
             const request = { ...values, cart };
             const localRequest = new CheckoutRequest(request);
 
-            const response = await CheckoutService.checkout(localRequest);
+            const isExpress = window.location.search.indexOf('express') > -1;
+
+            const { data } = await CheckoutService.checkout(
+                localRequest,
+                isExpress
+            );
 
             await cart.map(async (item) => await removeItem(item.product_id));
 
-            window.location.href = response.data;
+            if (isExpress) {
+                dispatch(resetExpressCart());
+            }
+
+            if (validURL(data)) {
+                window.location.href = response.data;
+            }
+
+            Router.replace('/404');
         } catch (e) {
             dispatch(stopLoading());
         }

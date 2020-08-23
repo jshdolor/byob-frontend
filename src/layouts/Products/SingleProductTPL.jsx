@@ -6,6 +6,7 @@ import Product from '~/components/products/Product';
 import ReviewForm from '../../components/forms/ReviewForm/ReviewForm';
 import ProductModel from '~/models/product';
 import AddCart from '~/components/buttons/addCart';
+import BuyNow from '~/components/buttons/buyNow';
 const { Option } = Select;
 import {
     amountPrecision,
@@ -182,11 +183,17 @@ class SingleProductTPL extends Component {
                                 </div>
                             </div>
                             <div className='order-button-cont'>
-                                {/* <div className='buy-now-btn'>
-                                    <Button type='success' size='large'>
-                                        Buy Now
-                                    </Button>
-                                </div> */}
+                                <div className='buy-now-btn'>
+                                    <BuyNow
+                                        product_id={id}
+                                        type={type}
+                                        qty={quantity}
+                                    >
+                                        <Button type='success' size='large'>
+                                            Buy Now
+                                        </Button>
+                                    </BuyNow>
+                                </div>
                                 <AddCart
                                     id={id}
                                     type={type}

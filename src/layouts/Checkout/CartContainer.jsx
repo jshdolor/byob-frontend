@@ -1,5 +1,6 @@
 import React, { PureComponent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import CartItem from '../../components/cart/item';
 import {
     Container,
@@ -19,7 +20,18 @@ import {
 import { Divider } from 'antd';
 
 const CartContainer = () => {
-    const cartItems = useSelector((state) => state.cart) || [];
+    const router = useRouter();
+
+    const cartItems =
+        useSelector((state) => {
+            if (router.query?.express == 1) {
+                if (state.expressCart.length === 0) {
+                    router.replace('/products');
+                }
+                return state.expressCart;
+            }
+            return state.cart;
+        }) || [];
     const { isLoggedIn } = useSelector((state) => state.session);
     const { currentStep, pickupType } = useSelector((state) => state.checkout);
     const cartCount = (cartItems || []).reduce((a, b) => {
