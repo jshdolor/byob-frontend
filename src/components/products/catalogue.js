@@ -13,7 +13,6 @@ class Catalogue extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        //resolves clicking a suggested product within the page - values stays the same without this
         if (prevProps.products.length !== this.props.products.length) {
             this.handlePageChange(1);
         }
