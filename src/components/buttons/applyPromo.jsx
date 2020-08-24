@@ -9,6 +9,7 @@ import { setDiscount } from '~/store/checkout/actions';
 const applyPromoBtn = ({ disabled }) => {
     const dispatch = useDispatch();
     const { isLoggedIn } = useSelector((state) => state.session);
+    const { discount } = useSelector((state) => state.checkout);
 
     const [isApplyingPromo, setIsApplyingPromo] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -31,24 +32,52 @@ const applyPromoBtn = ({ disabled }) => {
         setIsApplyingPromo(false);
     };
 
+    const handleClear = () => {
+        dispatch(setDiscount({}));
+        setCode('');
+    };
+
     return (
         <Spin spinning={isApplyingPromo}>
             <InputGroup className='voucher-input'>
                 <FormControl
                     placeholder='Voucher Code'
                     aria-label='Voucher Code'
-                    disabled={!isLoggedIn}
+                    disabled={!isLoggedIn || discount.code}
                     aria-describedby='Voucher Code'
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                     onFocus={(e) => setErrors([])}
                 />
 
-                <InputGroup.Append>
-                    <Button onClick={handleClick} variant='outline-secondary'>
-                        APPLY
-                    </Button>
-                </InputGroup.Append>
+                {!discount.code && (
+                    <InputGroup.Append>
+                        <Button
+                            onClick={handleClick}
+                            variant='outline-secondary'
+                        >
+                            APPLY
+                        </Button>
+                    </InputGroup.Append>
+                )}
+
+                {discount.code && (
+                    <InputGroup.Append>
+                        <Button
+                            onClick={handleClear}
+                            variant='outline-secondary'
+                        >
+                            CLEAR
+                        </Button>
+                    </InputGroup.Append>
+                )}
+
+                {discount.code && (
+                    <FormControl.Feedback type='valid' className='d-block'>
+                        Code applied
+                    </FormControl.Feedback>
+                )}
+
                 <FormControl.Feedback type='invalid' className='d-block'>
                     {errors.map((error, i) => (
                         <span key={i} className='text-danger'>
