@@ -28,6 +28,7 @@ const init = {
     },
     isLoading: false,
     pickupType: 'booth',
+    discount: {},
 };
 
 export default (state = init, { type, payload }) => {
@@ -82,6 +83,12 @@ export default (state = init, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
+            };
+
+        case actions.APPLY_DISCOUNT:
+            return {
+                ...state,
+                discount: payload,
             };
         default:
             return state;

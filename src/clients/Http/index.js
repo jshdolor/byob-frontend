@@ -99,6 +99,10 @@ const intercept = () => {
             return response;
         },
         (error) => {
+            if (!error.response) {
+                throw 'Check your internet connection';
+            }
+
             if (error.response.status === 401) {
                 if (process.browser) {
                     const { data } = error.response.data;

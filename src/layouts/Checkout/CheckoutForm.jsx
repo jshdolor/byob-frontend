@@ -30,20 +30,23 @@ const CheckoutForm = () => {
         (state) => state.checkout
     );
     const cart = useSelector((state) => state.cart);
+    const { discount } = useSelector((state) => state.checkout);
 
     const dispatch = useDispatch();
 
     const handlePayment = async (values) => {
         dispatch(startLoading());
+        const code = discount.code ?? null;
         try {
-            const request = { ...values, cart };
+            const request = { ...values, cart, code: discount.code };
             const localRequest = new CheckoutRequest(request);
 
             const isExpress = window.location.search.indexOf('express') > -1;
 
             const { data } = await CheckoutService.checkout(
                 localRequest,
-                isExpress
+                isExpress,
+                code
             );
 
             await cart.map(async (item) => await removeItem(item.product_id));

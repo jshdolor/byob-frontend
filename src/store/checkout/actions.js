@@ -8,6 +8,7 @@ export const EDIT_FORM = DOCUMENT + 'EDIT_FORM';
 export const START_LOADING = DOCUMENT + 'START_LOADING';
 export const STOP_LOADING = DOCUMENT + 'STOP_LOADING';
 export const SET_PICKUPTYPE = DOCUMENT + 'STOP_LOADING';
+export const APPLY_DISCOUNT = DOCUMENT + 'APPLY_DISCOUNT';
 
 export const startLoading = () => ({
     type: START_LOADING,
@@ -50,4 +51,9 @@ export const updateForm = (key, value) => ({
         key,
         value,
     },
+});
+
+export const setDiscount = (payload) => ({
+    type: APPLY_DISCOUNT,
+    payload,
 });

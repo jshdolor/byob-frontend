@@ -19,8 +19,11 @@ import {
 } from '~/config/app';
 import { Divider } from 'antd';
 
+import ApplyPromoBtn from '~/components/buttons/applyPromo';
+
 const CartContainer = () => {
     const router = useRouter();
+    const { discount } = useSelector((state) => state.checkout);
 
     const cartItems =
         useSelector((state) => {
@@ -51,7 +54,18 @@ const CartContainer = () => {
         .filter((item) => item.type.id === 2)
         .reduce((a, b) => a + b.bottles * bottlePrice, 0)
         .toFixed(amountPrecision);
+
     const total = (parseFloat(subtotal) || 0) + (parseFloat(bottle) || 0);
+
+    let discountValue = 0;
+
+    if (Object.keys(discount).length !== 0) {
+        if (discount.type === 'discount') {
+            discountValue = total * (discount.value / 100);
+        } else {
+            discountValue = discount.value;
+        }
+    }
 
     return (
         <div id='checkout-cart' className='checkout-page-container -cart'>
@@ -83,7 +97,7 @@ const CartContainer = () => {
                 {!isDisabled && (
                     <Row>
                         <Col>
-                            <VoucherInput disabled={!isLoggedIn} />
+                            <ApplyPromoBtn disabled={!isLoggedIn} />
                             {!isLoggedIn ? (
                                 <small>
                                     Login to use a promo code. Don't have an
@@ -118,38 +132,29 @@ const CartContainer = () => {
                     <Col className='text-right'>P{bottle}</Col>
                 </Row>
 
-                {isDisabled && isLoggedIn && (
-                    <Row>
-                        <Col>Discount Voucher (0%)</Col>
-                        <Col className='text-right'>P{0}</Col>
-                    </Row>
+                <Divider></Divider>
+
+                {isLoggedIn && Object.keys(discount).length > 0 && (
+                    <>
+                        <Row>
+                            <Col>
+                                Discount Voucher ({discount.value}
+                                {discount.type === 'discount' ? '%' : ''})
+                            </Col>
+                            <Col className='text-right'>(P{discountValue})</Col>
+                        </Row>
+                        <Divider></Divider>
+                    </>
                 )}
 
-                <Divider></Divider>
                 <Row>
                     <Col>Total</Col>
                     <Col className='text-right'>
-                        P{total.toFixed(amountPrecision)}
+                        P{(total - discountValue).toFixed(amountPrecision)}
                     </Col>
                 </Row>
             </div>
         </div>
-    );
-};
-
-const VoucherInput = ({ disabled }) => {
-    return (
-        <InputGroup className='voucher-input'>
-            <FormControl
-                placeholder='Voucher Code'
-                aria-label='Voucher Code'
-                aria-describedby='Voucher Code'
-                disabled={disabled}
-            />
-            <InputGroup.Append>
-                <Button variant='outline-secondary'>APPLY</Button>
-            </InputGroup.Append>
-        </InputGroup>
     );
 };
 

@@ -15,8 +15,5 @@ export default class CheckoutRequest extends FormData {
         this._cart = data.cart.map((item) => {
             return { product_id: item.product_id, qty: item.qty };
         });
-
-        //voucher code
-        this._code = data.code;
     }
 }
