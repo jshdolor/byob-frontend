@@ -17,7 +17,7 @@ import CartItemModel from '~/models/cart';
 
 import ProductService from '~/services/Product';
 
-import { Typography, Tooltip } from 'antd';
+import { Typography, Tooltip, Space } from 'antd';
 import { InfoCircleFilled } from '@ant-design/icons';
 const { Text } = Typography;
 import { amountPrecision, bottlePrice } from '~/config/app';
@@ -66,7 +66,8 @@ const Cart = (props) => {
                         Cart
                         <Button
                             variant='link'
-                            className='float-right px-0'
+                            style={{ position: 'absolute', right: 5, top: 5 }}
+                            className='px-0'
                             onClick={() => {
                                 props.toggleCartMenu();
                             }}
