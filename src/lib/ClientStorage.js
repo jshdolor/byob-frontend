@@ -1,6 +1,6 @@
 class ClientStorage {
     static storage = process.browser
-        ? sessionStorage
+        ? localStorage
         : { getItem: () => '', setItem: () => '' };
 
     static get(key = '') {
