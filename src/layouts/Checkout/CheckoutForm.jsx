@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Form } from 'formik-antd';
 import Router from 'next/router';
-import { Spin } from 'antd';
+import { Spin, Modal, Button } from 'antd';
 import checkoutFormSchema from '../../../config/forms/schema/checkoutFormSchema';
 import CFContactInformation from '../../components/forms/Checkout/CFContactInformation';
 import CFClaimingMethod from '../../components/forms/Checkout/CFClaimingMethod';
@@ -14,6 +14,7 @@ import {
     editForm,
     startLoading,
     stopLoading,
+    setHasErrors,
 } from '../../store/checkout/actions';
 import { CHECKOUT_STEPS } from '../../config/checkout';
 import CFCheckoutInformation from '../../components/forms/Checkout/CFCheckoutInformation';
@@ -33,9 +34,12 @@ const CheckoutForm = () => {
     const { discount } = useSelector((state) => state.checkout);
 
     const dispatch = useDispatch();
+    const [apiMessage, setApiMessage] = useState({});
 
     const handlePayment = async (values) => {
         dispatch(startLoading());
+        dispatch(setHasErrors(false));
+
         const code = discount.code ?? null;
         try {
             const request = { ...values, cart, code: discount.code };
@@ -63,6 +67,14 @@ const CheckoutForm = () => {
             Router.replace('/404');
         } catch (e) {
             dispatch(stopLoading());
+            dispatch(setHasErrors(true));
+
+            if (e.getErrors) {
+                setApiMessage({
+                    visible: true,
+                    messages: e.getErrors(),
+                });
+            }
         }
     };
 
@@ -81,15 +93,33 @@ const CheckoutForm = () => {
     };
 
     return (
-        <Formik
-            initialValues={formValues}
-            validationSchema={checkoutFormSchema}
-            onSubmit={handleSubmit}
-        >
-            {({ setFieldValue }) => (
-                <FormContainer setFieldValue={setFieldValue} />
-            )}
-        </Formik>
+        <>
+            <Modal
+                visible={apiMessage.visible}
+                onOk={() => setApiMessage({})}
+                className='byob-popup'
+                closable={false}
+                footer={null}
+            >
+                <h1 className='title'>Error</h1>
+                {(apiMessage.messages || []).map((msg, i) => (
+                    <p key={i}>{msg}</p>
+                ))}
+
+                <Button type='primary' onClick={() => setApiMessage({})}>
+                    Okay
+                </Button>
+            </Modal>
+            <Formik
+                initialValues={formValues}
+                validationSchema={checkoutFormSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ setFieldValue }) => (
+                    <FormContainer setFieldValue={setFieldValue} />
+                )}
+            </Formik>
+        </>
     );
 };
 

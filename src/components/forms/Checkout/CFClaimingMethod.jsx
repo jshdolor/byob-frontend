@@ -17,7 +17,7 @@ const { Option } = Select;
 const CFClaimingMethod = ({ setFieldValue }) => {
     const dispatch = useDispatch();
 
-    const { formValues, currentStep, steps } = useSelector(
+    const { formValues, currentStep, steps, hasErrors } = useSelector(
         (state) => state.checkout
     );
 
@@ -59,7 +59,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
             setLockerSchedules(schedules);
             setLockerSchedulesLoading(false);
         })();
-    }, [claimingMethod, cart]);
+    }, [claimingMethod, cart, hasErrors]);
 
     const [date, setDate] = useState(formValues.lockerDate);
     const [time, setTime] = useState(formValues.lockerTime);

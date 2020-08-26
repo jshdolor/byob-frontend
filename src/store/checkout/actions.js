@@ -7,8 +7,9 @@ export const SET_FORM_VALUES = DOCUMENT + 'SET_FORM_VALUES';
 export const EDIT_FORM = DOCUMENT + 'EDIT_FORM';
 export const START_LOADING = DOCUMENT + 'START_LOADING';
 export const STOP_LOADING = DOCUMENT + 'STOP_LOADING';
-export const SET_PICKUPTYPE = DOCUMENT + 'STOP_LOADING';
+export const SET_PICKUPTYPE = DOCUMENT + 'SET_PICKUPTYPE';
 export const APPLY_DISCOUNT = DOCUMENT + 'APPLY_DISCOUNT';
+export const HAS_ERRORS = DOCUMENT + 'HAS_ERRORS';
 
 export const startLoading = () => ({
     type: START_LOADING,
@@ -55,5 +56,10 @@ export const updateForm = (key, value) => ({
 
 export const setDiscount = (payload) => ({
     type: APPLY_DISCOUNT,
+    payload,
+});
+
+export const setHasErrors = (payload) => ({
+    type: HAS_ERRORS,
     payload,
 });

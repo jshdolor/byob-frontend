@@ -29,6 +29,7 @@ const init = {
     isLoading: false,
     pickupType: 'booth',
     discount: {},
+    hasErrors: false,
 };
 
 export default (state = init, { type, payload }) => {
@@ -89,6 +90,12 @@ export default (state = init, { type, payload }) => {
             return {
                 ...state,
                 discount: payload,
+            };
+
+        case actions.HAS_ERRORS:
+            return {
+                ...state,
+                hasErrors: true,
             };
         default:
             return state;
