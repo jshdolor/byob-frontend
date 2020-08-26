@@ -143,12 +143,6 @@ const Filter = ({ products, handle, typeFilter }) => {
                                     </Checkbox>
                                 </Form.Item>
                             ))}
-                            {filterKey <
-                            Object.keys(filterValues).length - 1 ? (
-                                <hr></hr>
-                            ) : (
-                                ''
-                            )}
                         </Panel>
                     );
                 })}
