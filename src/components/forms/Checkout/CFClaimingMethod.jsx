@@ -9,7 +9,7 @@ import { CLAIMING_METHOD } from '../../../config/checkout';
 import { useSelector, useDispatch } from 'react-redux';
 import LockerService from '~/services/Lockers/LockerService';
 import BoothService from '~/services/Booth/BoothService';
-import { availableLockers } from '~/config/app';
+import { itemsPerLocker } from '~/config/app';
 import { setPickupType } from '~/store/checkout/actions';
 
 const { Option } = Select;
@@ -46,7 +46,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                 const qty = item.type?.id === 2 ? item.bottles : item.qty;
                 return a + qty;
             }, 0);
-            const lockersNeeded = Math.ceil(cartCount / availableLockers);
+            const lockersNeeded = Math.ceil(cartCount / itemsPerLocker);
             setLockerSchedulesLoading(true);
 
             let schedules = [];
@@ -59,7 +59,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
             setLockerSchedules(schedules);
             setLockerSchedulesLoading(false);
         })();
-    }, [claimingMethod]);
+    }, [claimingMethod, cart]);
 
     const [date, setDate] = useState(formValues.lockerDate);
     const [time, setTime] = useState(formValues.lockerTime);
