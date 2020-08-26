@@ -64,11 +64,11 @@ const Filter = ({ products, handle, typeFilter }) => {
                     );
                 });
 
-            handle(filteredProducts);
+            handle([...filteredProducts]);
             return;
         }
 
-        handle(products);
+        handle([...products]);
     };
 
     const [filterValues, setFilterValues] = useState({

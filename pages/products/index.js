@@ -14,6 +14,7 @@ function ProductsPage() {
     const [typeFilter, setTypeFilter] = useState([]);
     const router = useRouter();
     const dispatch = useDispatch();
+    const [, forceUpdate] = useState();
 
     useEffect(() => {
         ProductService.getAll().then((prod) => {
