@@ -28,6 +28,7 @@
         "react-bootstrap-table-next": "^4.0.3",
         "react-cool-img": "^1.2.2",
         "react-dom": "16.13.1",
+        "react-google-recaptcha": "^2.1.0",
         "react-hook-form": "^6.3.0",
         "react-hook-form-input": "^1.1.10",
         "react-icons": "^3.10.0",
