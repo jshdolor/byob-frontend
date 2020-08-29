@@ -58,7 +58,11 @@ class HomeTPL extends Component {
                     <Slider {...settings}>
                         {this.state.carousel.map((slide) => (
                             <div className='slide' key={slide.id}>
-                                <Link href='/products'>
+                                <Link
+                                    href={slide.redirect_link}
+                                    passHref={true}
+                                    prefetch={false}
+                                >
                                     <a>
                                         <img
                                             className='-desktop'

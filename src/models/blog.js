@@ -33,19 +33,6 @@ export default class Blog {
     }
 
     get image() {
-        if (this._thumbnail && this.type !== 'video') {
-            return this._thumbnail;
-        }
-
-        let div = document.createElement('div');
-
-        div.innerHTML = this._video;
-        let videoSrc = div.querySelector('iframe')?.getAttribute('src');
-        const videoId = videoSrc.split('/').reverse()[0];
-        if (videoId) {
-            return `https://img.youtube.com/vi/${videoId}/0.jpg`;
-        }
-
-        return ``;
+        return this._thumbnail || null;
     }
 }
