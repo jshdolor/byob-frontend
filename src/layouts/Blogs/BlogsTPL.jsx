@@ -16,7 +16,9 @@ class BlogsTPL extends Component {
         (async () => {
             const videos = await SocialService.videos();
             const links = await SocialService.links();
-            this.setState({ blogs: [...videos, ...links] });
+            const articles = await SocialService.articles();
+            console.log(articles);
+            this.setState({ blogs: [...videos, ...links, ...articles] });
         })();
     }
 

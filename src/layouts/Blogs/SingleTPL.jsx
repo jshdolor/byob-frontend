@@ -1,47 +1,74 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
 import Blog from '../../components/blog/Blog';
+import { useEffect, useState } from 'react';
+import SocialServices from '../../services/SocialService';
+import { useRouter } from 'next/router';
 
-class SingleTPL extends Component {
-  state = {};
-  render() {
+const BlogArticlePage = () => {
+    const [data, setData] = useState({});
+    const [articles, setArticles] = useState([]);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const id = router.query?.slug;
+
+                const articleData = await SocialServices.articleById(id);
+                setData(articleData);
+                const fetchedArticles = await SocialServices.articles();
+                setArticles(
+                    fetchedArticles
+                        .filter((article) => article.id != id)
+                        .filter((article, i) => i < 3)
+                );
+            } catch (e) {
+                console.log(e);
+            }
+        })();
+    }, [router.query.slug]);
+
     return (
-      <>
-        <Container>
-          <div className='single-blogs-cont'>
-            <h1 className='title'>TITLE</h1>
-            <p className='date'>September 1</p>
+        <>
+            <Container>
+                <div className='single-blogs-cont'>
+                    <h1 className='title'>{data.title}</h1>
+                    <p className='date'>
+                        .............missing date data.........
+                    </p>
 
-            <div className='image-cont'>
-              <img src='https://via.placeholder.com/800x400' alt='' />
-              <p className='desc'>Test</p>
-            </div>
+                    <div className='image-cont'>
+                        <img src={data.image} alt='' />
+                        {/* <p className='desc'>Test</p> */}
+                    </div>
 
-            <div className='body'>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores sequi est facilis odit dignissimos provident quis labore inventore. Maxime minus quis rerum dignissimos ut modi!
-                Possimus doloribus maiores ad consectetur.
-              </p>
+                    <div
+                        className='body'
+                        dangerouslySetInnerHTML={{
+                            __html: data.content,
+                        }}
+                    ></div>
 
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse at inventore libero labore cumque corrupti, sunt, quasi ducimus, ut ipsam reprehenderit nostrum doloribus vel sit eius
-                qui recusandae incidunt. Nulla!
-              </p>
-            </div>
-
-            <div className='more-blogs'>
-              <h1 className='title'>You Might Also Like</h1>
-              <div className='more-blog-list'>
-                <Blog type='post' image='https://via.placeholder.com/400x400' title='Test' link='#'></Blog>
-                <Blog type='post' image='https://via.placeholder.com/400x400' title='Test' link='#'></Blog>
-                <Blog type='post' image='https://via.placeholder.com/400x400' title='Test' link='#'></Blog>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </>
+                    <div className='more-blogs'>
+                        <h1 className='title'>You Might Also Like</h1>
+                        <div className='more-blog-list'>
+                            {(articles || []).map((article) => (
+                                <Blog
+                                    key={article.id}
+                                    type='article'
+                                    image={article.image}
+                                    title={article.title}
+                                    link={article.link}
+                                ></Blog>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </Container>
+        </>
     );
-  }
-}
+};
 
-export default SingleTPL;
+export default BlogArticlePage;

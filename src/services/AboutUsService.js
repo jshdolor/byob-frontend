@@ -8,7 +8,7 @@ export default class AboutUsService {
         return Client.setUrl(this.endpoint)
             .get()
             .then(({ data }) => {
-                return data[0] || [];
+                return data[0] || {};
             })
             .catch((e) => {
                 throw new ExceptionHandler('AboutUsService - getAll', e);

@@ -1,6 +1,7 @@
 import Client from '~/clients/ApiClient';
 import ExceptionHandler from '~/exception/Handler';
 import Blog from '~/models/blog';
+import CacheManager from '~/lib/CacheManager';
 
 export default class SocialServices {
     static endpoint = '/socials';
@@ -26,6 +27,54 @@ export default class SocialServices {
             })
             .catch((e) => {
                 throw new ExceptionHandler('SocialServices - links', e);
+            });
+    }
+
+    static articles() {
+        const cacheKey = 'social-articles';
+        if (CacheManager.has(cacheKey)) {
+            return new Promise((resolve, rej) => {
+                resolve(CacheManager.get(cacheKey));
+            });
+        }
+
+        return Client.setUrl(this.endpoint + '/articles')
+            .get()
+            .then(({ data }) => {
+                const articles = (data?.links || []).map((link) => {
+                    const modeled = new Blog(link, 'article');
+                    CacheManager.set(`socialarticle-${link.id}`, modeled);
+
+                    return modeled;
+                });
+
+                CacheManager.set(cacheKey, articles);
+                return articles;
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('SocialServices - articles', e);
+            });
+    }
+
+    static articleById(id) {
+        const cacheKey = `socialarticle-${id}`;
+
+        if (CacheManager.has(cacheKey)) {
+            return new Promise((resolve, rej) => {
+                resolve(CacheManager.get(cacheKey));
+            });
+        }
+
+        return Client.setUrl(this.endpoint + `/articles/${id}`)
+            .get()
+            .then(({ data }) => {
+                const modeled = new Blog(data, 'article');
+                CacheManager.set(cacheKey, modeled);
+
+                return modeled;
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('SocialServices - articleById', e);
             });
     }
 }

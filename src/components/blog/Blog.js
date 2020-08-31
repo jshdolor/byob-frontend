@@ -4,7 +4,7 @@ import Link from 'next/link';
 class Blog extends Component {
     state = {};
     render() {
-        const { image, title, link, type, video, onClick } = this.props;
+        const { id, image, title, link, type, video, onClick } = this.props;
 
         return (
             <div className='blog' onClick={onClick}>
@@ -17,6 +17,10 @@ class Blog extends Component {
                         <h4 className='title'>{title}</h4>
                     </div>
                 ) : (
+                    ''
+                )}
+
+                {type === 'external-link' ? (
                     <a href={link} target='_blank'>
                         <div
                             className='blog-image'
@@ -24,6 +28,22 @@ class Blog extends Component {
                         ></div>
                         <h4 className='title'>{title}</h4>
                     </a>
+                ) : (
+                    ''
+                )}
+
+                {type === 'article' ? (
+                    <Link href={`/blogs/[slug]`} as={link}>
+                        <a>
+                            <div
+                                className='blog-image'
+                                style={{ backgroundImage: `url(${image})` }}
+                            ></div>
+                            <h4 className='title'>{title}</h4>
+                        </a>
+                    </Link>
+                ) : (
+                    ''
                 )}
             </div>
         );

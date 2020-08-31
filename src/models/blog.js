@@ -5,6 +5,7 @@ export default class Blog {
         this._video = data.embed || null;
         this._thumbnail = data.thumbnail || null;
         this._link = data.link;
+        this._content = data.content;
 
         this._type = type;
     }
@@ -29,10 +30,18 @@ export default class Blog {
     }
 
     get link() {
+        if (this._type === 'article') {
+            return `/blogs/${this._id}`;
+        }
+
         return this._link;
     }
 
     get image() {
         return this._thumbnail || null;
+    }
+
+    get content() {
+        return this._content || '';
     }
 }
