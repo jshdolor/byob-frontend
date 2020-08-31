@@ -116,6 +116,13 @@ class SingleProductTPL extends Component {
                                 <h4 className='name'>{name}</h4>
                                 <h4 className='price'>{displayPrice}</h4>
                             </div>
+
+                            <div
+                                className='desc'
+                                dangerouslySetInnerHTML={{
+                                    __html: description,
+                                }}
+                            ></div>
                             <div className='rating-cont'>
                                 <StarRatingComponent
                                     name='productStarRating'
@@ -123,12 +130,6 @@ class SingleProductTPL extends Component {
                                     editing={false}
                                 />
                             </div>
-                            <div
-                                className='desc'
-                                dangerouslySetInnerHTML={{
-                                    __html: description,
-                                }}
-                            ></div>
                         </div>
                         <div className='product-order'>
                             <div className='quantity-cont'>
