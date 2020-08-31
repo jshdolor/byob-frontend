@@ -1,69 +1,70 @@
 #app {
-    color: $default-text-color;
+  color: $default-text-color;
 
-    #byob-navbar {
-        .nav-link {
-            text-transform: uppercase;
-            color: $white;
+  #byob-navbar {
+    .nav-link {
+      text-transform: uppercase;
+      color: $white;
+      letter-spacing: -1px;
 
-            &.active,
-            &:hover {
-                font-weight: 400;
-                opacity: 1;
-            }
-        }
-
-        z-index: 2001;
+      &.active,
+      &:hover {
+        font-weight: 400;
+        opacity: 1;
+      }
     }
 
-    #byob-content {
-        min-height: 60%;
-        padding-top: 125px;
-        padding-bottom: 125px;
+    z-index: 2001;
+  }
+
+  #byob-content {
+    min-height: 60%;
+    padding-top: 125px;
+    padding-bottom: 125px;
+  }
+
+  .cart {
+    .cart-item {
+      &-name {
+        font-weight: bold;
+      }
+
+      &-description {
+        color: #404040;
+      }
     }
+  }
 
-    .cart {
-        .cart-item {
-            &-name {
-                font-weight: bold;
-            }
+  .form-control:not(select) {
+    border-radius: 0;
+    padding: $form-input-padding;
+    font-size: $common-font-size;
 
-            &-description {
-                color: #404040;
-            }
-        }
+    &:focus {
+      outline: none;
+      box-shadow: none;
     }
+  }
 
-    .form-control:not(select) {
-        border-radius: 0;
-        padding: $form-input-padding;
-        font-size: $common-font-size;
+  .form-control.is-invalid {
+    border-color: $byob-accent;
+    background-image: none;
+  }
 
-        &:focus {
-            outline: none;
-            box-shadow: none;
-        }
+  .invalid-feedback {
+    color: $byob-accent;
+    font-size: $small-font-size;
+  }
+
+  .btn {
+    border-radius: 0;
+    padding-top: $input-padding;
+    padding-bottom: $input-padding;
+    text-transform: uppercase;
+    font-size: $common-font-size;
+
+    &.btn-primary {
+      color: $white;
     }
-
-    .form-control.is-invalid {
-        border-color: $byob-accent;
-        background-image: none;
-    }
-
-    .invalid-feedback {
-        color: $byob-accent;
-        font-size: $small-font-size;
-    }
-
-    .btn {
-        border-radius: 0;
-        padding-top: $input-padding;
-        padding-bottom: $input-padding;
-        text-transform: uppercase;
-        font-size: $common-font-size;
-
-        &.btn-primary {
-            color: $white;
-        }
-    }
+  }
 }
