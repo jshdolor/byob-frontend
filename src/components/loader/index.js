@@ -12,7 +12,13 @@ function Loading() {
         // handleComplete event was not firing
         const handleComplete = (url) => {
             setLoading(false);
-            window.scrollTo(0, 0);
+            try {
+                document
+                    .querySelector('nav#byob-navbar')
+                    .parentElement.scrollTo(0, 0);
+            } catch (e) {
+                console.log(e);
+            }
         };
 
         router.events.on('routeChangeStart', handleStart);
