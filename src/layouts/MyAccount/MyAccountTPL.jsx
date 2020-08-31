@@ -17,6 +17,7 @@ class MyAccountTPL extends Component {
             otherReason: '',
             profile: props.data,
             reasons: [],
+            apiMessage: null,
         };
     }
 
@@ -50,6 +51,7 @@ class MyAccountTPL extends Component {
     handleOk = () => {
         this.setState({
             visible: false,
+            apiMessage: null,
         });
     };
 
@@ -81,7 +83,16 @@ class MyAccountTPL extends Component {
             ClientStorage.set('cart', []);
             CookieManager.set('b-at', null);
             window.location.reload();
-        } catch (e) {}
+        } catch (e) {
+            const errors = e.getErrors();
+
+            this.setState({
+                apiMessage: {
+                    success: false,
+                    messages: [errors],
+                },
+            });
+        }
     };
 
     render() {
@@ -115,6 +126,33 @@ class MyAccountTPL extends Component {
 
         return (
             <>
+                {this.state.apiMessage ? (
+                    <Modal
+                        visible={this.state.apiMessage}
+                        onOk={this.handleOk}
+                        className='byob-popup'
+                        closable={false}
+                        footer={null}
+                    >
+                        <h1 className='title'>
+                            {this.state.apiMessage.success
+                                ? 'success'
+                                : 'error'}
+                        </h1>
+                        {(this.state.apiMessage.messages || []).map(
+                            (msg, i) => (
+                                <p key={i}>{msg}</p>
+                            )
+                        )}
+
+                        <Button type='primary' onClick={this.handleOk}>
+                            Okay
+                        </Button>
+                    </Modal>
+                ) : (
+                    ''
+                )}
+
                 <Modal
                     visible={this.state.delete}
                     onOk={this.handleOk}
