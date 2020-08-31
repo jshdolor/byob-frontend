@@ -6,11 +6,11 @@ import { setUser } from '../src/store/session/actions';
 import authCheck from '../src/middleware/auth';
 
 export default function CheckoutPage(props) {
-    const { user = {} } = props;
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(setUser(user));
-    }, []);
+    // const { user = {} } = props;
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(setUser(user));
+    // }, []);
     return (
         <div>
             <Head>
@@ -21,8 +21,8 @@ export default function CheckoutPage(props) {
     );
 }
 
-CheckoutPage.getInitialProps = async (ctx) => {
-    const user = await authCheck(ctx, false);
-
-    return { user };
-};
+// CheckoutPage.getInitialProps = async (ctx) => {
+//     const user = await authCheck(ctx, false);
+//     console.log(user);
+//     return { user };
+// };

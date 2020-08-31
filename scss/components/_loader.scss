@@ -6,9 +6,58 @@
     height: 100%;
     z-index: 3000;
     color: #fff;
-    opacity: 0.8;
-    background-image: url(/preloader.svg);
-    background-color: #ccc;
+    background-color: $byob-primary;
     background-repeat: no-repeat;
     background-position: center;
+
+    .bottle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 100px;
+        width: 26px;
+
+        &:before {
+            content: '';
+            width: 40px;
+            height: 5px;
+            background: #000;
+            opacity: 0.1;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -20px;
+            border-radius: 50%;
+            animation: shadow 900ms linear infinite;
+        }
+
+        svg {
+            height: 100px;
+            opacity: 0.7;
+            width: 26px;
+            animation: bottle 900ms linear infinite;
+        }
+    }
+
+    @keyframes shadow {
+        0%,
+        100% {
+            transform: scale(1, 1);
+        }
+        50% {
+            transform: scale(1.3, 1);
+        }
+    }
+
+    @keyframes bottle {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-15%);
+        }
+    }
 }

@@ -3,7 +3,8 @@ import { Container } from 'react-bootstrap';
 import { Button, Modal, Checkbox, Input } from 'antd';
 import EditProfileForm from '../../components/forms/EditProfileForm/EditProfileForm';
 import ProfileService from '~/services/ProfileService';
-
+import ClientStorage from '~/lib/ClientStorage';
+import CookieManager from '~/lib/CookieManager';
 class MyAccountTPL extends Component {
     constructor(props) {
         super();
@@ -13,9 +14,16 @@ class MyAccountTPL extends Component {
             delete: false,
             terms: false,
             others: false,
+            otherReason: '',
             profile: props.data,
+            reasons: [],
+            apiMessage: null,
         };
     }
+
+    handleOtherReasonChange = (e) => {
+        this.setState({ otherReason: e.target.value });
+    };
 
     showEdit = () => {
         this.setState({
@@ -43,6 +51,7 @@ class MyAccountTPL extends Component {
     handleOk = () => {
         this.setState({
             visible: false,
+            apiMessage: null,
         });
     };
 
@@ -62,6 +71,30 @@ class MyAccountTPL extends Component {
         this.setState({ profile });
     };
 
+    deleteAccount = async () => {
+        let reasons = this.state.reasons || [];
+
+        if (this.state.others) {
+            reasons = [...reasons, this.state.otherReason];
+        }
+
+        try {
+            await ProfileService.deleteAccount({ data: reasons });
+            ClientStorage.set('cart', []);
+            CookieManager.set('b-at', null);
+            window.location.reload();
+        } catch (e) {
+            const errors = e.getErrors();
+
+            this.setState({
+                apiMessage: {
+                    success: false,
+                    messages: [errors],
+                },
+            });
+        }
+    };
+
     render() {
         const {
             name,
@@ -72,15 +105,54 @@ class MyAccountTPL extends Component {
         } = this.state.profile;
 
         const options = [
-            { label: 'Pick up locations are too far away', value: 'far' },
-            { label: 'I did not get my order on time', value: 'time' },
-            { label: 'Unavailability of product/s I want', value: 'want' },
-            { label: 'Its hard to buy from the website', value: 'hard' },
-            { label: 'I prefer cash payment', value: 'cash' },
+            {
+                label: 'Pick up locations are too far away',
+                value: 'Pick up locations are too far away',
+            },
+            {
+                label: 'I did not get my order on time',
+                value: 'I did not get my order on time',
+            },
+            {
+                label: 'Unavailability of product/s I want',
+                value: 'Unavailability of product/s I want',
+            },
+            {
+                label: "It's hard to buy from the website",
+                value: "It's hard to buy from the website",
+            },
+            { label: 'I prefer cash payment', value: 'I prefer cash payment' },
         ];
 
         return (
             <>
+                {this.state.apiMessage ? (
+                    <Modal
+                        visible={this.state.apiMessage}
+                        onOk={this.handleOk}
+                        className='byob-popup'
+                        closable={false}
+                        footer={null}
+                    >
+                        <h1 className='title'>
+                            {this.state.apiMessage.success
+                                ? 'success'
+                                : 'error'}
+                        </h1>
+                        {(this.state.apiMessage.messages || []).map(
+                            (msg, i) => (
+                                <p key={i}>{msg}</p>
+                            )
+                        )}
+
+                        <Button type='primary' onClick={this.handleOk}>
+                            Okay
+                        </Button>
+                    </Modal>
+                ) : (
+                    ''
+                )}
+
                 <Modal
                     visible={this.state.delete}
                     onOk={this.handleOk}
@@ -92,7 +164,7 @@ class MyAccountTPL extends Component {
                         <svg
                             viewBox='64 64 896 896'
                             focusable='false'
-                            class=''
+                            className=''
                             data-icon='close'
                             width='1em'
                             height='1em'
@@ -108,7 +180,12 @@ class MyAccountTPL extends Component {
                         <p>Why would you like to delete your account?</p>
                         <p className='italic'>Choose at least one</p>
                         <div className='checkbox-cont'>
-                            <Checkbox.Group options={options} />
+                            <Checkbox.Group
+                                onChange={(values) =>
+                                    this.setState({ reasons: values })
+                                }
+                                options={options}
+                            />
                             <Checkbox
                                 onChange={this.onChange}
                                 className='other-check'
@@ -118,6 +195,8 @@ class MyAccountTPL extends Component {
                             <Input
                                 placeholder='Others'
                                 className='other-input'
+                                onChange={this.handleOtherReasonChange}
+                                value={this.state.otherReason}
                                 disabled={!this.state.others}
                             />
                         </div>
@@ -149,8 +228,14 @@ class MyAccountTPL extends Component {
 
                     <Button
                         type='primary'
-                        onClick={this.handleOk}
-                        disabled={!this.state.terms}
+                        onClick={this.deleteAccount}
+                        disabled={
+                            !this.state.terms ||
+                            (this.state.reasons.length === 0 &&
+                                !this.state.others) ||
+                            (this.state.others &&
+                                this.state.otherReason.length == 0)
+                        }
                     >
                         Delete Account
                     </Button>

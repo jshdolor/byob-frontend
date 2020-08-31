@@ -26,6 +26,17 @@ export default class ProfileService {
             });
     }
 
+    static deleteAccount(reasons) {
+        return Client.setUrl(this.endpoint)
+            .delete(reasons)
+            .then(({ data }) => {
+                return data;
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('ProfileService - deleteAccount', e);
+            });
+    }
+
     static updatePassword({ password, password_confirmation }) {
         const config = {
             headers: {

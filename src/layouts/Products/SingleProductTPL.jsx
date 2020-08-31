@@ -6,6 +6,7 @@ import Product from '~/components/products/Product';
 import ReviewForm from '../../components/forms/ReviewForm/ReviewForm';
 import ProductModel from '~/models/product';
 import AddCart from '~/components/buttons/addCart';
+import BuyNow from '~/components/buttons/buyNow';
 const { Option } = Select;
 import {
     amountPrecision,
@@ -115,6 +116,13 @@ class SingleProductTPL extends Component {
                                 <h4 className='name'>{name}</h4>
                                 <h4 className='price'>{displayPrice}</h4>
                             </div>
+
+                            <div
+                                className='desc'
+                                dangerouslySetInnerHTML={{
+                                    __html: description,
+                                }}
+                            ></div>
                             <div className='rating-cont'>
                                 <StarRatingComponent
                                     name='productStarRating'
@@ -122,12 +130,6 @@ class SingleProductTPL extends Component {
                                     editing={false}
                                 />
                             </div>
-                            <div
-                                className='desc'
-                                dangerouslySetInnerHTML={{
-                                    __html: description,
-                                }}
-                            ></div>
                         </div>
                         <div className='product-order'>
                             <div className='quantity-cont'>
@@ -183,9 +185,15 @@ class SingleProductTPL extends Component {
                             </div>
                             <div className='order-button-cont'>
                                 {/* <div className='buy-now-btn'>
-                                    <Button type='success' size='large'>
-                                        Buy Now
-                                    </Button>
+                                    <BuyNow
+                                        product_id={id}
+                                        type={type}
+                                        qty={quantity}
+                                    >
+                                        <Button type='success' size='large'>
+                                            Buy Now
+                                        </Button>
+                                    </BuyNow>
                                 </div> */}
                                 <AddCart
                                     id={id}

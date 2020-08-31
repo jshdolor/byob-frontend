@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 const dynamicSort = (property) => {
     let sortOrder = 1;
     if (property[0] === '-') {
@@ -12,8 +14,15 @@ const dynamicSort = (property) => {
 };
 
 const SortFilter = ({ products, handle }) => {
+    const [sort, setSort] = useState('1');
+
+    useEffect(() => {
+        handleChange('1');
+    }, [products.length]);
+
     const handleChange = (e) => {
-        const sortType = e.target.value;
+        const sortType = e.target?.value || e;
+        setSort(sortType);
 
         let sorted = products;
         switch (sortType) {
@@ -30,11 +39,12 @@ const SortFilter = ({ products, handle }) => {
                 sorted = products.sort(dynamicSort('-price'));
                 break;
         }
+        // handle([]);
         handle([...sorted]);
     };
 
     return (
-        <select className='form-control' onChange={handleChange}>
+        <select className='form-control' onChange={handleChange} value={sort}>
             <option value='1'>Popularity</option>
             <option value='2'>Price: Low - High</option>
             <option value='3'>Price: High - Low</option>

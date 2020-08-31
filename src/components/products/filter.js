@@ -64,11 +64,11 @@ const Filter = ({ products, handle, typeFilter }) => {
                     );
                 });
 
-            handle(filteredProducts);
+            handle([...filteredProducts]);
             return;
         }
 
-        handle(products);
+        handle([...products]);
     };
 
     const [filterValues, setFilterValues] = useState({
@@ -143,12 +143,6 @@ const Filter = ({ products, handle, typeFilter }) => {
                                     </Checkbox>
                                 </Form.Item>
                             ))}
-                            {filterKey <
-                            Object.keys(filterValues).length - 1 ? (
-                                <hr></hr>
-                            ) : (
-                                ''
-                            )}
                         </Panel>
                     );
                 })}

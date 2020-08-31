@@ -1,5 +1,6 @@
 import React, { PureComponent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import CartItem from '../../components/cart/item';
 import {
     Container,
@@ -10,19 +11,41 @@ import {
     FormControl,
 } from 'react-bootstrap';
 import Link from 'next/link';
-import { amountPrecision, bottlePrice, bottlePerMl } from '~/config/app';
+import {
+    amountPrecision,
+    bottlePrice,
+    bottlePerMl,
+    itemsPerLocker,
+} from '~/config/app';
 import { Divider } from 'antd';
 
+import ApplyPromoBtn from '~/components/buttons/applyPromo';
+
 const CartContainer = () => {
-    const cartItems = useSelector((state) => state.cart) || [];
+    const router = useRouter();
+    const { discount } = useSelector((state) => state.checkout);
+
+    const cartItems =
+        useSelector((state) => {
+            if (router.query?.express == 1) {
+                if (state.expressCart.length === 0) {
+                    router.replace('/products');
+                }
+                return state.expressCart;
+            }
+            return state.cart;
+        }) || [];
     const { isLoggedIn } = useSelector((state) => state.session);
-    const { currentStep } = useSelector((state) => state.checkout);
+    const { currentStep, pickupType } = useSelector((state) => state.checkout);
     const cartCount = (cartItems || []).reduce((a, b) => {
         if (b.type.id === 1) {
             return a + b.qty;
         }
         return a + Math.ceil(b.qty / bottlePerMl);
     }, 0);
+
+    const lockersNeeded = Math.ceil(cartCount / itemsPerLocker);
+
     const isDisabled = currentStep > 0;
     const subtotal = (cartItems || [])
         .reduce((a, b) => a + parseFloat(b.total) ?? 0, 0)
@@ -31,7 +54,18 @@ const CartContainer = () => {
         .filter((item) => item.type.id === 2)
         .reduce((a, b) => a + b.bottles * bottlePrice, 0)
         .toFixed(amountPrecision);
+
     const total = (parseFloat(subtotal) || 0) + (parseFloat(bottle) || 0);
+
+    let discountValue = 0;
+
+    if (Object.keys(discount).length !== 0) {
+        if (discount.type === 'discount') {
+            discountValue = total * (discount.value / 100);
+        } else {
+            discountValue = discount.value;
+        }
+    }
 
     return (
         <div id='checkout-cart' className='checkout-page-container -cart'>
@@ -52,10 +86,18 @@ const CartContainer = () => {
                     </Col>
                 </Row>
 
+                {pickupType === 'locker' && (
+                    <Row>
+                        <Col className={'byod -regular-font'}>
+                            Lockers to be used: <em>{lockersNeeded}</em>
+                        </Col>
+                    </Row>
+                )}
+
                 {!isDisabled && (
                     <Row>
                         <Col>
-                            <VoucherInput disabled={!isLoggedIn} />
+                            <ApplyPromoBtn disabled={!isLoggedIn} />
                             {!isLoggedIn ? (
                                 <small>
                                     Login to use a promo code. Don't have an
@@ -90,38 +132,29 @@ const CartContainer = () => {
                     <Col className='text-right'>P{bottle}</Col>
                 </Row>
 
-                {isDisabled && isLoggedIn && (
-                    <Row>
-                        <Col>Discount Voucher (0%)</Col>
-                        <Col className='text-right'>P{0}</Col>
-                    </Row>
+                <Divider></Divider>
+
+                {isLoggedIn && Object.keys(discount).length > 0 && (
+                    <>
+                        <Row>
+                            <Col>
+                                Discount Voucher ({discount.value}
+                                {discount.type === 'discount' ? '%' : ''})
+                            </Col>
+                            <Col className='text-right'>(P{discountValue})</Col>
+                        </Row>
+                        <Divider></Divider>
+                    </>
                 )}
 
-                <Divider></Divider>
                 <Row>
                     <Col>Total</Col>
                     <Col className='text-right'>
-                        P{total.toFixed(amountPrecision)}
+                        P{(total - discountValue).toFixed(amountPrecision)}
                     </Col>
                 </Row>
             </div>
         </div>
-    );
-};
-
-const VoucherInput = ({ disabled }) => {
-    return (
-        <InputGroup className='voucher-input'>
-            <FormControl
-                placeholder='Voucher Code'
-                aria-label='Voucher Code'
-                aria-describedby='Voucher Code'
-                disabled={disabled}
-            />
-            <InputGroup.Append>
-                <Button variant='outline-secondary'>APPLY</Button>
-            </InputGroup.Append>
-        </InputGroup>
     );
 };
 

@@ -8,12 +8,16 @@ import CFDividerHeader from './CFDivider';
 import { CLAIMING_METHOD } from '../../../config/checkout';
 import { useSelector, useDispatch } from 'react-redux';
 import LockerService from '~/services/Lockers/LockerService';
-import { availableLockers } from '~/config/app';
+import BoothService from '~/services/Booth/BoothService';
+import { itemsPerLocker } from '~/config/app';
+import { setPickupType } from '~/store/checkout/actions';
 
 const { Option } = Select;
 
 const CFClaimingMethod = ({ setFieldValue }) => {
-    const { formValues, currentStep, steps } = useSelector(
+    const dispatch = useDispatch();
+
+    const { formValues, currentStep, steps, hasErrors } = useSelector(
         (state) => state.checkout
     );
 
@@ -24,6 +28,7 @@ const CFClaimingMethod = ({ setFieldValue }) => {
     );
 
     const handleClaimingChange = (value) => {
+        dispatch(setPickupType(value));
         setFieldValue('pickup_type', value);
         setClaimingMethod(value);
     };
@@ -41,13 +46,20 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                 const qty = item.type?.id === 2 ? item.bottles : item.qty;
                 return a + qty;
             }, 0);
-            const lockersNeeded = Math.ceil(cartCount / availableLockers);
+            const lockersNeeded = Math.ceil(cartCount / itemsPerLocker);
             setLockerSchedulesLoading(true);
-            const schedules = await LockerService.getSchedules(lockersNeeded);
+
+            let schedules = [];
+            if (claimingMethod === CLAIMING_METHOD.LOCKER) {
+                schedules = await LockerService.getSchedules(lockersNeeded);
+            } else {
+                schedules = await BoothService.getSchedules();
+            }
+
             setLockerSchedules(schedules);
             setLockerSchedulesLoading(false);
         })();
-    }, [cart]);
+    }, [claimingMethod, cart, hasErrors]);
 
     const [date, setDate] = useState(formValues.lockerDate);
     const [time, setTime] = useState(formValues.lockerTime);
@@ -105,63 +117,60 @@ const CFClaimingMethod = ({ setFieldValue }) => {
                     </Radio>
                 </Radio.Group>
             </Form.Item>
-            {claimingMethod == CLAIMING_METHOD.LOCKER && (
-                <Spin spinning={lockerSchedulesLoading}>
-                    <Row gutter={14}>
-                        <Col xs={24} sm={24} md={12} span={12}>
-                            <Form.Item name='lockerDate'>
-                                <Select
-                                    onChange={(v) => setDate(v)}
-                                    style={{ width: '100%' }}
-                                    name='lockerDate'
-                                    className='checkout-input'
-                                    placeholder='Select Date'
-                                >
-                                    {lockerSchedules.map((o) => (
-                                        <Option
-                                            // disabled={o.status === 'disabled'}
-                                            value={o.date}
-                                            key={o.date}
-                                        >
-                                            {o.date}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={12} span={12}>
-                            <Form.Item name='lockerTime'>
-                                <Select
-                                    onChange={(v) => {
-                                        setTime(v);
-                                    }}
-                                    style={{ width: '100%' }}
-                                    name='lockerTime'
-                                    className='checkout-input'
-                                    placeholder='Select Time'
-                                >
-                                    {(
-                                        lockerSchedules.find(
-                                            (locker) => locker.date == date
-                                        )?._time || []
-                                    ).map((o) => (
-                                        <Option
-                                            key={o.schedule_id}
-                                            disabled={
-                                                o.locker_availability !==
-                                                'enabled'
-                                            }
-                                            value={o.schedule_id}
-                                        >
-                                            {o.name}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Spin>
-            )}
+            <Spin spinning={lockerSchedulesLoading}>
+                <Row gutter={14}>
+                    <Col xs={24} sm={24} md={12} span={12}>
+                        <Form.Item name='lockerDate'>
+                            <Select
+                                onChange={(v) => setDate(v)}
+                                style={{ width: '100%' }}
+                                name='lockerDate'
+                                className='checkout-input'
+                                placeholder='Select Date'
+                            >
+                                {lockerSchedules.map((o) => (
+                                    <Option
+                                        // disabled={o.status === 'disabled'}
+                                        value={o.date}
+                                        key={o.date}
+                                    >
+                                        {o.date}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} span={12}>
+                        <Form.Item name='lockerTime'>
+                            <Select
+                                onChange={(v) => {
+                                    setTime(v);
+                                }}
+                                style={{ width: '100%' }}
+                                name='lockerTime'
+                                className='checkout-input'
+                                placeholder='Select Time'
+                            >
+                                {(
+                                    lockerSchedules.find(
+                                        (locker) => locker.date == date
+                                    )?._time || []
+                                ).map((o) => (
+                                    <Option
+                                        key={o.schedule_id}
+                                        disabled={
+                                            o.locker_availability !== 'enabled'
+                                        }
+                                        value={o.schedule_id}
+                                    >
+                                        {o.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Spin>
             <p className='-normal-text -italic'>
                 Your items are only for pick-up. You will receive an SMS
                 notification an hour before time of pick up. The BYOB Booth is

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Form } from 'formik-antd';
 import Router from 'next/router';
-import { Spin } from 'antd';
+import { Spin, Modal, Button } from 'antd';
 import checkoutFormSchema from '../../../config/forms/schema/checkoutFormSchema';
 import CFContactInformation from '../../components/forms/Checkout/CFContactInformation';
 import CFClaimingMethod from '../../components/forms/Checkout/CFClaimingMethod';
@@ -14,6 +14,7 @@ import {
     editForm,
     startLoading,
     stopLoading,
+    setHasErrors,
 } from '../../store/checkout/actions';
 import { CHECKOUT_STEPS } from '../../config/checkout';
 import CFCheckoutInformation from '../../components/forms/Checkout/CFCheckoutInformation';
@@ -21,30 +22,59 @@ import CFPaymentMethod from '../../components/forms/Checkout/CFPaymentMethod';
 import CheckoutService from '../../services/Checkout/Checkout';
 import CheckoutRequest from '../../services/Checkout/Requests/CheckoutRequest';
 
-import { resetCart } from '~/store/cart/actions';
+import { resetExpressCart } from '~/store/express-cart/actions';
 import { handle as removeItem } from '~/components/cart/RemoveCartItemButton';
+import { validURL } from '~/helpers';
 
 const CheckoutForm = () => {
     const { formValues, currentStep, informationEditing } = useSelector(
         (state) => state.checkout
     );
     const cart = useSelector((state) => state.cart);
+    const { discount } = useSelector((state) => state.checkout);
 
     const dispatch = useDispatch();
+    const [apiMessage, setApiMessage] = useState({});
 
     const handlePayment = async (values) => {
         dispatch(startLoading());
+        dispatch(setHasErrors(false));
+
+        const code = discount.code ?? null;
         try {
-            const request = { ...values, cart };
+            const request = { ...values, cart, code: discount.code };
             const localRequest = new CheckoutRequest(request);
 
-            const response = await CheckoutService.checkout(localRequest);
+            const isExpress = window.location.search.indexOf('express') > -1;
+
+            const { data } = await CheckoutService.checkout(
+                localRequest,
+                isExpress,
+                code
+            );
 
             await cart.map(async (item) => await removeItem(item.product_id));
 
-            window.location.href = response.data;
+            if (isExpress) {
+                dispatch(resetExpressCart());
+            }
+
+            if (validURL(data)) {
+                window.location.href = data;
+                return;
+            }
+
+            Router.replace('/404');
         } catch (e) {
             dispatch(stopLoading());
+            dispatch(setHasErrors(true));
+
+            if (e.getErrors) {
+                setApiMessage({
+                    visible: true,
+                    messages: e.getErrors(),
+                });
+            }
         }
     };
 
@@ -63,15 +93,33 @@ const CheckoutForm = () => {
     };
 
     return (
-        <Formik
-            initialValues={formValues}
-            validationSchema={checkoutFormSchema}
-            onSubmit={handleSubmit}
-        >
-            {({ setFieldValue }) => (
-                <FormContainer setFieldValue={setFieldValue} />
-            )}
-        </Formik>
+        <>
+            <Modal
+                visible={apiMessage.visible}
+                onOk={() => setApiMessage({})}
+                className='byob-popup'
+                closable={false}
+                footer={null}
+            >
+                <h1 className='title'>Error</h1>
+                {(apiMessage.messages || []).map((msg, i) => (
+                    <p key={i}>{msg}</p>
+                ))}
+
+                <Button type='primary' onClick={() => setApiMessage({})}>
+                    Okay
+                </Button>
+            </Modal>
+            <Formik
+                initialValues={formValues}
+                validationSchema={checkoutFormSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ setFieldValue }) => (
+                    <FormContainer setFieldValue={setFieldValue} />
+                )}
+            </Formik>
+        </>
     );
 };
 

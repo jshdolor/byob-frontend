@@ -27,10 +27,18 @@ const init = {
         },
     },
     isLoading: false,
+    pickupType: 'booth',
+    discount: {},
+    hasErrors: false,
 };
 
 export default (state = init, { type, payload }) => {
     switch (type) {
+        case actions.SET_PICKUPTYPE:
+            return {
+                ...state,
+                pickupType: payload,
+            };
         case actions.SET_STEP:
             return {
                 ...state,
@@ -76,6 +84,18 @@ export default (state = init, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
+            };
+
+        case actions.APPLY_DISCOUNT:
+            return {
+                ...state,
+                discount: payload,
+            };
+
+        case actions.HAS_ERRORS:
+            return {
+                ...state,
+                hasErrors: true,
             };
         default:
             return state;
