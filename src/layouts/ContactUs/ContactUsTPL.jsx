@@ -8,34 +8,32 @@ class UpdatePasswordTPL extends Component {
   render() {
     return (
       <div className='contact-container'>
-        <Container>
-          <div className='form-container'>
-            <ContactForm></ContactForm>
-          </div>
+        <div className='form-container'>
+          <ContactForm></ContactForm>
+        </div>
 
-          <div className='contact-info'>
-            <p>We will get back to you as soon as possible</p>
-            <Row align='bottom'>
-              <Col span={14}>
-                <div className='info-cont'>
-                  <h5 className='info-title'>General Inquiry</h5>
-                  <p>info@domain.com</p>
-                </div>
-                <div className='info-cont'>
-                  <h5 className='info-title'>Press and Media</h5>
-                  <p>press@domain.com</p>
-                </div>
-                <div className='info-cont'>
-                  <h5 className='info-title'>Office Address</h5>
-                  <p>Unit 1234 Building Name Corner Street Avenue, Barangay Village, Anywhere City Philippines 10am - 6pm</p>
-                </div>
-              </Col>
-              <Col span={10} className='contact-image-cont'>
-                <img className='contact-logo' src='/images/contact.png' alt='logo' />
-              </Col>
-            </Row>
-          </div>
-        </Container>
+        <div className='contact-info'>
+          <p>We will get back to you as soon as possible</p>
+          <Row align='bottom'>
+            <Col span={14}>
+              <div className='info-cont'>
+                <h5 className='info-title'>General Inquiry</h5>
+                <p>info@domain.com</p>
+              </div>
+              <div className='info-cont'>
+                <h5 className='info-title'>Press and Media</h5>
+                <p>press@domain.com</p>
+              </div>
+              <div className='info-cont'>
+                <h5 className='info-title'>Office Address</h5>
+                <p>Unit 1234 Building Name Corner Street Avenue, Barangay Village, Anywhere City Philippines 10am - 6pm</p>
+              </div>
+            </Col>
+            <Col span={10} className='contact-image-cont'>
+              <img className='contact-logo' src='/images/contact.png' alt='logo' />
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }
