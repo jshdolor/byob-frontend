@@ -7,6 +7,7 @@ export default class ContactUsRequest extends FormData {
         this._email = data.email;
         this._message = data.message;
         this._terms = true;
+        this._contact_number = data.mobileNumber;
         this['_g-recaptcha-response'] = data.recaptcha;
     }
 }

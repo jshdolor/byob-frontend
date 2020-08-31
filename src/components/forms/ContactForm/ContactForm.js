@@ -20,6 +20,7 @@ const ContactForm = () => {
         name: '',
         email: '',
         message: '',
+        mobileNumber: '',
     });
 
     const recaptcha = createRef();
@@ -30,8 +31,12 @@ const ContactForm = () => {
         if (isLoggedIn) {
             (async () => {
                 setReadonlyField(true);
-                const { name, email } = await ProfileService.get();
-                setInitialData({ name, email, message: '' });
+                const {
+                    name,
+                    email,
+                    mobileNumber,
+                } = await ProfileService.get();
+                setInitialData({ name, email, message: '', mobileNumber });
             })();
         }
         return () => {};
@@ -60,10 +65,6 @@ const ContactForm = () => {
             });
         }
         setIsSubmitting(false);
-    };
-
-    const handleOk = () => {
-        setApiMsg({});
     };
 
     return (
@@ -102,6 +103,14 @@ const ContactForm = () => {
                                 <Input
                                     name='email'
                                     placeholder='Email*'
+                                    readOnly={readonlyField}
+                                />
+                            </Form.Item>
+
+                            <Form.Item name='mobileNumber'>
+                                <Input
+                                    name='mobileNumber'
+                                    placeholder='Mobile*'
                                     readOnly={readonlyField}
                                 />
                             </Form.Item>
