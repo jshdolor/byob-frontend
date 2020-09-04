@@ -10,7 +10,7 @@ import loadingImage from '~/components/loader/image-loader';
 const ByobImage = ({ name, src }) => (
     <Img
         style={{ width: '100%' }}
-        placeholder='/img-preloader.svg'
+        placeholder='/item-loading.gif'
         src={src}
         error={loadingImage}
         alt={name}
