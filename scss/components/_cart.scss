@@ -69,7 +69,7 @@ button.add-to-cart {
 
       .item-image {
         text-align: left;
-        min-height: 80px
+        min-height: 80px;
       }
     }
 
@@ -90,4 +90,11 @@ button.add-to-cart {
   .col {
     padding: 0;
   }
+}
+
+.continue-btn {
+  margin: 20px 0;
+  margin-bottom: 0px;
+  text-decoration: underline;
+  text-align: center;
 }
