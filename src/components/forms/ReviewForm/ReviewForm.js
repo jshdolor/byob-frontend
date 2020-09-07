@@ -22,7 +22,6 @@ class ReviewForm extends Component {
     }
 
     onFinish = async (values) => {
-        console.log(values);
         const request = new PostReviewRequest({
             ratings: this.state.rating,
             message: values.review,

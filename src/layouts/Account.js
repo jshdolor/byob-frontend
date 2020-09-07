@@ -27,7 +27,7 @@ const AccountLayout = ({ children, logoutUser }) => {
         ClientStorage.set('cart', []);
         CookieManager.set('b-at', null);
         logoutUser(true);
-        // Router.replace('/');
+        Router.replace('/');
     };
 
     return (
