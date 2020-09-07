@@ -4,6 +4,7 @@ import CheckoutContainer from './CheckoutContainer';
 import CartContainer from './CartContainer';
 import { TOGGLE_CART_MENU } from '~/store/cartMenu/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import CookieManager from '~/lib/CookieManager';
 
 const CheckoutTPL = () => {
     const { isLoading } = useSelector((state) => state.checkout);
@@ -18,7 +19,7 @@ const CheckoutTPL = () => {
 
     return (
         <Spin spinning={isLoading}>
-            <Row className="checkout-page">
+            <Row className='checkout-page'>
                 <Col xs={24} sm={24} lg={12}>
                     <CheckoutContainer />
                 </Col>

@@ -3,6 +3,7 @@ import Client from '~/clients/ApiClient';
 import ExceptionHandler from '~/exception/Handler';
 
 import CookieManager from '~/lib/CookieManager';
+import ClientStorage from '~/lib/ClientStorage';
 
 export default class ProfileService {
     static endpoint = '/profile';

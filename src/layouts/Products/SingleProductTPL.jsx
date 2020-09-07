@@ -94,7 +94,7 @@ class SingleProductTPL extends Component {
             brand,
             id,
             image,
-            average_rating,
+            average_ratings,
         } = new ProductModel(this.props.product);
 
         const suggestions = this.props.suggestions.map(
@@ -126,7 +126,7 @@ class SingleProductTPL extends Component {
                             <div className='rating-cont'>
                                 <StarRatingComponent
                                     name='productStarRating'
-                                    value={average_rating}
+                                    value={average_ratings}
                                     editing={false}
                                 />
                             </div>
@@ -241,7 +241,7 @@ class SingleProductTPL extends Component {
                                                     </h4>
                                                     <StarRatingComponent
                                                         name={i + review.name}
-                                                        value={review.rating}
+                                                        value={review.ratings}
                                                         editing={false}
                                                     />
                                                     <p className='para'>
@@ -266,7 +266,9 @@ class SingleProductTPL extends Component {
                                         </p>
                                     </div>
                                     <div className='review-form'>
-                                        <ReviewForm></ReviewForm>
+                                        <ReviewForm
+                                            product={this.props.product}
+                                        ></ReviewForm>
                                     </div>
                                 </div>
                             )}

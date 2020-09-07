@@ -26,6 +26,7 @@ const authCheck = async (ctx, required = true) => {
             return await ProfileService.get(null);
         } catch (e) {
             CookieManager.delete('b-at');
+            window.location.reload();
             if (required) {
                 Router.replace('/login');
             }

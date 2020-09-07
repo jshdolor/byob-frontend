@@ -20,4 +20,15 @@ export default class ContactUsService {
                 throw new ExceptionHandler('ContactUsService - send', e);
             });
     }
+
+    static get() {
+        return Client.setUrl('/contact')
+            .get()
+            .then((data) => {
+                return data?.data[0] || [];
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('ContactUsService - get', e);
+            });
+    }
 }

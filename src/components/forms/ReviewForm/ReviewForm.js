@@ -21,8 +21,9 @@ class ReviewForm extends Component {
 
         this.setState({ isSubmitting: true });
         try {
+            console.log(this.props);
             const apiMessage = await ProductService.postReview(
-                this.props.product,
+                this.props.product.id,
                 request
             );
             this.setState({
