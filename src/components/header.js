@@ -35,6 +35,7 @@ const Header = (props) => {
                 onClick={() => {
                     setNavbarExpanded(false);
                     if (!CookieManager.get('b-at')) {
+                        ClientStorage.set('cart', []);
                         window.location.reload();
                     }
                 }}
