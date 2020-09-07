@@ -44,4 +44,7 @@
 
 .mobile-none {
   display: none;
+  @include for-tablet-portrait-up {
+    display: block;
+  }
 }
