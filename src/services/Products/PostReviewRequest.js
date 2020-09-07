@@ -5,5 +5,6 @@ export default class PostReviewRequest extends FormData {
         super();
         this._message = data.message;
         this._ratings = data.ratings;
+        this._name = data.name;
     }
 }

@@ -267,6 +267,9 @@ class SingleProductTPL extends Component {
                                     </div>
                                     <div className='review-form'>
                                         <ReviewForm
+                                            closeForm={() =>
+                                                this.setState({ review: false })
+                                            }
                                             product={this.props.product}
                                         ></ReviewForm>
                                     </div>

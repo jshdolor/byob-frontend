@@ -4,6 +4,7 @@ import { Form, Input, Button, Spin, Modal } from 'antd';
 const { TextArea } = Input;
 import PostReviewRequest from '~/services/Products/PostReviewRequest';
 import ProductService from '~/services/Product';
+import ProfileService from '~/services/ProfileService';
 
 class ReviewForm extends Component {
     state = {
@@ -11,17 +12,25 @@ class ReviewForm extends Component {
         isSubmitting: false,
         apiMessage: false,
         visible: false,
+        name: '',
     };
 
+    componentDidMount() {
+        ProfileService.get().then((data) => {
+            this.setState({ name: data.name });
+        });
+    }
+
     onFinish = async (values) => {
+        console.log(values);
         const request = new PostReviewRequest({
             ratings: this.state.rating,
             message: values.review,
+            name: this.state.name,
         });
 
         this.setState({ isSubmitting: true });
         try {
-            console.log(this.props);
             const apiMessage = await ProductService.postReview(
                 this.props.product.id,
                 request
@@ -46,6 +55,11 @@ class ReviewForm extends Component {
 
     handleOk = () => {
         this.setState({ visible: false });
+        this.props.closeForm();
+    };
+
+    onNameChange = (e) => {
+        this.setState({ name: e.target.value });
     };
 
     render() {
@@ -82,6 +96,20 @@ class ReviewForm extends Component {
                             value={rating}
                             onStarClick={this.onRatingChange}
                         />
+
+                        <Form.Item name='name'>
+                            <Input
+                                name='name'
+                                onChange={this.onNameChange}
+                                value={this.state.name}
+                                placeholder='Name'
+                            />
+                            <small name=''>
+                                If this field is blank, your review will be
+                                registered as Anonymous
+                            </small>
+                        </Form.Item>
+
                         <Form.Item
                             name='review'
                             rules={[
