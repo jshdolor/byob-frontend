@@ -2,7 +2,7 @@ import Cookie from 'nookies';
 import { mergeDeep } from '~/helpers';
 
 const defaultOptions = {
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 60 * 60 * 24, //max age of cookie one day
     path: '/',
 };
 
