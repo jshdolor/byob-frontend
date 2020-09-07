@@ -5,7 +5,7 @@ export default function HomePage() {
     return (
         <div>
             <Head>
-                <title>BYOB | Click & Collect</title>
+                <title>BYOB Click & Collect</title>
             </Head>
             <HomeTPL></HomeTPL>
         </div>

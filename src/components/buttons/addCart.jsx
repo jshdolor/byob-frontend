@@ -16,10 +16,6 @@ import CookieManager from '~/lib/CookieManager';
 //TODO: recode and refactor --- this is a rush project: less if else
 
 const addToCart = async (product_id, type, qty = 1, alreadyInCart = false) => {
-    if (!CookieManager.get('b-at')) {
-        window.location.reload();
-    }
-
     if (type.id === 2) {
         qty = qty === 1 ? 250 : qty;
     }
@@ -63,10 +59,6 @@ const addToCart = async (product_id, type, qty = 1, alreadyInCart = false) => {
 };
 
 const openCartMenu = () => {
-    if (!CookieManager.get('b-at')) {
-        window.location.reload();
-    }
-
     window.Store.dispatch({
         type: TOGGLE_CART_MENU,
         payload: true,
