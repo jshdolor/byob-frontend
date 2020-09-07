@@ -26,18 +26,18 @@ const ContactUsTPL = () => {
                 <Row align='bottom'>
                     <Col span={14}>
                         <div className='info-cont'>
-                            <h5 className='info-title'>General Inquiry</h5>
+                            <h5 className='info-title'>Email Address</h5>
                             <p
                                 dangerouslySetInnerHTML={{
-                                    __html: data.phone_number,
+                                    __html: data.email,
                                 }}
                             ></p>
                         </div>
                         <div className='info-cont'>
-                            <h5 className='info-title'>Press and Media</h5>
+                            <h5 className='info-title'>Contact Number</h5>
                             <p
                                 dangerouslySetInnerHTML={{
-                                    __html: data.email,
+                                    __html: data.phone_number,
                                 }}
                             ></p>
                         </div>

@@ -16,6 +16,7 @@ import io from 'socket.io-client';
 import { useRouter } from 'next/router';
 
 import ClientStorage from '~/lib/ClientStorage';
+import CookieManager from '~/lib/CookieManager';
 
 import { userPages } from '~/config/routes';
 
@@ -30,7 +31,15 @@ const Header = (props) => {
 
     const accountLink = (
         <ByobLink href='/account'>
-            <a onClick={() => setNavbarExpanded(false)} className='nav-link'>
+            <a
+                onClick={() => {
+                    setNavbarExpanded(false);
+                    if (!CookieManager.get('b-at')) {
+                        window.location.reload();
+                    }
+                }}
+                className='nav-link'
+            >
                 My Account
             </a>
         </ByobLink>
