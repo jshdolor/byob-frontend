@@ -141,7 +141,9 @@ const CartContainer = () => {
                                 Discount Voucher ({discount.value}
                                 {discount.type === 'discount' ? '%' : ''})
                             </Col>
-                            <Col className='text-right'>(P{discountValue})</Col>
+                            <Col className='text-right'>
+                                (P{discountValue.toFixed(amountPrecision)})
+                            </Col>
                         </Row>
                         <Divider></Divider>
                     </>
