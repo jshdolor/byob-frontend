@@ -18,12 +18,8 @@ const BlogArticlePage = () => {
 
                 const articleData = await SocialServices.articleById(id);
                 setData(articleData);
-                const fetchedArticles = await SocialServices.articles();
-                setArticles(
-                    fetchedArticles
-                        .filter((article) => article.id != id)
-                        .filter((article, i) => i < 3)
-                );
+                const relatedArticles = await SocialServices.getRelated(id);
+                setArticles(relatedArticles);
             } catch (e) {
                 console.log(e);
             }
@@ -35,9 +31,7 @@ const BlogArticlePage = () => {
             <Container>
                 <div className='single-blogs-cont'>
                     <h1 className='title'>{data.title}</h1>
-                    <p className='date'>
-                        .............missing date data.........
-                    </p>
+                    <p className='date'>{data.publishedAt}</p>
 
                     <div className='image-cont'>
                         <img src={data.image} alt='' />
@@ -54,10 +48,11 @@ const BlogArticlePage = () => {
                     <div className='more-blogs'>
                         <h1 className='title'>You Might Also Like</h1>
                         <div className='more-blog-list'>
-                            {(articles || []).map((article) => (
+                            {(articles || []).map((article, i) => (
                                 <Blog
-                                    key={article.id}
-                                    type='article'
+                                    key={i}
+                                    id={article.id}
+                                    type={article.type}
                                     image={article.image}
                                     title={article.title}
                                     link={article.link}

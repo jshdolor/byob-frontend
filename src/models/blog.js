@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export default class Blog {
     constructor(data, type = 'video') {
         this._id = data.id;
@@ -6,8 +8,18 @@ export default class Blog {
         this._thumbnail = data.thumbnail || null;
         this._link = data.link;
         this._content = data.content;
+        this._publishedAt = data.published_at;
 
         this._type = type;
+    }
+
+    get publishedAt() {
+        try {
+            return format(new Date(this._publishedAt), 'MMM d, yyyy HH:mm');
+        } catch (e) {
+            console.log(e);
+            return '';
+        }
     }
 
     get id() {

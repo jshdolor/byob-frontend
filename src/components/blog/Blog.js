@@ -4,7 +4,7 @@ import Link from 'next/link';
 class Blog extends Component {
     state = {};
     render() {
-        const { id, image, title, link, type, video, onClick } = this.props;
+        let { id, image, title, link, type, video, onClick } = this.props;
 
         return (
             <div className='blog' onClick={onClick}>

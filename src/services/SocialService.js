@@ -77,4 +77,26 @@ export default class SocialServices {
                 throw new ExceptionHandler('SocialServices - articleById', e);
             });
     }
+
+    static getRelated(id) {
+        return Client.setUrl(this.endpoint + `/other/${id}`)
+            .get()
+            .then(({ data }) => {
+                return (data.other || []).map((blog) => {
+                    let type = null;
+                    if (blog.link) {
+                        type = 'external-link';
+                    }
+
+                    if (blog.content) {
+                        type = 'article';
+                    }
+
+                    return new Blog(blog, type);
+                });
+            })
+            .catch((e) => {
+                throw new ExceptionHandler('SocialServices - articleById', e);
+            });
+    }
 }

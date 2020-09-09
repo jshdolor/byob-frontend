@@ -75,6 +75,8 @@ const Header = (props) => {
         if (session.isLoggedIn) {
             setUserNav(accountLink);
             getCurrentCart();
+        } else {
+            setUserNav(loginLink);
         }
 
         socket.on('newCart', () => {

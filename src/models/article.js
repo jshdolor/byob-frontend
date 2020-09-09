@@ -4,6 +4,11 @@ export default class ArticleModel {
         this._title = data.title;
         this._content = data.content;
         this._thumbnail = data.thumbnail;
+        this._publishedAt = data.published_at;
+    }
+
+    get publishedAt() {
+        return this._publishedAt;
     }
 
     get id() {
