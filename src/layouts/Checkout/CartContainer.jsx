@@ -65,8 +65,9 @@ const CartContainer = () => {
         } else {
             discountValue = discount.value;
         }
-
-        discountValue = (discountValue || 0).toFixed(amountPrecision);
+        if (discountValue.toFixed) {
+            discountValue = discountValue.toFixed(amountPrecision);
+        }
     }
 
     return (
