@@ -3,6 +3,7 @@ import { Row, Col } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { editForm } from '../../../store/checkout/actions';
 import { CLAIMING_METHOD } from '../../../config/checkout';
+import { titleCase } from '~/helpers';
 
 const CFCheckoutInformation = () => {
     const {
@@ -36,8 +37,8 @@ const CFCheckoutInformation = () => {
             </li>
             <li className='information-item'>
                 <Row>
-                    <Col span={7}>Pickup Method</Col>
-                    <Col>{claimingMethod}</Col>
+                    <Col span={7}>Pickup Method: </Col>
+                    <Col>{titleCase(claimingMethod)}</Col>
                 </Row>
             </li>
             <li className='information-item'>
