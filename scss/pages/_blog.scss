@@ -85,26 +85,32 @@
     }
     padding-bottom: 40px;
   }
+}
 
-  .more-blogs {
-    padding-top: 40px;
-    border-top: 1px solid $byob-primary;
-    .title {
-      font-size: 20px;
-      margin-bottom: 20px;
+.more-blogs {
+  padding-top: 40px;
+  border-top: 1px solid $byob-primary;
+  .title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: $byob-primary;
+  }
+  .more-blog-list {
+    .blog {
+      width: 100%;
+      margin: inherit;
     }
-    .more-blog-list {
-      .blog {
-        width: 100%;
-        margin: inherit;
-      }
 
-      .title {
-        font-family: $primary-font;
-        color: $default-text-color;
-        font-size: 14px;
-        text-transform: inherit;
-      }
+    .title {
+      font-family: $primary-font;
+      color: $default-text-color;
+      font-size: 14px;
+      text-transform: inherit;
     }
   }
+}
+
+.about-cont {
+  margin-bottom: 40px;
 }
