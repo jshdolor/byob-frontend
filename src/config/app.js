@@ -22,6 +22,6 @@ module.exports = {
     ],
     defaultRefillableValue: 250,
     orderHistoryProductShow: 2,
-    availableLockers: 15,
+    availableLockers: 14,
     itemsPerLocker: 10,
 };
